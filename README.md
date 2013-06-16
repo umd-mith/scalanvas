@@ -13,7 +13,7 @@ for [JSON-LD](http://json-ld.org/) serialization.
 It includes (among other things)
 [a demonstration](https://github.com/umd-mith/scalanvas/blob/master/generators/src/main/scala/generators/PrefixGenerator.scala)
 of how Scala 2.10's
-macro system can be used to parse RDF schemas at run time to produce
+macro system can be used to parse RDF schemas at compile time to produce
 Scala bindings. So, for example, instead of writing something like this:
 
 ``` scala
@@ -48,8 +48,8 @@ val ore = PrefixGenerator.fromSchema(
 )
 ```
 
-And the RDF schema at the indicated resource path will be parsed (at
-compile time), and we'll have an anonymous subclass of `Prefix` with
+Now the RDF schema at the indicated resource path will be parsed at
+compile time, and we'll have an anonymous subclass of `Prefix` with
 all of the members of our `OREPrefix` above added for us. This approach
 is less tedious, less error-prone, and much easier to maintain in the
 case of changing schemas.
