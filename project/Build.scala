@@ -5,38 +5,21 @@ object Scalanvas extends Build {
   lazy val core: Project = Project(
     id = "scalanvas-core",
     base = file("core"),
-    dependencies = Seq(prefixes),
+    dependencies = Seq(schemas),
     settings = commonSettings ++ Seq(
       libraryDependencies <++= scalaVersion { sv => Seq(
-        "org.slf4j" % "slf4j-simple" % "1.6.4",
-        "com.github.jsonld-java" % "jsonld-java-jena" % "0.1" excludeAll(
+        "com.chuusai" % "shapeless" % "2.0.0-SNAPSHOT" cross CrossVersion.full changing(), 
+        "com.github.jsonld-java" % "jsonld-java-jena" % "0.2" excludeAll(
           ExclusionRule(organization = "org.apache.jena"),
           ExclusionRule(organization = "org.slf4j")
         )
       )}
     )
   ).dependsOn(
-    ProjectRef(uri("git://github.com/w3c/banana-rdf.git"), "banana-jena")
-  )
-
-  lazy val prefixes: Project = Project(
-    id = "scalanvas-prefixes",
-    base = file("prefixes"),
-    dependencies = Seq(schemas, generators),
-    settings = commonSettings
-  )
-
-  lazy val generators: Project = Project(
-    id = "scalanvas-generators",
-    base = file("generators"),
-    dependencies = Seq(root),
-    settings = commonSettings ++ Seq(
-      libraryDependencies <+= scalaVersion(
-        "org.scala-lang" % "scala-compiler" % _
-      )
-    )
-  ).dependsOn(
-    ProjectRef(uri("git://github.com/w3c/banana-rdf.git"), "banana-sesame")
+    ProjectRef(uri("git://github.com/w3c/banana-rdf.git#259d7e17a9c7aa72dec9abe8c0bb61ea9e49e3bd"), "banana-jena"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-io-jena"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-prefixes"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-argonaut")
   )
 
   lazy val schemas: Project = Project(
@@ -49,17 +32,14 @@ object Scalanvas extends Build {
     id = "scalanvas",
     base = file("."),
     settings = commonSettings
-  ).aggregate(
-    schemas, generators, prefixes, core
-  )
+  ).aggregate(schemas, core)
 
   def commonSettings = Defaults.defaultSettings ++ Seq(
     organization := "edu.umd.mith",
     version := "0.0.0-SNAPSHOT",
-    resolvers += "Sonatype snapshots" at
-      "http://oss.sonatype.org/content/repositories/snapshots",
+    resolvers += Resolver.sonatypeRepo("snapshots"),
     scalaVersion := "2.10.2",
-    scalaBinaryVersion := "2.10",
+    //scalaBinaryVersion := "2.10",
     scalacOptions := Seq(
       "-feature",
       "-language:implicitConversions",
@@ -67,7 +47,8 @@ object Scalanvas extends Build {
       "-unchecked"
     ),
     libraryDependencies <++= scalaVersion(sv => Seq(
-      "org.slf4j" % "slf4j-simple" % "1.6.4"
+      "org.slf4j" % "slf4j-simple" % "1.6.4",
+      "io.argonaut" %% "argonaut" % "6.0"
     ))
   )
 }

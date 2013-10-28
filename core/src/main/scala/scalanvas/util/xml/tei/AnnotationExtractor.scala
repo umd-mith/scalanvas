@@ -4,7 +4,7 @@ import edu.umd.mith.scalanvas.util.xml.XmlLabeler
 import scala.xml._
 import scalaz.{ Node => _, _ }, Scalaz._
 
-case class Annotation(pos: (Int, Int), place: Option[String])
+case class Annotation(pos: (Int, Int), place: Option[String], attrs: Map[String, String])
 
 case class AnnotationExtractor(doc: Elem, ignore: Set[String]) {
   def attrEquals(name: String, value: String)(node: Node) =
@@ -12,7 +12,7 @@ case class AnnotationExtractor(doc: Elem, ignore: Set[String]) {
 
   def fromElem(e: Node): Annotation = {
     val attrs = e.attributes.asAttrMap
-    Annotation((attrs("mu:b").toInt, attrs("mu:e").toInt), attrs.get("place"))
+    Annotation((attrs("mu:b").toInt, attrs("mu:e").toInt), attrs.get("place"), attrs - "mu:b" - "mu:e" - "place" - "xml:id" - "spanTo")
   }
 
   def fromMilestone(e: Node): ValidationNel[String, Option[Annotation]] = {
@@ -26,7 +26,8 @@ case class AnnotationExtractor(doc: Elem, ignore: Set[String]) {
       ).headOption.map { anchor =>
         Some(Annotation(
           (attrs("mu:b").toInt, anchor.attributes.asAttrMap("mu:b").toInt),
-          attrs.get("place")
+          attrs.get("place"),
+          attrs - "mu:b" - "mu:e" - "place" - "xml:id" - "spanTo"
         )).success
       }.getOrElse(
         if (ignore(spanTo.tail)) None.success

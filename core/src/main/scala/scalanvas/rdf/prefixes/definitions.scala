@@ -1,4 +1,4 @@
-package edu.umd.mith.scalanvas
+package edu.umd.mith.scalanvas.rdf.prefixes
 
 import org.w3.banana._
 
@@ -13,7 +13,18 @@ object DCElementsPrefix {
     new DCElementsPrefix[Rdf](ops)
 }
 
-/*class DCTypesPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
+class DCTermsPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
+  extends DCTPrefix[Rdf](ops) {
+  val conformsTo = apply("conformsTo")
+  val isPartOf = apply("isPartOf")
+}
+
+object DCTermsPrefix {
+  def apply[Rdf <: RDF](implicit ops: RDFOps[Rdf]) =
+    new DCTermsPrefix[Rdf](ops)
+}
+
+class DCTypesPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends PrefixBuilder("dct", "http://purl.org/dc/dcmitype/")(ops) {
   val Image = apply("Image")
 }
@@ -21,7 +32,7 @@ object DCElementsPrefix {
 object DCTypesPrefix {
   def apply[Rdf <: RDF](implicit ops: RDFOps[Rdf]) =
     new DCTypesPrefix[Rdf](ops)
-}*/
+}
 
 class ContentPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends PrefixBuilder("cnt", "http://www.w3.org/2011/content#")(ops) {
@@ -65,7 +76,7 @@ object OpenAnnotationExtensionPrefix {
     new OpenAnnotationExtensionPrefix[Rdf](ops)
 }
 
-/*class OrePrefix[Rdf <: RDF](ops: RDFOps[Rdf])
+class OREPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends PrefixBuilder("ore", "http://www.openarchives.org/ore/terms/")(ops) {
   val aggregates = apply("aggregates")
   val describes = apply("describes")
@@ -74,10 +85,10 @@ object OpenAnnotationExtensionPrefix {
   val ResourceMap = apply("ResourceMap")
 }
 
-object OrePrefix {
+object OREPrefix {
   def apply[Rdf <: RDF](implicit ops: RDFOps[Rdf]) =
-    new OrePrefix[Rdf](ops)
-}*/
+    new OREPrefix[Rdf](ops)
+}
 
 class TeiPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends PrefixBuilder("tei", "http://www.tei-c.org/ns/1.0/")(ops) {
@@ -105,9 +116,20 @@ class SharedCanvasPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   val Canvas = apply("Canvas")
   val Manifest = apply("Manifest")
   val Sequence = apply("Sequence")
+  val Range = apply("Range")
   val Zone = apply("Zone")
   val ContentAnnotation = apply("ContentAnnotation")
   val AnnotationList = apply("AnnotationList")
+  val Layer = apply("Layer")
+  val forMotivation = apply("forMotivation")
+  val hasRelatedService = apply("hasRelatedService")
+  val motivatedBy = apply("motivatedBy")
+  val painting = apply("painting")
+  val agentLabel = apply("agentLabel")
+  val dateLabel = apply("dateLabel")
+  val locationLabel = apply("locationLabel")
+  val attributionLabel = apply("attributionLabel")
+  val rightsLabel = apply("rightsLabel")
 }
 
 object SharedCanvasPrefix {
@@ -117,9 +139,16 @@ object SharedCanvasPrefix {
 
 class SgaPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends PrefixBuilder("sga", "http://www.shelleygodwinarchive.org/ns1#")(ops) {
+  val hasClass = apply("hasClass")
   val LineAnnotation = apply("LineAnnotation")
   val AdditionAnnotation = apply("AdditionAnnotation")
   val DeletionAnnotation = apply("DeletionAnnotation")
+  val reading = apply("reading")
+  val source = apply("source")
+  val shelfmarkLabel = apply("shelfmarkLabel")
+  val stateLabel = apply("stateLabel")
+  val handLabel = apply("handLabel")
+  val folioLabel = apply("folioLabel")
 }
 
 object SgaPrefix {

@@ -10,7 +10,24 @@ It's built on the [W3C](http://www.w3.org/)'s
 and uses [jsonld-java](https://github.com/jsonld-java/jsonld-java)
 for [JSON-LD](http://json-ld.org/) serialization.
 
-It includes (among other things)
+Setup
+-----
+
+Once you've checked out this repository, all you need is an installation
+of the Java Runtime Environment (version 6 or newer). Running `./sbt`
+and then typing `project scalanvas-core` in the console will load a shell
+that will allow you to interactively use these libraries.
+
+Usage
+-----
+
+See the [`edu.umd.mith.sga.frankenstein.Builder`](https://github.com/umd-mith/scalanvas/blob/master/core/src/main/scala/sga/frankenstein/builder.scala)
+object for sample usage. 
+
+Experimental
+------------
+
+This repository also includes
 [a demonstration](https://github.com/umd-mith/scalanvas/blob/master/generators/src/main/scala/generators/PrefixGenerator.scala)
 of how Scala 2.10's
 macro system can be used to parse RDF schemas at compile time to produce
