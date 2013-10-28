@@ -4,7 +4,6 @@ Scalanvas
 Scalanvas is a Scala library for creating
 [Shared Canvas](http://www.shared-canvas.org/)
 manifests from other document representations (TEI, etc.).
-
 It's built on the [W3C](http://www.w3.org/)'s
 [banana-rdf](https://github.com/w3c/banana-rdf) library,
 and uses [jsonld-java](https://github.com/jsonld-java/jsonld-java)
