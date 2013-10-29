@@ -20,23 +20,26 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
     case (key, values) => key -> values.size  
   }.withDefaultValue(0)
 
+  val topHeight = 0.05
+
   private def coords(current: String, past: List[String]) = (current, past) match {
-    case ("top", _) => Some((0.4, 0.0) -> (0.2, 0.05)).success
+    case ("top", _) => Some((0.4, 0.0) -> (0.2, topHeight)).success
     case ("pagination", _) =>
       //Some((0.8, 0.1) -> (0.1, 0.05)).success
-      Some((0.8, 0.0) -> (0.1, 0.05)).success
+      Some((0.8, 0.0) -> (0.1, topHeight)).success
     //case ("library", _) => Some((0.9, 0.10) -> (0.1, 0.05)).success
-    case ("library", _) => Some((0.9, 0.0) -> (0.1, 0.05)).success
+    case ("library", _) => Some((0.9, 0.0) -> (0.1, topHeight)).success
     case ("left_margin", past) =>
       val leftMarginCount = typeCounts("left_margin")
       val leftMarginIdx = past.count(_ == "left_margin")
+      //val blockHeight = 1 / leftMarginCount
       Some(
-        (0.0,  0.05 + 0.95 * (leftMarginIdx.toDouble / leftMarginCount)),
-        (0.25, 0.95 * (1.0 / leftMarginCount))
+        (0.0,  topHeight + (1 - topHeight) * (leftMarginIdx.toDouble / leftMarginCount)),
+        (0.25, (1 - topHeight) / leftMarginCount)
       ).success
     case ("main", _) if typeCounts("left_margin") == 0 =>
-      Some((0.0, 0.05) -> (1.0, 0.95)).success
-    case ("main", _) => Some((0.25, 0.05) -> (0.75, 0.95)).success
+      Some((0.125, topHeight) -> (0.875, 1 - topHeight)).success
+    case ("main", _) => Some((0.25, topHeight) -> (0.75, 1 - topHeight)).success
     case ("", _) => None.success
     case other => 
        "Unknown zone in %s: %s!".format(canvas.shelfmark, other).fail
