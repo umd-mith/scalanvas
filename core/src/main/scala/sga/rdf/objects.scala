@@ -72,9 +72,11 @@ trait ObjectBinders {
         }
 
         val Hand = "#(\\S+)".r
+        val BrokenHand = "(\\S+)".r
 
         val handClass = hand.flatMap {
           case Hand(hand) => Some(s"hand-$hand")
+          case BrokenHand(hand) => Some(s"hand-$hand")
           case _ => None
         }
 
@@ -107,9 +109,11 @@ trait ObjectBinders {
         }
 
         val Hand = "#(\\S+)".r
+        val BrokenHand = "(\\S+)".r
 
         val handClass = attrs.get("hand").flatMap {
           case Hand(hand) => Some(s"hand-$hand")
+          case BrokenHand(hand) => Some(s"hand-$hand")
           case _ => None
         }
 
