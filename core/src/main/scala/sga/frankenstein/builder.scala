@@ -44,7 +44,7 @@ object Builder extends App {
   )
 
   save(
-    new DraftManifest
+    new VolumeIManifest
       with FrankensteinConfiguration
       with BodleianImages
       with SgaTei
@@ -52,7 +52,15 @@ object Builder extends App {
   )
 
   save(
-    new FairCopyManifest
+    new VolumeIIManifest
+      with FrankensteinConfiguration
+      with BodleianImages
+      with SgaTei
+      with Cratylus
+  )
+
+  save(
+    new VolumeIIIManifest
       with FrankensteinConfiguration
       with BodleianImages
       with SgaTei

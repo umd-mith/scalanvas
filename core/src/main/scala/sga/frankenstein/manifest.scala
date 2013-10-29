@@ -29,49 +29,39 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
   val title = "Frankenstein"
 
   def label = id match {
-    case "ox-ms_abinger_c56" => "Draft Notebook A"
-    case "ox-ms_abinger_c57" => "Draft Notebook B"
-    case "ox-ms_abinger_c58a" => "Draft Notebook C1"
-    case "ox-ms_abinger_c58b" => "Draft Notebook C2"
-    case "ox-frankenstein_draft" => "Draft Manuscript in Final Sequence"
-    case "ox-frankenstein_faircopy" => "Fair-Copy Manuscript in Final Sequence"
+    case "ox-frankenstein-notebook_a" => "Draft Notebook A"
+    case "ox-frankenstein-notebook_b" => "Draft Notebook B"
+    case "ox-frankenstein-notebook_c1" => "Fair-Copy Notebook C1"
+    case "ox-frankenstein-notebook_c2" => "Fair-Copy Notebook C2"
+    case "ox-frankenstein-volume_i" => "Volume I Draft in Chapter Sequence"
+    case "ox-frankenstein-volume_ii" => "Volume I Draft in Chapter Sequence"
+    case "ox-frankenstein-volume_iii" => "Voume III Fair Copy in Chapter Sequence"
     case _ => throw new RuntimeException("Unknown identifier.")
   }
 
   override def state = Some(
     id match {
-      case "ox-ms_abinger_c58a"
-         | "ox-ms_abinger_c58b"
-         | "ox-frankenstein_faircopy" => "Fair copy"
+      case "ox-frankenstein-notebook_c1"
+         | "ox-frankenstein-notebook_c2"
+         | "ox-frankenstein-volume_iii" => "Fair copy"
       case _ => "Draft"
     }
   )
 
   override def date = Some(
     id match {
-      case "ox-ms_abinger_c56" => "[August or September]-[?December] 1816"
-      case "ox-ms_abinger_c57" => "[?December] 1816-April 1817"
-      case "ox-ms_abinger_c58a" => "18 April-[?13] May 1817"
-      case "ox-ms_abinger_c58b" => "18 April-[?13] May 1817"
-      case "ox-frankenstein_draft" => "1816-1817"
-      case "ox-frankenstein_faircopy" => "1817"
+      case "ox-frankenstein-notebook_a" => "[August or September]-[?December] 1816"
+      case "ox-frankenstein-notebook_b" => "[?December] 1816-April 1817"
+      case "ox-frankenstein-notebook_c1" => "18 April-[?13] May 1817"
+      case "ox-frankenstein-notebook_c2" => "18 April-[?13] May 1817"
+      case "ox-frankenstein-volume_i" => "1816-1817"
+      case "ox-frankenstein-volume_ii" => "1816-1817"
+      case "ox-frankenstein-volume_iii" => "1817"
       case id => throw new RuntimeException(s"Unknown identifier: $id!")
     }
   )
 
   import FrankensteinManifest.IdWithSeq
-
-  def toFileId(idWithSeq: String) = idWithSeq match {
-    case IdWithSeq("c58a", seq) => "ox-ms_abinger_c58-%s".format(seq)
-    case IdWithSeq("c58b", seq) => "ox-ms_abinger_c58-%04d".format(seq.toInt + 36)
-    case other => other
-  }
-
-  def fromFileId(fileIdWithSeq: String) = fileIdWithSeq match {
-    case IdWithSeq("c58", seq) if seq.toInt <= 36 => "ox-ms_abinger_c58a-%s".format(seq)
-    case IdWithSeq("c58", seq) => "ox-ms_abinger_c58b-%04d".format(seq.toInt - 36)
-    case other => other
-  }
 
   override val agent = Some("Mary Shelley")
   override val attribution = Some("Bodleian Library, University of Oxford")

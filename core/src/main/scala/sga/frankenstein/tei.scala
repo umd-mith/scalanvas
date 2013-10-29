@@ -10,7 +10,7 @@ import java.net.URI
 
 trait TeiManager {
   self: FrankensteinManifest with FrankensteinConfiguration =>
-  def parseTeiFile(idWithSeq: String): SgaCanvas = {
+  def parseTeiFile(idWithSeq: String, itemShelfmark: String, pageFolio: String): SgaCanvas = {
     import FrankensteinManifest.IdWithSeq
 
     val (fullId, pageSeq) = idWithSeq match {
@@ -20,9 +20,7 @@ trait TeiManager {
       )
     }
 
-    val (itemShelfmark, pageFolio) = shelfmarkMap(fullId)(pageSeq)
-
-    val file = new File(teiDir, toFileId(idWithSeq) + ".xml")
+    val file = new File(teiDir, idWithSeq + ".xml")
     val surface = XmlLabeler.addCharOffsets(XML.loadFile(file))
     val attrs = surface.attributes.asAttrMap
     val _uri = basePlus("/%s/canvas/%s".format(fullId, pageSeq))
@@ -30,8 +28,7 @@ trait TeiManager {
     val percyOnly =
       (surface \\ "handShift").toList.exists(
         _.attributes.asAttrMap.get("new").exists(_ == "#pbs")
-      ) && ! _uri.toString.endsWith("ox-ms_abinger_c58b/canvas/0011")
-
+      ) && !(fullId == "ox-ms_abinger_c58" && pageSeq == "0047")
 
     val (w, h) = adjustDimensions(attrs("lrx").toInt, attrs("lry").toInt) 
  
@@ -57,14 +54,14 @@ trait TeiManager {
         new URI(
           "http://%s/tei/ox/%s.xml".format(
             resolvableDomain,
-            toFileId(idWithSeq)
+            idWithSeq
           )
         ),
         "application/tei+xml"
       )
       override val hand = Some(
         if (percyOnly) "Percy Shelley" else {
-          if (_uri.toString.endsWith("ox-ms_abinger_c58b/canvas/0011"))
+          if (fullId == "ox-ms_abinger_c58" && pageSeq == "0047")
             "Mary Shelley and Percy Shelley"
           else {
             if ((surface \\ "@hand").exists(_.text == "#pbs"))

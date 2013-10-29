@@ -5,11 +5,12 @@ import edu.umd.mith.sga.model.SgaManifest
 import scala.io.Source
 
 trait ChapterMapReader { this: SgaManifest =>
+  private[this] val IdPattern = "ox-frankenstein-(volume_i{1,3})".r
+
   private[this] lazy val stream = getClass.getResourceAsStream(
     "/edu/umd/mith/sga/frankenstein/%s-chapters.txt".format(
       id match {
-        case "ox-frankenstein_draft" => "draft"
-        case "ox-frankenstein_faircopy" => "faircopy"
+        case IdPattern(volume) => volume
         case id => throw new RuntimeException(
           "No chapter map for %s!".format(id)
         )

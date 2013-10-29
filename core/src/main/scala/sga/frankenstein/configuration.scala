@@ -24,9 +24,7 @@ trait FrankensteinConfiguration { this: FrankensteinManifest =>
   // This should be the identifier for any Djatoka server, so I'm including
   // it here as a default, but it will need to be overridden in some cases.
   def constructImageUri(idWithSeq: String) = new URI(
-    "http://shelleygodwinarchive.org/images/ox/%s.jp2".format(
-      toFileId(idWithSeq)
-    )
+    "http://shelleygodwinarchive.org/images/ox/%s.jp2".format(idWithSeq)
   )
 }
 
@@ -41,10 +39,7 @@ trait BodleianImages { this: FrankensteinConfiguration =>
 
 trait SgaTei { this: FrankensteinConfiguration with FrankensteinManifest =>
   def constructReadingUri(idWithSeq: String) = new URI(
-    "http://%s/tei/readingTEI/html/%s.html".format(
-      resolvableDomain,
-      toFileId(idWithSeq)
-    )
+    "http://%s/tei/readingTEI/html/%s.html".format(resolvableDomain, idWithSeq)
   )
 }
 

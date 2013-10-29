@@ -92,7 +92,7 @@ trait ObjectBinders {
                 textOffsetSelection(canvas.source, attrs("mu:b").toInt, attrs("mu:e").toInt)
                   -- sga.hasClass ->- handClass.filter { _ =>
                     // This is a horrible hack.
-                    !canvas.uri.toString.endsWith("ox-ms_abinger_c58b/canvas/0011") || i > 5 
+                    !canvas.uri.toString.endsWith("ox-ms_abinger_c58/canvas/0047") || i > 5 
                   }
                   -- sga.textAlignment ->- attrs.get("rend").filterNot(_.startsWith("indent"))
                   -- sga.textIndentLevel ->- attrs.get("rend").filter(_.startsWith("indent")).map(_.drop(6).toInt)

@@ -7,18 +7,13 @@ trait PhysicalManifest extends FrankensteinManifest {
   this: FrankensteinConfiguration =>
   val ranges = Nil
 
-  private lazy val pages = shelfmarkMap.getOrElse(
-    id,
-    throw new RuntimeException(s"Invalid identifier: $id!")
-  ).toList.sorted
+  def firstIndex: Int
+  def pageCount: Int
+
+  private lazy val pages = shelfmarkMap.drop(firstIndex).take(pageCount)
 
   private lazy val canvases = pages.map {
-    case (pageSeq, (_, _)) => parseTeiFile(s"$id-$pageSeq")
-  }
-
-  override lazy val shelfmark = pages.map(_._2._1).distinct match {
-    case value :: Nil => Some(value)
-    case _ => throw new RuntimeException("Multiple shelfmarks!")
+    case (fileId, (shelfmark, folio)) => parseTeiFile(fileId, shelfmark, folio)
   }
 
   lazy val sequence = Sequence[SgaCanvas](
@@ -30,21 +25,29 @@ trait PhysicalManifest extends FrankensteinManifest {
 
 trait NotebookAManifest extends PhysicalManifest {
   this: FrankensteinConfiguration =>
-  val id = "ox-ms_abinger_c56"
+  val id = "ox-frankenstein-notebook_a"
+  val firstIndex = 0
+  val pageCount = 170
 }
 
 trait NotebookBManifest extends PhysicalManifest {
   this: FrankensteinConfiguration =>
-  val id = "ox-ms_abinger_c57"
+  val id = "ox-frankenstein-notebook_b"
+  val firstIndex = 170
+  val pageCount = 154
 }
 
 trait NotebookC1Manifest extends PhysicalManifest {
   this: FrankensteinConfiguration =>
-  val id = "ox-ms_abinger_c58a"
+  val id = "ox-frankenstein-notebook_c1"
+  val firstIndex = 324
+  val pageCount = 36 
 }
 
 trait NotebookC2Manifest extends PhysicalManifest {
   this: FrankensteinConfiguration =>
-  val id = "ox-ms_abinger_c58b"
+  val id = "ox-frankenstein-notebook_c2"
+  val firstIndex = 360
+  val pageCount = 26
 }
 

@@ -6,12 +6,12 @@ import edu.umd.mith.sga.model.SgaCanvas
 
 trait LogicalManifest extends FrankensteinManifest with ChapterMapReader {
   this: FrankensteinConfiguration =>
-  lazy val ranges = chapters.zipWithIndex.map {
+  lazy val ranges = chapters.filterNot(_._1 == "???").zipWithIndex.map {
     case ((title, pages), i) => Range(
       itemBasePlus("/range/%04d".format(i + 1)),
       title,
       pages.map {
-        case (idWithSeq, _, _) => parseTeiFile(idWithSeq)
+        case (idWithSeq, shelfmark, folio) => parseTeiFile(idWithSeq, shelfmark, folio)
       }
     )
   }
@@ -23,13 +23,18 @@ trait LogicalManifest extends FrankensteinManifest with ChapterMapReader {
   )
 }
 
-trait DraftManifest extends LogicalManifest {
+trait VolumeIManifest extends LogicalManifest {
   this: FrankensteinConfiguration =>
-  val id = "ox-frankenstein_draft"
+  val id = "ox-frankenstein-volume_i"
 }
 
-trait FairCopyManifest extends LogicalManifest {
+trait VolumeIIManifest extends LogicalManifest {
   this: FrankensteinConfiguration =>
-  val id = "ox-frankenstein_faircopy"
+  val id = "ox-frankenstein-volume_ii"
+}
+
+trait VolumeIIIManifest extends LogicalManifest {
+  this: FrankensteinConfiguration =>
+  val id = "ox-frankenstein-volume_iii"
 }
 
