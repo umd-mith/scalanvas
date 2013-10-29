@@ -14,6 +14,7 @@ class IndexManifest(manifest: SgaManifest) {
     "@id" := manifest.itemBasePlus("/Manifest-index.jsonld").toString,
     "@type" := "sc:Manifest",
     "attribution" := manifest.attribution,
+    "dc:title" := manifest.title, 
     "label" := manifest.label,
     "service" := relatedServiceString,
     "metadata" := List(
@@ -61,6 +62,7 @@ class IndexManifest(manifest: SgaManifest) {
       "label" := canvas.label,
       "width" := canvas.width,
       "height" := canvas.height,
+      "sga:hasTeiSource" := canvas.source.uri.toString,
       "service" := "%s#n=%d".format(relatedServiceString, i + 1)
     )
   }
