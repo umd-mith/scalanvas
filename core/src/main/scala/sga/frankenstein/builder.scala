@@ -12,6 +12,38 @@ import scalax.io.Resource
 
 object Builder extends App {
   save(
+    new NotebookAManifest
+      with FrankensteinConfiguration
+      with BodleianImages
+      with SgaTei
+      with Cratylus
+  )
+  
+  save(
+    new NotebookBManifest
+      with FrankensteinConfiguration
+      with BodleianImages
+      with SgaTei
+      with Cratylus
+  )
+
+  save(
+    new NotebookC1Manifest
+      with FrankensteinConfiguration
+      with BodleianImages
+      with SgaTei
+      with Cratylus
+  )
+
+  save(
+    new NotebookC2Manifest
+      with FrankensteinConfiguration
+      with BodleianImages
+      with SgaTei
+      with Cratylus
+  )
+
+  save(
     new DraftManifest
       with FrankensteinConfiguration
       with BodleianImages
