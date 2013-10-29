@@ -1,0 +1,171 @@
+???
+ox-ms_abinger_c56-0001		MS. Abinger c. 56, fol. i recto
+ox-ms_abinger_c56-0002		MS. Abinger c. 56, fol. i verso
+ox-ms_abinger_c56-0003		MS. Abinger c. 56, fol. ii recto
+ox-ms_abinger_c56-0004		MS. Abinger c. 56, fol. ii verso
+
+Volume I, Chapter 1
+ox-ms_abinger_c56-0011		MS. Abinger c. 56, fol. 4r
+ox-ms_abinger_c56-0012		MS. Abinger c. 56, fol. 4v
+ox-ms_abinger_c56-0013		MS. Abinger c. 56, fol. 5r # all but last 4 lines
+
+Volume I, Chapter 2
+ox-ms_abinger_c56-0005		MS. Abinger c. 56, fol. 1r
+ox-ms_abinger_c56-0006		MS. Abinger c. 56, fol. 1v
+ox-ms_abinger_c56-0007		MS. Abinger c. 56, fol. 2r
+ox-ms_abinger_c56-0008		MS. Abinger c. 56, fol. 2v
+ox-ms_abinger_c56-0009		MS. Abinger c. 56, fol. 3r # first 3 lines
+ox-ms_abinger_c56-0013		MS. Abinger c. 56, fol. 5r # last 4 lines
+ox-ms_abinger_c56-0014		MS. Abinger c. 56, fol. 5v
+ox-ms_abinger_c56-0015		MS. Abinger c. 56, fol. 6r # first half
+ox-ms_abinger_c56-0009		MS. Abinger c. 56, fol. 3r # all but first 3 lines
+ox-ms_abinger_c56-0010		MS. Abinger c. 56, fol. 3v
+ox-ms_abinger_c56-0015		MS. Abinger c. 56, fol. 6r # second half
+ox-ms_abinger_c56-0016		MS. Abinger c. 56, fol. 6v
+
+Volume I, Chapter 3
+ox-ms_abinger_c56-0017		MS. Abinger c. 56, fol. 7r
+ox-ms_abinger_c56-0018		MS. Abinger c. 56, fol. 7v
+ox-ms_abinger_c56-0019		MS. Abinger c. 56, fol. 8r
+ox-ms_abinger_c56-0020		MS. Abinger c. 56, fol. 8v
+ox-ms_abinger_c56-0021		MS. Abinger c. 56, fol. 9r
+ox-ms_abinger_c56-0022		MS. Abinger c. 56, fol. 9v
+ox-ms_abinger_c56-0023		MS. Abinger c. 56, fol. 10r
+
+Volume I, Chapter 4
+ox-ms_abinger_c56-0024		MS. Abinger c. 56, fol. 10v
+ox-ms_abinger_c56-0025		MS. Abinger c. 56, fol. 11r
+ox-ms_abinger_c56-0026		MS. Abinger c. 56, fol. 11v
+ox-ms_abinger_c56-0027		MS. Abinger c. 56, fol. 12r
+ox-ms_abinger_c56-0028		MS. Abinger c. 56, fol. 12v
+ox-ms_abinger_c56-0029		MS. Abinger c. 56, fol. 13r
+ox-ms_abinger_c56-0030		MS. Abinger c. 56, fol. 13v
+
+Volume I, Chapter 5
+ox-ms_abinger_c56-0031		MS. Abinger c. 56, fol. 14r
+ox-ms_abinger_c56-0032		MS. Abinger c. 56, fol. 14v
+ox-ms_abinger_c56-0033		MS. Abinger c. 56, fol. 15r
+ox-ms_abinger_c56-0034		MS. Abinger c. 56, fol. 15v
+ox-ms_abinger_c56-0035		MS. Abinger c. 56, fol. 16r
+ox-ms_abinger_c56-0036		MS. Abinger c. 56, fol. 16v
+ox-ms_abinger_c56-0037		MS. Abinger c. 56, fol. 17r
+
+Volume I, Chapter 6
+ox-ms_abinger_c56-0038		MS. Abinger c. 56, fol. 17v
+ox-ms_abinger_c56-0039		MS. Abinger c. 56, fol. 18r
+ox-ms_abinger_c56-0040		MS. Abinger c. 56, fol. 18v
+ox-ms_abinger_c56-0041		MS. Abinger c. 56, fol. 19r
+ox-ms_abinger_c56-0042		MS. Abinger c. 56, fol. 19v
+ox-ms_abinger_c56-0043		MS. Abinger c. 56, fol. 20r
+ox-ms_abinger_c56-0044		MS. Abinger c. 56, fol. 20v
+
+Volume I, Chapter 7A
+ox-ms_abinger_c56-0045		MS. Abinger c. 56, fol. 21r # missing
+ox-ms_abinger_c56-0046		MS. Abinger c. 56, fol. 21v # missing
+ox-ms_abinger_c56-0047		MS. Abinger c. 56, fol. 22r
+ox-ms_abinger_c56-0048		MS. Abinger c. 56, fol. 22v
+ox-ms_abinger_c56-0049		MS. Abinger c. 56, fol. 23r
+ox-ms_abinger_c56-0050		MS. Abinger c. 56, fol. 23v
+ox-ms_abinger_c56-0051		MS. Abinger c. 56, fol. 24r
+ox-ms_abinger_c56-0052		MS. Abinger c. 56, fol. 24v
+ox-ms_abinger_c56-0053		MS. Abinger c. 56, fol. 25r
+ox-ms_abinger_c56-0054		MS. Abinger c. 56, fol. 25v
+
+Volume I, Chapter 7B
+ox-ms_abinger_c56-0055		MS. Abinger c. 56, fol. 26r
+ox-ms_abinger_c56-0056		MS. Abinger c. 56, fol. 26v
+ox-ms_abinger_c56-0057		MS. Abinger c. 56, fol. 27r
+ox-ms_abinger_c56-0058		MS. Abinger c. 56, fol. 27v
+ox-ms_abinger_c56-0059		MS. Abinger c. 56, fol. 28a recto
+ox-ms_abinger_c56-0060		MS. Abinger c. 56, fol. 28a verso
+ox-ms_abinger_c56-0061		MS. Abinger c. 56, fol. 28b recto
+ox-ms_abinger_c56-0062		MS. Abinger c. 56, fol. 28b verso
+ox-ms_abinger_c56-0063		MS. Abinger c. 56, fol. 29r
+ox-ms_abinger_c56-0064		MS. Abinger c. 56, fol. 29v
+ox-ms_abinger_c56-0065		MS. Abinger c. 56, fol. 30r
+
+Volume I, Chapter 8
+ox-ms_abinger_c56-0066		MS. Abinger c. 56, fol. 30v
+ox-ms_abinger_c56-0067		MS. Abinger c. 56, fol. 31r
+ox-ms_abinger_c56-0068		MS. Abinger c. 56, fol. 31v
+ox-ms_abinger_c56-0069		MS. Abinger c. 56, fol. 32r
+ox-ms_abinger_c56-0070		MS. Abinger c. 56, fol. 32v
+ox-ms_abinger_c56-0071		MS. Abinger c. 56, fol. 33r
+ox-ms_abinger_c56-0072		MS. Abinger c. 56, fol. 33v
+
+Volume I, Chapter 9
+ox-ms_abinger_c56-0073		MS. Abinger c. 56, fol. 34r
+ox-ms_abinger_c56-0074		MS. Abinger c. 56, fol. 34v
+ox-ms_abinger_c56-0075		MS. Abinger c. 56, fol. 35r
+ox-ms_abinger_c56-0076		MS. Abinger c. 56, fol. 35v
+ox-ms_abinger_c56-0077		MS. Abinger c. 56, fol. 36r
+ox-ms_abinger_c56-0078		MS. Abinger c. 56, fol. 36v
+ox-ms_abinger_c56-0079		MS. Abinger c. 56, fol. 37r
+ox-ms_abinger_c56-0080		MS. Abinger c. 56, fol. 37v
+
+Volume I, Chapter 10
+ox-ms_abinger_c56-0081		MS. Abinger c. 56, fol. 38r
+ox-ms_abinger_c56-0082		MS. Abinger c. 56, fol. 38v
+ox-ms_abinger_c56-0083		MS. Abinger c. 56, fol. 39r
+ox-ms_abinger_c56-0084		MS. Abinger c. 56, fol. 39v
+ox-ms_abinger_c56-0085		MS. Abinger c. 56, fol. 40r
+ox-ms_abinger_c56-0086		MS. Abinger c. 56, fol. 40v
+ox-ms_abinger_c56-0087		MS. Abinger c. 56, fol. 41r
+ox-ms_abinger_c56-0088		MS. Abinger c. 56, fol. 41v
+ox-ms_abinger_c56-0089		MS. Abinger c. 56, fol. 42r
+
+Volume I, Chapter 11
+ox-ms_abinger_c56-0090		MS. Abinger c. 56, fol. 42v
+ox-ms_abinger_c56-0091		MS. Abinger c. 56, fol. 43r
+ox-ms_abinger_c56-0092		MS. Abinger c. 56, fol. 43v
+ox-ms_abinger_c56-0093		MS. Abinger c. 56, fol. 44r
+ox-ms_abinger_c56-0094		MS. Abinger c. 56, fol. 44v
+ox-ms_abinger_c56-0095		MS. Abinger c. 56, fol. 45r
+ox-ms_abinger_c56-0096		MS. Abinger c. 56, fol. 45v
+ox-ms_abinger_c56-0097		MS. Abinger c. 56, fol. 46r
+ox-ms_abinger_c56-0098		MS. Abinger c. 56, fol. 46v
+ox-ms_abinger_c56-0099		MS. Abinger c. 56, fol. 47r
+
+Volume I, Chapter 12
+ox-ms_abinger_c56-0100		MS. Abinger c. 56, fol. 47v
+ox-ms_abinger_c56-0101		MS. Abinger c. 56, fol. 48r
+ox-ms_abinger_c56-0102		MS. Abinger c. 56, fol. 48v
+ox-ms_abinger_c56-0103		MS. Abinger c. 56, fol. 49r
+ox-ms_abinger_c56-0104		MS. Abinger c. 56, fol. 49v
+ox-ms_abinger_c56-0105		MS. Abinger c. 56, fol. 50r
+ox-ms_abinger_c56-0106		MS. Abinger c. 56, fol. 50v
+ox-ms_abinger_c56-0107		MS. Abinger c. 56, fol. 51r
+
+Volume I, Chapter 13
+ox-ms_abinger_c56-0108		MS. Abinger c. 56, fol. 51v
+ox-ms_abinger_c56-0109		MS. Abinger c. 56, fol. 52r
+ox-ms_abinger_c56-0110		MS. Abinger c. 56, fol. 52v
+ox-ms_abinger_c56-0111		MS. Abinger c. 56, fol. 53r
+ox-ms_abinger_c56-0112		MS. Abinger c. 56, fol. 53v
+ox-ms_abinger_c56-0113		MS. Abinger c. 56, fol. 54r
+ox-ms_abinger_c56-0114		MS. Abinger c. 56, fol. 54v
+ox-ms_abinger_c56-0115		MS. Abinger c. 56, fol. 55r
+ox-ms_abinger_c56-0116		MS. Abinger c. 56, fol. 55v
+ox-ms_abinger_c56-0117		MS. Abinger c. 56, fol. 56r
+ox-ms_abinger_c56-0118		MS. Abinger c. 56, fol. 56v
+
+Volume I, Chapter 14
+ox-ms_abinger_c56-0119		MS. Abinger c. 56, fol. 57r
+ox-ms_abinger_c56-0120		MS. Abinger c. 56, fol. 57v
+ox-ms_abinger_c56-0121		MS. Abinger c. 56, fol. 58r
+ox-ms_abinger_c56-0122		MS. Abinger c. 56, fol. 58v
+ox-ms_abinger_c56-0123		MS. Abinger c. 56, fol. 59r
+ox-ms_abinger_c56-0124		MS. Abinger c. 56, fol. 59v
+ox-ms_abinger_c56-0125		MS. Abinger c. 56, fol. 60r
+ox-ms_abinger_c56-0126		MS. Abinger c. 56, fol. 60v
+ox-ms_abinger_c56-0127		MS. Abinger c. 56, fol. 61r
+ox-ms_abinger_c56-0128		MS. Abinger c. 56, fol. 61v
+ox-ms_abinger_c56-0129		MS. Abinger c. 56, fol. 62r
+ox-ms_abinger_c56-0130		MS. Abinger c. 56, fol. 62v
+
+???
+ox-ms_abinger_c56-0131		MS. Abinger c. 56, fol. 63r
+ox-ms_abinger_c56-0132		MS. Abinger c. 56, fol. 63v
+ox-ms_abinger_c56-0133		MS. Abinger c. 56, fol. 64r
+ox-ms_abinger_c56-0134		MS. Abinger c. 56, fol. 64v
+
