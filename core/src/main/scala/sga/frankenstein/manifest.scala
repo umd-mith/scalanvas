@@ -20,9 +20,20 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
     "http://%s/data/ox".format(domain) 
   )
 
+  val ServicePattern = """ox-frankenstein-([^_]+)_(.+)""".r
+
   def service = Some(
     Service(
-      new URI("http://%s/sc/ox/%s".format(resolvableDomain, id))
+      id match {
+        case ServicePattern(group, item) =>
+          new URI(
+            "http://%s/sc/oxford/frankenstein/%s/%s".format(
+              resolvableDomain,
+              group,
+              item
+            )
+          )
+      }
     )
   )
 
@@ -34,7 +45,7 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
     case "ox-frankenstein-notebook_c1" => "Fair-Copy Notebook C1"
     case "ox-frankenstein-notebook_c2" => "Fair-Copy Notebook C2"
     case "ox-frankenstein-volume_i" => "Volume I Draft in Chapter Sequence"
-    case "ox-frankenstein-volume_ii" => "Volume I Draft in Chapter Sequence"
+    case "ox-frankenstein-volume_ii" => "Volume II Draft in Chapter Sequence"
     case "ox-frankenstein-volume_iii" => "Voume III Fair Copy in Chapter Sequence"
     case _ => throw new RuntimeException("Unknown identifier.")
   }
