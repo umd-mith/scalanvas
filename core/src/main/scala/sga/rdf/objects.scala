@@ -83,6 +83,15 @@ trait ObjectBinders {
         val lines = (canvas.transcription \\ "line").toList.zipWithIndex.map { case (line, i) =>
           val attrs = line.attributes.asAttrMap
 
+          val inLibraryZone = (canvas.transcription \\ "zone").filter(
+            _.attributes.asAttrMap("type") == "library"
+          ).flatMap(_ \\ "line").contains(line)
+
+          val libraryHand = inLibraryZone match {
+            case true => Some("hand-library")
+            case false => None
+          }
+
           (
             URI(canvas.uri.toString + "/line-annotations/%04d".format(i + 1))
               .a(oa.Annotation)
@@ -90,10 +99,12 @@ trait ObjectBinders {
               .a(oax.Highlight)
               -- oa.hasTarget ->- (
                 textOffsetSelection(canvas.source, attrs("mu:b").toInt, attrs("mu:e").toInt)
-                  -- sga.hasClass ->- handClass.filter { _ =>
-                    // This is a horrible hack.
-                    !canvas.uri.toString.endsWith("ox-ms_abinger_c58/canvas/0047") || i > 5 
-                  }
+                  -- sga.hasClass ->- libraryHand.orElse(
+                    handClass.filter { _ =>
+                      // This is a horrible hack.
+                      !canvas.uri.toString.endsWith("ox-ms_abinger_c58/canvas/0047") || i > 5 
+                    }
+                  )
               )
               -- sga.textAlignment ->- attrs.get("rend").filterNot(_.startsWith("indent"))
               -- sga.textIndentLevel ->- attrs.get("rend").filter(_.startsWith("indent")).map(_.drop(6).toInt)
