@@ -10,8 +10,12 @@ import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
+trait Cratylus { this: FrankensteinConfiguration =>
+  val teiDir = new File("/home/travis/code/projects/sg-data/data/tei/ox/")
+}
+
 object DevelopmentBuilder extends Builder with App {
-  val outputDir = new File("output", "development")
+  val outputDir = new File(new File("output", "development"), "primary")
 
   trait Dev extends FrankensteinConfiguration
     with DevelopmentConfiguration

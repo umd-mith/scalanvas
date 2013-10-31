@@ -71,7 +71,3 @@ trait SgaTei { this: FrankensteinConfiguration with FrankensteinManifest =>
   )
 }
 
-trait Cratylus { this: FrankensteinConfiguration =>
-  val teiDir = new File("/home/travis/code/projects/sg-data/data/tei/ox/")
-}
-
