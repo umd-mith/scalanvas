@@ -21,7 +21,44 @@ Usage
 -----
 
 See the [`edu.umd.mith.sga.frankenstein.Builder`](https://github.com/umd-mith/scalanvas/blob/master/core/src/main/scala/sga/frankenstein/builder.scala)
-object for sample usage. 
+object for sample programmatic usage.
+
+Temporary Shelley-Godwin Archive Manifest Generation Instructions
+-----------------------------------------------------------------
+
+If you just need to build the Shelley-Godwin Archive manifests,
+see the `builder.scala` file linked in the preceding subsection.
+At the top of this file you'll find a configuration trait with
+a local path to the Shelley-Godwin Archive TEI files. Change the
+value of this path to match the location on your local system.
+
+After making this change, run `./sbt` to launch the SBT console.
+At the prompt, run `project scalanvas-core`, and then `run`. You'll
+be asked whether you want the development or production manifests:
+
+```
+> run
+
+Multiple main classes detected, select one to run:
+
+[1] edu.umd.mith.sga.frankenstein.DevelopmentBuilder
+[2] edu.umd.mith.sga.frankenstein.ProductionBuilder
+
+Enter number:
+```
+
+Type `1` or `2` as appropriate and hit enter. After a few minutes you'll have your
+files in the `./output` directory.
+
+For production we want to compact the JSON by removing unnecessary
+whitespace and then compress the files with Gzip to allow Nginx to
+avoid compressing the files on every request. This process is taken
+care of by the `scripts/compact.sh` script, which you can run from the
+project root, and which will give you a `compact.tgz` file ready for
+deployment.
+
+I know this process is a mess, but we're under the gun, and it'll be
+easy to streamline in the near future.
 
 Experimental
 ------------
