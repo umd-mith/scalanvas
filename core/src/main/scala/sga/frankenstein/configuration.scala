@@ -44,10 +44,16 @@ trait BodleianImages { this: FrankensteinConfiguration =>
 trait MithDjatokaImages { this: FrankensteinConfiguration =>
   def imageService = Some(
     Service(
-      new URI("http://50.17.196.83:8080/adore-djatoka/resolver"),
+      new URI("http://sga.mith.org:8080/adore-djatoka/resolver"),
       Some(new URI("http://sourceforge.net/projects/djatoka/"))
     )
   )
+
+  override def constructImageUri(idWithSeq: String) = new URI(
+    "http://sga.mith.org/images/jp2/%s.jp2".format(idWithSeq)
+  )
+
+  override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)
 }
 
 trait MithStaticImages { this: FrankensteinConfiguration =>
@@ -55,6 +61,8 @@ trait MithStaticImages { this: FrankensteinConfiguration =>
   override def constructImageUri(idWithSeq: String) = new URI(
     "http://shelleygodwinarchive.org/images/ox/%s.jpg".format(idWithSeq)
   )
+
+  override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)
 }
 
 trait SgaTei { this: FrankensteinConfiguration with FrankensteinManifest =>
