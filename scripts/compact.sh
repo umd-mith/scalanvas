@@ -3,8 +3,9 @@ do
   mkdir -p 'compact/'${dir#output/}
   for file in $dir/*
   do
-    echo $file
+    echo 'compact/'${file#output/}
     jq -c '.' $file > 'compact/'${file#output/}
+    gzip -k 'compact/'${file#output/}
   done
 done
 
