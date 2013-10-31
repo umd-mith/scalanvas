@@ -10,65 +10,62 @@ import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
-object Builder extends App {
-  save(
-    new NotebookAManifest
-      with FrankensteinConfiguration
-      with BodleianImages
-      with SgaTei
-      with Cratylus
-  )
+object DevelopmentBuilder extends Builder with App {
+  val outputDir = new File("output", "development")
+
+  trait Dev extends FrankensteinConfiguration
+    with DevelopmentConfiguration
+    with BodleianImages
+    with SgaTei
+    with Cratylus { this: FrankensteinManifest => }
+
+  save(new NotebookAManifest with Dev, outputDir)
+  save(new NotebookBManifest with Dev, outputDir)
+  save(new NotebookC1Manifest with Dev, outputDir)
+  save(new NotebookC2Manifest with Dev, outputDir)
+  save(new VolumeIManifest with Dev, outputDir)
+  save(new VolumeIIManifest with Dev, outputDir)
+  save(new VolumeIIIManifest with Dev, outputDir)
+}
+
+object ProductionBuilder extends Builder with App {
+  val outputDir = new File("output", "production")
   
-  save(
-    new NotebookBManifest
-      with FrankensteinConfiguration
-      with BodleianImages
-      with SgaTei
-      with Cratylus
-  )
+  trait Production extends FrankensteinConfiguration
+    with SgaTei
+    with Cratylus { this: FrankensteinManifest => }
 
-  save(
-    new NotebookC1Manifest
-      with FrankensteinConfiguration
-      with BodleianImages
-      with SgaTei
-      with Cratylus
-  )
+  val primaryOutputDir = new File(outputDir, "primary")
+  save(new NotebookAManifest with Production with BodleianImages, primaryOutputDir)
+  save(new NotebookBManifest with Production with BodleianImages, primaryOutputDir)
+  save(new NotebookC1Manifest with Production with BodleianImages, primaryOutputDir)
+  save(new NotebookC2Manifest with Production with BodleianImages, primaryOutputDir)
+  save(new VolumeIManifest with Production with BodleianImages, primaryOutputDir)
+  save(new VolumeIIManifest with Production with BodleianImages, primaryOutputDir)
+  save(new VolumeIIIManifest with Production with BodleianImages, primaryOutputDir)
 
-  save(
-    new NotebookC2Manifest
-      with FrankensteinConfiguration
-      with BodleianImages
-      with SgaTei
-      with Cratylus
-  )
+  val secondaryOutputDir = new File(outputDir, "fallback")
+  save(new NotebookAManifest with Production with MithDjatokaImages, secondaryOutputDir)
+  save(new NotebookBManifest with Production with MithDjatokaImages, secondaryOutputDir)
+  save(new NotebookC1Manifest with Production with MithDjatokaImages, secondaryOutputDir)
+  save(new NotebookC2Manifest with Production with MithDjatokaImages, secondaryOutputDir)
+  save(new VolumeIManifest with Production with MithDjatokaImages, secondaryOutputDir)
+  save(new VolumeIIManifest with Production with MithDjatokaImages, secondaryOutputDir)
+  save(new VolumeIIIManifest with Production with MithDjatokaImages, secondaryOutputDir)
 
-  save(
-    new VolumeIManifest
-      with FrankensteinConfiguration
-      with BodleianImages
-      with SgaTei
-      with Cratylus
-  )
+  val staticOutputDir = new File(outputDir, "fallback-static")
+  save(new NotebookAManifest with Production with MithStaticImages, staticOutputDir)
+  save(new NotebookBManifest with Production with MithStaticImages, staticOutputDir)
+  save(new NotebookC1Manifest with Production with MithStaticImages, staticOutputDir)
+  save(new NotebookC2Manifest with Production with MithStaticImages, staticOutputDir)
+  save(new VolumeIManifest with Production with MithStaticImages, staticOutputDir)
+  save(new VolumeIIManifest with Production with MithStaticImages, staticOutputDir)
+  save(new VolumeIIIManifest with Production with MithStaticImages, staticOutputDir)
+}
 
-  save(
-    new VolumeIIManifest
-      with FrankensteinConfiguration
-      with BodleianImages
-      with SgaTei
-      with Cratylus
-  )
-
-  save(
-    new VolumeIIIManifest
-      with FrankensteinConfiguration
-      with BodleianImages
-      with SgaTei
-      with Cratylus
-  )
-
-  def save(manifest: SgaManifest) = {
-    val dir = new File("output", manifest.id)
+trait Builder {
+  def save(manifest: SgaManifest, outputDir: File) = {
+    val dir = new File(outputDir, manifest.id)
     dir.mkdirs
 
     val output = new File(dir, "Manifest.json")

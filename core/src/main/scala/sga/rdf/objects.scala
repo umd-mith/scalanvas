@@ -102,7 +102,7 @@ trait ObjectBinders {
                   -- sga.hasClass ->- libraryHand.orElse(
                     handClass.filter { _ =>
                       // This is a horrible hack.
-                      !canvas.uri.toString.endsWith("ox-ms_abinger_c58/canvas/0047") || i > 5 
+                      !canvas.uri.toString.endsWith("ox-ms_abinger_c58/canvas/0047") || i > 7 
                     }
                   )
               )

@@ -6,7 +6,7 @@ import java.io.File
 import java.net.URI
 
 trait FrankensteinConfiguration { this: FrankensteinManifest =>
-  def development: Boolean = true
+  def development: Boolean = false
   def teiDir: File
   def constructReadingUri(idWithSeq: String): URI
   def imageService: Option[Service]
@@ -28,12 +28,32 @@ trait FrankensteinConfiguration { this: FrankensteinManifest =>
   )
 }
 
+trait DevelopmentConfiguration { this: FrankensteinConfiguration =>
+  override def development = true
+}
+
 trait BodleianImages { this: FrankensteinConfiguration =>
   def imageService = Some(
     Service(
       new URI("http://tiles2.bodleian.ox.ac.uk:8080/adore-djatoka/resolver"),
       Some(new URI("http://sourceforge.net/projects/djatoka/"))
     )
+  )
+}
+
+trait MithDjatokaImages { this: FrankensteinConfiguration =>
+  def imageService = Some(
+    Service(
+      new URI("http://50.17.196.83:8080/adore-djatoka/resolver"),
+      Some(new URI("http://sourceforge.net/projects/djatoka/"))
+    )
+  )
+}
+
+trait MithStaticImages { this: FrankensteinConfiguration =>
+  def imageService = None
+  override def constructImageUri(idWithSeq: String) = new URI(
+    "http://shelleygodwinarchive.org/images/ox/%s.jpg".format(idWithSeq)
   )
 }
 
