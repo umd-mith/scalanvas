@@ -48,7 +48,8 @@ object Scalanvas extends Build {
     ),
     libraryDependencies <++= scalaVersion(sv => Seq(
       "org.slf4j" % "slf4j-simple" % "1.6.4",
-      "io.argonaut" %% "argonaut" % "6.0"
+      "io.argonaut" %% "argonaut" % "6.0",
+      "no.arktekk" % "anti-xml_2.10" % "0.5.1"
     ))
   )
 }

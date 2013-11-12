@@ -130,6 +130,7 @@ class SharedCanvasPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   val locationLabel = apply("locationLabel")
   val attributionLabel = apply("attributionLabel")
   val rightsLabel = apply("rightsLabel")
+  val hasCanvases = apply("hasCanvases")
 }
 
 object SharedCanvasPrefix {
@@ -137,7 +138,7 @@ object SharedCanvasPrefix {
     new SharedCanvasPrefix[Rdf](ops)
 }
 
-class SgaPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
+/*class SgaPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends PrefixBuilder("sga", "http://www.shelleygodwinarchive.org/ns1#")(ops) {
   val hasClass = apply("hasClass")
   val LineAnnotation = apply("LineAnnotation")
@@ -154,7 +155,7 @@ class SgaPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
 object SgaPrefix {
   def apply[Rdf <: RDF](implicit ops: RDFOps[Rdf]) =
     new SgaPrefix[Rdf](ops)
-}
+}*/
 
 class DmsPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends PrefixBuilder("dms", "http://dms.stanford.edu/ns/")(ops) {
