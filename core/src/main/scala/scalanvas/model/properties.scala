@@ -1,7 +1,6 @@
 package edu.umd.mith.scalanvas.model
 
 import java.net.URI
-import scala.xml.Elem
 
 trait Resource {
   def muri: Option[URI]
