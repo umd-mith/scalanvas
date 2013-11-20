@@ -194,7 +194,7 @@ trait ObjectBinders {
             -- dc.title ->- manifest.title
             -- rdfs.label ->- manifest.label
             -- tei.idno ->- manifest.id
-            -- sc.hasSequences ->- List(manifest.sequence)
+            //-- sc.hasSequences ->- List(manifest.sequence)
             -- sc.hasCanvases ->- manifest.sequence.canvases
             -- ore.aggregates ->- manifest.sequence
             -- ore.aggregates ->- (
