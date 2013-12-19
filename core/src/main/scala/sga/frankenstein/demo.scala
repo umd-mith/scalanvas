@@ -17,7 +17,6 @@ object JsonLdDemoBuilder extends JsonLdBuilder with App {
   val outputDir = new File("jsonld-demo")
 
   trait Dev extends FrankensteinConfiguration
-    with DevelopmentConfiguration
     with BodleianImages
     with SgaTei
     with Cratylus { this: FrankensteinManifest => }

@@ -211,6 +211,7 @@ trait ObjectBinders {
                     .a(oa.Annotation)
                     -- oa.hasTarget ->- canvas
                     -- oa.hasBody ->- canvas.reading
+                    -- sc.motivatedBy ->- sga.reading
                 )
               }
             ) 

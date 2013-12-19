@@ -1,6 +1,7 @@
 
 {"@context": 
   	{
+      "@base": "http://shelleygodwinarchive.org/",
   		"sc":         "http://www.shared-canvas.org/ns/",
       "sga":        "http://www.shelleygodwinarchive.org/ns1#",
       "ore":        "http://www.openarchives.org/ore/terms/",
