@@ -11,7 +11,7 @@ import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
 trait Cratylus { this: FrankensteinConfiguration =>
-  val teiDir = new File("/home/travis/code/projects/sg-data/data/tei/ox/")
+  val teiDir = new File("/home/rviglian/Projects/wman/wwa/cocoon/target/rcl/webapp/xml/processed/")
 }
 
 object DevelopmentBuilder extends Builder with App {
@@ -23,13 +23,14 @@ object DevelopmentBuilder extends Builder with App {
     with SgaTei
     with Cratylus { this: FrankensteinManifest => }
 
-  save(new NotebookAManifest with Dev, outputDir)
-  save(new NotebookBManifest with Dev, outputDir)
-  save(new NotebookC1Manifest with Dev, outputDir)
-  save(new NotebookC2Manifest with Dev, outputDir)
-  save(new VolumeIManifest with Dev, outputDir)
-  save(new VolumeIIManifest with Dev, outputDir)
-  save(new VolumeIIIManifest with Dev, outputDir)
+  // save(new NotebookAManifest with Dev, outputDir)
+  // save(new NotebookBManifest with Dev, outputDir)
+  // save(new NotebookC1Manifest with Dev, outputDir)
+  // save(new NotebookC2Manifest with Dev, outputDir)
+  // save(new VolumeIManifest with Dev, outputDir)
+  // save(new VolumeIIManifest with Dev, outputDir)
+  // save(new VolumeIIIManifest with Dev, outputDir)
+  save(new LessingManifest with Dev, outputDir)
 }
 
 object ProductionBuilder extends Builder with App {

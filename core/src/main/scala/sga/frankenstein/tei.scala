@@ -14,7 +14,7 @@ trait TeiManager {
     import FrankensteinManifest.IdWithSeq
 
     val (fullId, pageSeq) = idWithSeq match {
-      case IdWithSeq(itemId, seq) => ("ox-ms_abinger_" + itemId, seq)
+      case IdWithSeq(itemId, seq) => (itemId, seq)
       case itemIdWithSeq => throw new RuntimeException(
         s"Invalid identifier: $itemIdWithSeq!"
       )

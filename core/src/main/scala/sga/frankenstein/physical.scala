@@ -23,6 +23,13 @@ trait PhysicalManifest extends FrankensteinManifest {
   )
 }
 
+trait LessingManifest extends PhysicalManifest {
+  this: FrankensteinConfiguration =>
+  val id = "duk.00055"
+  val firstIndex = 0
+  val pageCount = 6
+}
+
 trait NotebookAManifest extends PhysicalManifest {
   this: FrankensteinConfiguration =>
   val id = "ox-frankenstein-notebook_a"
