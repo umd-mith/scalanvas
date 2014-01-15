@@ -55,14 +55,15 @@ trait Helpers {
       def aggregates[A](aggregated: List[A])(implicit
         aToPG: ToPG[Rdf, A]
       ) = aggregated match {
-        case h :: t =>
-          aggregated.foldLeft(
-            g.a(rdf.List).a(ore.Aggregation)
+        case h :: t => (
+          //aggregated.foldLeft(
+            g.a(rdf.List) //.a(ore.Aggregation)
               -- rdf.first ->- h
               -- rdf.rest ->- t
-            ) {
-              case (acc, item) => acc -- ore.aggregates ->- item 
-          }
+        )
+          //  ) {
+          //    case (acc, item) => acc -- ore.aggregates ->- item 
+          //}
         case Nil => g
       }
     }

@@ -1,5 +1,6 @@
 package edu.umd.mith.sga.frankenstein
 
+import com.github.jsonldjava.utils.JSONUtils
 import org.w3.banana._
 import org.w3.banana.syntax._
 import edu.umd.mith.sga.model.SgaManifest
@@ -11,7 +12,7 @@ import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
 trait Cratylus { this: FrankensteinConfiguration =>
-  val teiDir = new File("/home/rviglian/Projects/wman/wwa/cocoon/target/rcl/webapp/xml/processed/")
+  val teiDir = new File("/home/travis/code/projects/scalanvas-new/tmp/processed/")
 }
 
 object DevelopmentBuilder extends Builder with App {
@@ -73,25 +74,26 @@ trait Builder {
     val dir = new File(outputDir, manifest.id)
     dir.mkdirs
 
-    val output = new File(dir, "Manifest.json")
+    val output = new File(dir, "Manifest.jsonld")
     if (output.exists) output.delete()
 
-    val indexOutput = new File(dir, "Manifest-index.jsonld")
-    if (indexOutput.exists) indexOutput.delete()
+    implicit object MSOContext extends JsonLDContext[java.util.Map[String, Object]] {
+      def toMap(ctx: java.util.Map[String, Object]) = ctx
+    }
 
-    val writer = RDFWriter[Rdf, RDFJson]
-    val indexWriter = new PrintWriter(indexOutput)
-
-    val indexManifest = new IndexManifest(manifest)
+    val writer = new JsonLDWriter[java.util.Map[String, Object]] {
+      val context = JSONUtils.fromString(
+        io.Source.fromInputStream(
+          getClass.getResourceAsStream("/edu/umd/mith/scalanvas/context.json")
+        ).mkString
+      ).asInstanceOf[java.util.Map[String, Object]]
+    }
 
     writer.write(
       manifest.jsonResource.toPG[Rdf].graph,
       Resource.fromFile(output),
       manifest.base.toString
     )
-
-    indexWriter.println(indexManifest.toJsonLd.spaces2)
-    indexWriter.close()
   }
 }
 

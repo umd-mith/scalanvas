@@ -43,7 +43,7 @@ trait ObjectBinders {
       override def toPG(canvas: SgaCanvas) = (
         super.toPG(canvas)
           .a(sc.Canvas)
-          .a(dms.Canvas)
+          //.a(dms.Canvas)
       )
     }
 
@@ -172,14 +172,29 @@ trait ObjectBinders {
       }
 
       override def toPG(manifest: SgaManifest) = {
+        val imageAnnotations =
+          manifest.sequence.canvases.flatMap { canvas =>
+            canvas.images.map { image =>
+              (
+                bnode()
+                //manifest.itemBasePlus("/image-annotations/" + canvas.seq).toUri
+                  .a(oa.Annotation)
+                  //.a(dms.ImageAnnotation)
+                  -- oa.hasTarget ->- canvas
+                  -- oa.hasBody ->- image
+              )
+            }
+          }
+
         val rangeless = ( 
           super.toPG(manifest)
             .a(sc.Manifest)
-            .a(dms.Manifest)
+            //.a(dms.Manifest)
             .a(ore.Aggregation)
             -- dc.title ->- manifest.title
             -- rdfs.label ->- manifest.label
             -- tei.idno ->- manifest.id
+            //-- sc.hasSequences ->- List(manifest.sequence)
             -- sc.hasCanvases ->- manifest.sequence.canvases
             -- ore.aggregates ->- manifest.sequence
             -- ore.aggregates ->- (
@@ -196,6 +211,7 @@ trait ObjectBinders {
                     .a(oa.Annotation)
                     -- oa.hasTarget ->- canvas
                     -- oa.hasBody ->- canvas.reading
+                    -- sc.motivatedBy ->- sga.reading
                 )
               }
             ) 
@@ -216,25 +232,13 @@ trait ObjectBinders {
                 )
               }
             )
+            -- sc.hasImageAnnotations ->- (imageAnnotations)
             -- ore.aggregates ->- (
               manifest.itemBasePlus("/image-annotations").toUri
                 .a(sc.AnnotationList)
-                .a(dms.ImageAnnotationList)
+                //.a(dms.ImageAnnotationList)
                 -- sc.forMotivation ->- sc.painting
-            ).aggregates(
-              manifest.sequence.canvases.flatMap { canvas =>
-                canvas.images.map { image =>
-                  (
-                    bnode()
-                    //manifest.itemBasePlus("/image-annotations/" + canvas.seq).toUri
-                      .a(oa.Annotation)
-                      .a(dms.ImageAnnotation)
-                      -- oa.hasTarget ->- canvas
-                      -- oa.hasBody ->- image
-                  )
-                }
-              }
-            )
+            ).aggregates(imageAnnotations)
             -- ore.aggregates ->- (
               manifest.itemBasePlus("/zone-annotations").toUri
                 .a(sc.AnnotationList)
