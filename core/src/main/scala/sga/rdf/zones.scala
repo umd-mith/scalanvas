@@ -40,6 +40,8 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
     case ("main", _) if typeCounts("left_margin") == 0 =>
       Some((0.125, topHeight) -> (0.875, 1 - topHeight)).success
     case ("main", _) => Some((0.25, topHeight) -> (0.75, 1 - topHeight)).success
+    case ("logical", _) => None.success
+    case ("column", _) => Some((0.50, topHeight) -> (0.75, 1 - topHeight)).success
     case ("", _) => None.success
     case other => 
        "Unknown zone in %s: %s!".format(canvas.shelfmark, other).fail

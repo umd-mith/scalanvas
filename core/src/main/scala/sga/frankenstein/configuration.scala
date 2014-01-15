@@ -13,7 +13,7 @@ trait FrankensteinConfiguration { this: FrankensteinManifest =>
 
   // The primary facsimile images are JPEG 2000 files served from Djatoka.
   // This value will need to be overriden for the static fallback manifests.
-  def imageFormat: String = "image/jp2"
+  def imageFormat: String = "image/jpg"
 
   // The image dimensions in the TEI files are based on the full TIFF images
   // that were delivered to MITH last year, which include a 200 pixel footer
@@ -24,7 +24,7 @@ trait FrankensteinConfiguration { this: FrankensteinManifest =>
   // This should be the identifier for any Djatoka server, so I'm including
   // it here as a default, but it will need to be overridden in some cases.
   def constructImageUri(idWithSeq: String) = new URI(
-    "http://shelleygodwinarchive.org/images/ox/%s.jp2".format(idWithSeq)
+    "/demo/images/wwa/%s.jpg".format(idWithSeq)
   )
 }
 
@@ -50,7 +50,7 @@ trait MithDjatokaImages { this: FrankensteinConfiguration =>
   )
 
   override def constructImageUri(idWithSeq: String) = new URI(
-    "http://sga.mith.org/images/jp2/%s.jp2".format(idWithSeq)
+    "/demo/images/wwa/%s.jpg".format(idWithSeq)
   )
 
   override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)
@@ -59,7 +59,7 @@ trait MithDjatokaImages { this: FrankensteinConfiguration =>
 trait MithStaticImages { this: FrankensteinConfiguration =>
   def imageService = None
   override def constructImageUri(idWithSeq: String) = new URI(
-    "http://shelleygodwinarchive.org/images/ox/%s.jpg".format(idWithSeq)
+    "/demo/images/wwa/%s.jpg".format(idWithSeq)
   )
 
   override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)

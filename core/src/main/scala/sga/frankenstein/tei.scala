@@ -52,8 +52,9 @@ trait TeiManager {
       val reading = Link(constructReadingUri(idWithSeq), "text/html")
       val source = Link(
         new URI(
-          "http://%s/tei/ox/%s.xml".format(
-            resolvableDomain,
+          //"http://%s/tei/ox/%s.xml".format(
+          "/demo/xml/%s.xml".format(
+            //resolvableDomain,
             idWithSeq
           )
         ),
