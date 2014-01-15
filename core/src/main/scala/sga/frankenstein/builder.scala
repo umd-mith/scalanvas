@@ -11,7 +11,7 @@ import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
 trait Cratylus { this: FrankensteinConfiguration =>
-  val teiDir = new File("/home/rviglian/Projects/wman/wwa/cocoon/target/rcl/webapp/xml/processed/")
+  val teiDir = new File("/home/travis/code/projects/scalanvas-new/tmp/processed/")
 }
 
 object DevelopmentBuilder extends Builder with App {
