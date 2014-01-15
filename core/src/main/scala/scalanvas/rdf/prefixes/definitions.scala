@@ -131,6 +131,8 @@ class SharedCanvasPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   val attributionLabel = apply("attributionLabel")
   val rightsLabel = apply("rightsLabel")
   val hasCanvases = apply("hasCanvases")
+  val hasSequences = apply("hasSequences")
+  val hasImageAnnotations = apply("hasImageAnnotations")
 }
 
 object SharedCanvasPrefix {
