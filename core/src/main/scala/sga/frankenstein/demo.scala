@@ -21,7 +21,7 @@ object JsonLdDemoBuilder extends JsonLdBuilder with App {
     with SgaTei
     with Cratylus { this: FrankensteinManifest => }
 
-  save(new NotebookC1Manifest with Dev, outputDir)
+  save(new LessingManifest with Dev, outputDir)
 }
 
 trait JsonLdBuilder {
