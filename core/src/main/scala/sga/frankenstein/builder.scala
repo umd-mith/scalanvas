@@ -1,14 +1,14 @@
 package edu.umd.mith.sga.frankenstein
 
+import com.github.jsonldjava.utils.JSONUtils
 import org.w3.banana._
 import org.w3.banana.syntax._
 import edu.umd.mith.sga.model.SgaManifest
 import edu.umd.mith.sga.json.IndexManifest
 import edu.umd.mith.sga.rdf._
-import edu.umd.mith.banana.io._
-import edu.umd.mith.banana.io.jena._
+//import edu.umd.mith.banana.io._
+//import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
-import scalax.io.Resource
 
 trait Cratylus { this: FrankensteinConfiguration =>
   val teiDir = new File("/home/travis/code/projects/sg-data/data/tei/ox/")
@@ -23,13 +23,14 @@ object DevelopmentBuilder extends Builder with App {
     with SgaTei
     with Cratylus { this: FrankensteinManifest => }
 
-  save(new NotebookAManifest with Dev, outputDir)
-  save(new NotebookBManifest with Dev, outputDir)
-  save(new NotebookC1Manifest with Dev, outputDir)
-  save(new NotebookC2Manifest with Dev, outputDir)
-  save(new VolumeIManifest with Dev, outputDir)
-  save(new VolumeIIManifest with Dev, outputDir)
-  save(new VolumeIIIManifest with Dev, outputDir)
+   save(new NotebookAManifest with Dev, outputDir)
+   save(new NotebookBManifest with Dev, outputDir)
+   save(new NotebookC1Manifest with Dev, outputDir)
+   save(new NotebookC2Manifest with Dev, outputDir)
+   save(new VolumeIManifest with Dev, outputDir)
+   save(new VolumeIIManifest with Dev, outputDir)
+   save(new VolumeIIIManifest with Dev, outputDir)
+  //save(new LessingManifest with Dev, outputDir)
 }
 
 object ProductionBuilder extends Builder with App {
@@ -69,28 +70,40 @@ object ProductionBuilder extends Builder with App {
 
 trait Builder {
   def save(manifest: SgaManifest, outputDir: File) = {
+
     val dir = new File(outputDir, manifest.id)
     dir.mkdirs
 
-    val output = new File(dir, "Manifest.json")
+    val output = new File(dir, "Manifest.jsonld")
     if (output.exists) output.delete()
 
-    val indexOutput = new File(dir, "Manifest-index.jsonld")
-    if (indexOutput.exists) indexOutput.delete()
-
     val writer = RDFWriter[Rdf, RDFJson]
-    val indexWriter = new PrintWriter(indexOutput)
 
-    val indexManifest = new IndexManifest(manifest)
+    import ops._
+
+    writer.write(
+      manifest.jsonResource.toPG.graph,
+      new java.io.FileOutputStream(output),
+      manifest.base.toString
+    )
+
+    /*implicit object MSOContext extends JsonLDContext[java.util.Map[String, Object]] {
+      def toMap(ctx: java.util.Map[String, Object]) = ctx
+    }
+
+    val writer = new JsonLDWriter[java.util.Map[String, Object]] {
+      val context = JSONUtils.fromString(
+        io.Source.fromInputStream(
+          getClass.getResourceAsStream("/edu/umd/mith/scalanvas/context.json")
+        ).mkString
+      ).asInstanceOf[java.util.Map[String, Object]]
+    }
 
     writer.write(
       manifest.jsonResource.toPG[Rdf].graph,
       Resource.fromFile(output),
       manifest.base.toString
-    )
-
-    indexWriter.println(indexManifest.toJsonLd.spaces2)
-    indexWriter.close()
+    )*/
   }
 }
 

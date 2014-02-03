@@ -13,8 +13,10 @@ trait PropertyBinders { this: ObjectBinders =>
   trait ResourceToPG[Rdf <: RDF, A <: Resource] extends ToPG[Rdf, A] {
     this: ScalanvasPrefixes[Rdf] =>
 
+    import ops._
+
     def toPG(a: A) = PointedGraph(
-      a.muri.fold[Rdf#Node](ops.bnode())(_.toUri[Rdf])
+      a.muri.fold[Rdf#Node](ops.bnode())(ToURI.javaURIToURI(ops).toURI)
     )
   }
 

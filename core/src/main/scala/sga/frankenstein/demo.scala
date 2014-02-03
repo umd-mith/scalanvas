@@ -8,12 +8,11 @@ import edu.umd.mith.sga.model.SgaManifest
 import edu.umd.mith.sga.json.IndexManifest
 import edu.umd.mith.sga.rdf._
 //import edu.umd.mith.banana.argo._
-import edu.umd.mith.banana.io._
-import edu.umd.mith.banana.io.jena._
+//import edu.umd.mith.banana.io._
+//import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
-import scalax.io.Resource
 
-object JsonLdDemoBuilder extends JsonLdBuilder with App {
+/*object JsonLdDemoBuilder extends JsonLdBuilder with App {
   val outputDir = new File("jsonld-demo")
 
   trait Dev extends FrankensteinConfiguration
@@ -22,14 +21,14 @@ object JsonLdDemoBuilder extends JsonLdBuilder with App {
     with Cratylus { this: FrankensteinManifest => }
 
   save(new NotebookC1Manifest with Dev, outputDir)
-}
+}*/
 
 trait JsonLdBuilder {
   def save(manifest: SgaManifest, outputDir: File) = {
     val dir = new File(outputDir, manifest.id)
     dir.mkdirs
 
-    val output = new File(dir, "Manifest.jsonld")
+    /*val output = new File(dir, "Manifest.jsonld")
     if (output.exists) output.delete()
 
     implicit object MSOContext extends JsonLDContext[java.util.Map[String, Object]] {
@@ -48,7 +47,7 @@ trait JsonLdBuilder {
       manifest.jsonResource.toPG[Rdf].graph,
       Resource.fromFile(output),
       manifest.base.toString
-    )
+    )*/
   }
 }
 
