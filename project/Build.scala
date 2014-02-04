@@ -10,6 +10,7 @@ object Scalanvas extends Build {
       libraryDependencies <++= scalaVersion { sv => Seq(
         "org.w3" %% "banana-rdf" % "0.4",
         "org.w3" %% "banana-jena" % "0.4",
+        "net.sf.opencsv" % "opencsv" % "2.3",
         "org.apache.jena" % "jena-arq" % "2.11.1",
         "com.github.jsonld-java" % "jsonld-java-jena" % "0.2" excludeAll(
           ExclusionRule(organization = "org.apache.jena"),
