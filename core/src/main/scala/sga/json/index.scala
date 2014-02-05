@@ -62,7 +62,7 @@ class IndexManifest(manifest: SgaManifest) {
       "label" := canvas.label,
       "width" := canvas.width,
       "height" := canvas.height,
-      "sga:hasTeiSource" := canvas.source.uri.toString,
+      "sga:hasTeiSource" := canvas.source.map(_.uri.toString),
       "service" := "%s#n=%d".format(relatedServiceString, i + 1)
     )
   }

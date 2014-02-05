@@ -63,9 +63,9 @@ trait ObjectBinders {
       }
 
       def readTextAnnotations(canvas: SgaCanvas): List[PointedGraph[Rdf]] = {
-        val annotationExtractor = AnnotationExtractor(canvas.transcription, Set("c56-0113.02"))
+        val annotationExtractor = AnnotationExtractor(canvas.transcription.get, Set("c56-0113.02"))
 
-        val hand = (canvas.transcription \\ "handShift").toList match {
+        val hand = (canvas.transcription.get \\ "handShift").toList match {
           case List(handShift) => handShift.attributes.asAttrMap.get("new").filter(_ == "#pbs")
           case Nil => None
           case _ => throw new RuntimeException("Too many hand shifts.")
@@ -80,10 +80,10 @@ trait ObjectBinders {
           case _ => None
         }
 
-        val lines = (canvas.transcription \\ "line").toList.zipWithIndex.map { case (line, i) =>
+        val lines = (canvas.transcription.get \\ "line").toList.zipWithIndex.map { case (line, i) =>
           val attrs = line.attributes.asAttrMap
 
-          val inLibraryZone = (canvas.transcription \\ "zone").filter(
+          val inLibraryZone = (canvas.transcription.get \\ "zone").filter(
             _.attributes.asAttrMap("type") == "library"
           ).flatMap(_ \\ "line").contains(line)
 
@@ -179,7 +179,7 @@ trait ObjectBinders {
                 bnode()
                 //manifest.itemBasePlus("/image-annotations/" + canvas.seq).toUri
                   .a(oa.Annotation)
-                  //.a(dms.ImageAnnotation)
+                  .a(dms.ImageAnnotation)
                   -- oa.hasTarget ->- canvas
                   -- oa.hasBody ->- image
               )
@@ -197,7 +197,9 @@ trait ObjectBinders {
             //-- sc.hasSequences ->- List(manifest.sequence)
             -- sc.hasCanvases ->- manifest.sequence.canvases
             -- ore.aggregates ->- manifest.sequence
-            -- ore.aggregates ->- (
+            -- ore.aggregates ->- {
+              if (manifest.hasTranscriptions)
+            Some((
               manifest.itemBasePlus("/reading-html").toUri
                 .a(sc.AnnotationList)
                 .a(sc.Layer)
@@ -214,8 +216,11 @@ trait ObjectBinders {
                     -- sc.motivatedBy ->- sga.reading
                 )
               }
-            ) 
-            -- ore.aggregates ->- (
+            )) else None
+            }
+            -- ore.aggregates ->- {
+              if (manifest.hasTranscriptions)
+              Some((
               manifest.itemBasePlus("/source-tei").toUri
                 .a(sc.AnnotationList)
                 .a(sc.Layer)
@@ -231,7 +236,8 @@ trait ObjectBinders {
                     -- oa.hasBody ->- canvas.source
                 )
               }
-            )
+            )) else None
+            }
             -- sc.hasImageAnnotations ->- (imageAnnotations)
             -- ore.aggregates ->- (
               manifest.itemBasePlus("/image-annotations").toUri
@@ -245,15 +251,18 @@ trait ObjectBinders {
             ).aggregates(
               manifest.sequence.canvases.flatMap(readZones)
             )
-            -- ore.aggregates ->- (
+            -- ore.aggregates ->- {
+              if (manifest.hasTranscriptions)
+            Some((
               manifest.itemBasePlus("/text-annotations").toUri
                 .a(sc.AnnotationList)
                 .a(sc.Layer)
                 -- rdfs.label ->- "Transcription"
                 -- sc.forMotivation ->- sc.painting
             ).aggregates(
-              manifest.sequence.canvases.flatMap(readTextAnnotations)
-            )
+              if (manifest.hasTranscriptions) manifest.sequence.canvases.flatMap(readTextAnnotations) else Nil
+            )) else None
+            }
         )
 
         manifest.ranges.foldLeft(rangeless) {

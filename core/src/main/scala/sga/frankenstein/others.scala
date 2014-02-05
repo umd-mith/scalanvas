@@ -21,6 +21,7 @@ object SpreadsheetReader extends App {
     val title = "Example manifest"
     val label = "Example manifest"
     val ranges = Nil
+    override val hasTranscriptions = false
     val service = None
     val sequence = Sequence[SgaCanvas](
       None,
@@ -30,19 +31,19 @@ object SpreadsheetReader extends App {
           val service = None
           val uri = new java.net.URI(base + "/canvas/%04d".format(index + 1))
           val seq = "%04d".format(index + 1)
-          val label = fields(4)
+          val label = fields(3)
           override val shelfmark = Some(fields(9)) 
           override val folio = Some(fields(3))
           override val hand = Some(fields(7))
           override val agent = Some(fields(6))
           override val attribution = Some(fields(10))
           override val date = Some(fields(8))
-          val reading = Link(new java.net.URI(base + "/canvas/%04d.html".format(index + 1)), "text/html")
-          val source = Link(new java.net.URI(base + "/canvas/%04d.xml".format(index + 1)), "application/tei+xml")
-          val transcription = <TEI/>
+          val reading = None //Link(new java.net.URI(base + "/canvas/%04d.html".format(index + 1)), "text/html")
+          val source = None //Link(new java.net.URI(base + "/canvas/%04d.xml".format(index + 1)), "application/tei+xml")
+          val transcription = None
           val width = fields(1).toInt
           val height = fields(2).toInt
-          val images = List(ImageForPainting(new java.net.URI(fields(0)), fields(1).toInt, fields(2).toInt, "image/jpg", None))
+          val images = List(ImageForPainting(new java.net.URI(fields(0)), fields(1).toInt, fields(2).toInt, "image/jpeg", None))
         }
       }
     )

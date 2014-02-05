@@ -12,7 +12,7 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
   with SpecificResourceHelper[Rdf]
   with AnnotationHelper[Rdf] {
 
-  val zones = canvas.transcription \\ "zone"
+  val zones = canvas.transcription.map(_ \\ "zone").getOrElse(Nil)
 
   val typeCounts = zones.map(
     zone => (zone \ "@type").text

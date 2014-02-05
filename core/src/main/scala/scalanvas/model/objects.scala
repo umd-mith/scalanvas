@@ -24,9 +24,9 @@ trait Canvas extends LocatedResource
   def width: Int
   def height: Int
   def images: List[Image]
-  def transcription: Elem
-  def reading: Link 
-  def source: Link
+  def transcription: Option[Elem]
+  def reading: Option[Link]
+  def source: Option[Link]
 }
 
 sealed trait Image extends LocatedResource

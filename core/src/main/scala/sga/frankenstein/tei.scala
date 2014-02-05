@@ -48,9 +48,9 @@ trait TeiManager {
           imageService
         )
       )
-      val transcription = surface
-      val reading = Link(constructReadingUri(idWithSeq), "text/html")
-      val source = Link(
+      val transcription = Some(surface)
+      val reading = Some(Link(constructReadingUri(idWithSeq), "text/html"))
+      val source = Some(Link(
         new URI(
           "http://%s/tei/ox/%s.xml".format(
             resolvableDomain,
@@ -58,7 +58,7 @@ trait TeiManager {
           )
         ),
         "application/tei+xml"
-      )
+      ))
       override val hand = Some(
         if (percyOnly) "Percy Shelley" else {
           if (fullId == "ox-ms_abinger_c58" && pageSeq == "0047")
