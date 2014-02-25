@@ -23,7 +23,17 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
   val topHeight = 0.05
 
   private def coords(current: String, past: List[String]) = (current, past) match {
-    case ("top", _) => Some((0.0, 0.0) -> (1.0, topHeight)).success
+    //case ("running_head", _) => Some((0.0, 0.0) -> (1.0, topHeight)).success
+    case ("running_head", past) =>
+      val runningHeadCount = typeCounts("running_head")
+      val runningHeadIdx = past.count(_ == "running_head") + 1
+      //val blockHeight = 1 / leftMarginCount
+      Some(
+        // (0.0,  topHeight + (1 - topHeight) * (leftMarginIdx.toDouble / leftMarginCount)),
+        // (0.25, (1 - topHeight) / leftMarginCount)
+        ((runningHeadIdx.toDouble / runningHeadCount) - (1 / runningHeadCount.toDouble),  0.0),
+        (1 / runningHeadCount.toDouble, 1 - topHeight)
+      ).success
     case ("pagination", _) =>
       //Some((0.8, 0.1) -> (0.1, 0.05)).success
       Some((0.8, 0.0) -> (0.1, topHeight)).success
@@ -46,8 +56,6 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
       val columnIdx = past.count(_ == "column") + 1
       //val blockHeight = 1 / leftMarginCount
       Some(
-        //(0.0,  topHeight + (1 - topHeight) * (leftMarginIdx.toDouble / leftMarginCount)),
-        //(0.25, (1 - topHeight) / leftMarginCount)
         ((columnIdx.toDouble / columnCount) - (1 / columnCount.toDouble),  topHeight),
         (1 / columnCount.toDouble, 1 - topHeight)
       ).success
