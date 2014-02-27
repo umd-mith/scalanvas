@@ -25,9 +25,9 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
   else
     false
 
-  val extraRight = if (typeCounts("marginalia_right") > 0) 0.08 else 0.0
+  val extraRight = if (typeCounts("marginalia_right") > 0) 0.1 else 0.0
 
-  val extraLeft = if (typeCounts("marginalia_left") > 0) 0.08 else 0.0
+  val extraLeft = if (typeCounts("marginalia_left") > 0) 0.1 else 0.0
 
   val topHeight = if (needExtraTop) 0.10 else 0.05
 
@@ -60,9 +60,12 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
     case ("column", past) => 
       val columnCount = typeCounts("column")
       val columnIdx = past.count(_ == "column") + 1
+      val start = 0 + extraLeft
+      val end = 1 - extraRight
+      val area = (end - start) / columnCount.toDouble
       Some(
-        (((columnIdx.toDouble / columnCount) - (1 / columnCount.toDouble)) + extraLeft,  topHeight),
-        (1 / columnCount.toDouble - extraRight, 1 - topHeight)
+        ((area * (columnIdx.toDouble - 1) + extraLeft,  topHeight),
+        (area, 1 - topHeight))
       ).success
     case ("", _) => None.success
     case other => 
