@@ -62,6 +62,14 @@ trait ObjectBinders {
         zoneReader.readZones
       }
 
+      def addCssStyle(g: PointedGraph[Rdf], css: String) = g -- oa.hasStyle ->- (
+        bnode().a(cnt.ContentAsText)
+          -- dc.format ->- "text/css"
+          -- cnt.chars ->- css
+      )
+
+      def addCssClass(g: PointedGraph[Rdf], cls: String) = g -- sga.hasClass ->- cls
+
       def readTextAnnotations(canvas: SgaCanvas): List[PointedGraph[Rdf]] = {
         val annotationExtractor = AnnotationExtractor(canvas.transcription, Set("c56-0113.02"))
 
@@ -168,7 +176,29 @@ trait ObjectBinders {
             )
         }
 
-        lines ::: additions ::: deletions
+        val highlights = (canvas.transcription \\ "hi").toList.map { hi => 
+          val attrs = hi.attributes.asAttrMap
+
+          val b = attrs("mu:b").toInt
+          val e = attrs("mu:e").toInt
+
+          val os = textOffsetSelection(canvas.source, b, e)
+
+          val offset = attrs.get("rend") match {
+            case Some("double-underline") => addCssClass(os, "double-underline")
+            case Some("underline") => addCssStyle(os, "text-decoration: underline")
+            case Some("italic") => addCssStyle(os, "font-style: italic")
+            case Some("sup") => addCssStyle(os, "vertical-align: super")
+            case Some("superscript") => addCssStyle(os, "vertical-align: super")
+            case Some("subscript") => addCssStyle(os, "vertical-align: sub")
+            case Some(rend) => sys.error(s"Unexpected rend value: $rend.")
+            case None => os
+          }
+
+          bnode().a(oa.Annotation).a(oax.Highlight) -- oa.hasTarget ->- offset
+        }
+
+        lines ::: additions ::: deletions ::: highlights
       }
 
       override def toPG(manifest: SgaManifest) = {

@@ -1,11 +1,11 @@
-package edu.umd.mith.sga.frankenstein
+package edu.umd.mith.sga.wwa
 
 import edu.umd.mith.scalanvas.model.Service
 
 import java.io.File
 import java.net.URI
 
-trait FrankensteinConfiguration { this: FrankensteinManifest =>
+trait WwaConfiguration { this: WwaManifest =>
   def development: Boolean = false
   def teiDir: File
   def constructReadingUri(idWithSeq: String): URI
@@ -28,11 +28,11 @@ trait FrankensteinConfiguration { this: FrankensteinManifest =>
   )
 }
 
-trait DevelopmentConfiguration { this: FrankensteinConfiguration =>
+trait DevelopmentConfiguration { this: WwaConfiguration =>
   override def development = true
 }
 
-trait BodleianImages { this: FrankensteinConfiguration =>
+trait BodleianImages { this: WwaConfiguration =>
   def imageService = Some(
     Service(
       new URI("http://tiles2.bodleian.ox.ac.uk:8080/adore-djatoka/resolver"),
@@ -41,7 +41,7 @@ trait BodleianImages { this: FrankensteinConfiguration =>
   )
 }
 
-trait MithDjatokaImages { this: FrankensteinConfiguration =>
+trait MithDjatokaImages { this: WwaConfiguration =>
   def imageService = Some(
     Service(
       new URI("http://sga.mith.org:8080/adore-djatoka/resolver"),
@@ -56,7 +56,7 @@ trait MithDjatokaImages { this: FrankensteinConfiguration =>
   override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)
 }
 
-trait MithStaticImages { this: FrankensteinConfiguration =>
+trait MithStaticImages { this: WwaConfiguration =>
   def imageService = None
   override def constructImageUri(idWithSeq: String) = new URI(
     "/demo/images/wwa/%s.jpg".format(idWithSeq)
@@ -65,7 +65,7 @@ trait MithStaticImages { this: FrankensteinConfiguration =>
   override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)
 }
 
-trait SgaTei { this: FrankensteinConfiguration with FrankensteinManifest =>
+trait SgaTei { this: WwaConfiguration with WwaManifest =>
   def constructReadingUri(idWithSeq: String) = new URI(
     "http://%s/tei/readingTEI/html/%s.html".format(resolvableDomain, idWithSeq)
   )

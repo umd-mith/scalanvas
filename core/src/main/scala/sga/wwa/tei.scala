@@ -1,4 +1,4 @@
-package edu.umd.mith.sga.frankenstein
+package edu.umd.mith.sga.wwa
 
 import edu.umd.mith.scalanvas.model.{ ImageForPainting, Link }
 import edu.umd.mith.scalanvas.util.xml.XmlLabeler
@@ -9,9 +9,9 @@ import scala.xml.XML
 import java.net.URI
 
 trait TeiManager {
-  self: FrankensteinManifest with FrankensteinConfiguration =>
+  self: WwaManifest with WwaConfiguration =>
   def parseTeiFile(idWithSeq: String, itemShelfmark: String, pageFolio: String): SgaCanvas = {
-    import FrankensteinManifest.IdWithSeq
+    import WwaManifest.IdWithSeq
 
     val (fullId, pageSeq) = idWithSeq match {
       case IdWithSeq(itemId, seq) => (itemId, seq)
@@ -81,4 +81,3 @@ trait TeiManager {
     }
   }
 }
-

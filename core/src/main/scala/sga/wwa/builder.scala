@@ -1,30 +1,34 @@
-package edu.umd.mith.sga.frankenstein
+package edu.umd.mith.sga.wwa
 
 import com.github.jsonldjava.utils.JSONUtils
-//import argonaut._, Argonaut._
 import org.w3.banana._
 import org.w3.banana.syntax._
 import edu.umd.mith.sga.model.SgaManifest
 import edu.umd.mith.sga.json.IndexManifest
 import edu.umd.mith.sga.rdf._
-//import edu.umd.mith.banana.argo._
 import edu.umd.mith.banana.io._
 import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
-object JsonLdDemoBuilder extends JsonLdBuilder with App {
-  val outputDir = new File("jsonld-demo")
-
-  trait Dev extends FrankensteinConfiguration
-    with BodleianImages
-    with SgaTei
-    with Cratylus { this: FrankensteinManifest => }
-
-  save(new LessingManifest with Dev, outputDir)
+trait Cratylus { this: WwaConfiguration =>
+  val teiDir = new File("/home/rviglian/Projects/wman/wwa/cocoon/target/rcl/webapp/xml/processed")
 }
 
-trait JsonLdBuilder {
+object DevelopmentBuilder extends Builder with App {
+  val outputDir = new File(new File("output", "development"), "primary")
+
+  trait Dev extends WwaConfiguration
+    with DevelopmentConfiguration
+    with BodleianImages
+    with SgaTei
+    with Cratylus { this: WwaManifest => }
+
+  save(new LessingManifest with Dev, outputDir)
+  save(new BunsenManifest with Dev, outputDir)
+}
+
+trait Builder {
   def save(manifest: SgaManifest, outputDir: File) = {
     val dir = new File(outputDir, manifest.id)
     dir.mkdirs
@@ -51,4 +55,3 @@ trait JsonLdBuilder {
     )
   }
 }
-
