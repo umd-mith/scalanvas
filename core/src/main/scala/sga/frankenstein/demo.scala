@@ -18,8 +18,7 @@ object JsonLdDemoBuilder extends JsonLdBuilder with App {
 
   trait Dev extends FrankensteinConfiguration
     with BodleianImages
-    with SgaTei
-    with Cratylus { this: FrankensteinManifest => }
+    with SgaTei { this: FrankensteinManifest => }
 
   save(new LessingManifest with Dev, outputDir)
 }

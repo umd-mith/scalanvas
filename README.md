@@ -23,17 +23,20 @@ Usage
 See the [`edu.umd.mith.sga.frankenstein.Builder`](https://github.com/umd-mith/scalanvas/blob/master/core/src/main/scala/sga/frankenstein/builder.scala)
 object for sample programmatic usage.
 
+Configuration
+-------------
+
+Copy the `./examples/config/application.conf` file to `./core/src/main/resources/`
+and edit it to reflect the paths to the TEI directories on your local system.
+
 Temporary Shelley-Godwin Archive Manifest Generation Instructions
 -----------------------------------------------------------------
 
 If you just need to build the Shelley-Godwin Archive manifests,
 see the `builder.scala` file linked in the preceding subsection.
-At the top of this file you'll find a configuration trait with
-a local path to the Shelley-Godwin Archive TEI files. Change the
-value of this path to match the location on your local system.
 
-After making this change, run `./sbt` to launch the SBT console.
-At the prompt, run `project scalanvas-core`, and then `run`. You'll
+Run `./sbt` to launch the SBT console.
+At the prompt, type `project scalanvas-core`, and then `run`. You'll
 be asked whether you want the development or production manifests:
 
 ```

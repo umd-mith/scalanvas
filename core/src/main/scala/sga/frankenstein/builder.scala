@@ -11,18 +11,13 @@ import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
-trait Cratylus { this: FrankensteinConfiguration =>
-  val teiDir = new File("/home/travis/code/projects/scalanvas/tmp/processed/")
-}
-
 object DevelopmentBuilder extends Builder with App {
   val outputDir = new File(new File("output", "development"), "primary")
 
   trait Dev extends FrankensteinConfiguration
     with DevelopmentConfiguration
     with BodleianImages
-    with SgaTei
-    with Cratylus { this: FrankensteinManifest => }
+    with SgaTei { this: FrankensteinManifest => }
 
   // save(new NotebookAManifest with Dev, outputDir)
   // save(new NotebookBManifest with Dev, outputDir)
@@ -38,8 +33,7 @@ object ProductionBuilder extends Builder with App {
   val outputDir = new File("output", "production")
   
   trait Production extends FrankensteinConfiguration
-    with SgaTei
-    with Cratylus { this: FrankensteinManifest => }
+    with SgaTei { this: FrankensteinManifest => }
 
   val primaryOutputDir = new File(outputDir, "primary")
   save(new NotebookAManifest with Production with BodleianImages, primaryOutputDir)

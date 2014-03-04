@@ -18,8 +18,7 @@ import scalax.io.Resource
 
 //   trait Dev extends WwaConfiguration
 //     with BodleianImages
-//     with SgaTei
-//     with Cratylus { this: WwaManifest => }
+//     with SgaTei { this: WwaManifest => }
 
 //   save(new LessingManifest with Dev, outputDir)
 // }
