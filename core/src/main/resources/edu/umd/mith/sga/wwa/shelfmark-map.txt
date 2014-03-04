@@ -4,7 +4,3 @@ duk.00055-0003		Lessing's, fol. 2 recto
 duk.00055-0004		Lessing's, fol. 2 verso
 duk.00055-0005		Lessing's, fol. 3 recto
 duk.00055-0006		Lessing's, fol. 3 verso
-duk.00200-0001		Bunsen, fol. 1 recto
-duk.00200-0002		Bunsen, fol. 1 verso
-duk.00200-0002		Bunsen, fol. 1 verso
-duk.00200-0002		Bunsen, fol. 1 verso

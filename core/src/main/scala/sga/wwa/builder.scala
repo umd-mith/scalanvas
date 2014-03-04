@@ -11,18 +11,13 @@ import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
-trait Cratylus { this: WwaConfiguration =>
-  val teiDir = new File("/home/rviglian/Projects/wman/wwa/cocoon/target/rcl/webapp/xml/processed")
-}
-
 object DevelopmentBuilder extends Builder with App {
   val outputDir = new File(new File("output", "development"), "primary")
 
   trait Dev extends WwaConfiguration
     with DevelopmentConfiguration
     with BodleianImages
-    with SgaTei
-    with Cratylus { this: WwaManifest => }
+    with SgaTei { this: WwaManifest => }
 
   save(new LessingManifest with Dev, outputDir)
   save(new BunsenManifest with Dev, outputDir)

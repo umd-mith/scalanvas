@@ -1,5 +1,6 @@
 package edu.umd.mith.sga.wwa
 
+import com.typesafe.config.ConfigFactory
 import edu.umd.mith.scalanvas.model.Service
 
 import java.io.File
@@ -7,9 +8,10 @@ import java.net.URI
 
 trait WwaConfiguration { this: WwaManifest =>
   def development: Boolean = false
-  def teiDir: File
   def constructReadingUri(idWithSeq: String): URI
   def imageService: Option[Service]
+
+  def teiDir = new File(ConfigFactory.load.getString("texts.local.wwa"))
 
   // The primary facsimile images are JPEG 2000 files served from Djatoka.
   // This value will need to be overriden for the static fallback manifests.
