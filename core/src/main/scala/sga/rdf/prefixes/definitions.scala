@@ -8,6 +8,7 @@ class SgaPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   val LineAnnotation = apply("LineAnnotation")
   val AdditionAnnotation = apply("AdditionAnnotation")
   val DeletionAnnotation = apply("DeletionAnnotation")
+  val MarginalAnnotation = apply("MarginalAnnotation")
   val LineBreak = apply("LineBreak")
   val reading = apply("reading")
   val source = apply("source")
@@ -17,6 +18,7 @@ class SgaPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   val folioLabel = apply("folioLabel")
   val textAlignment = apply("textAlignment")
   val textIndentLevel = apply("textIndentLevel")
+  val hasPlace = apply("hasPlace")
 }
 
 object SgaPrefix {

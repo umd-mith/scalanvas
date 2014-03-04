@@ -36,6 +36,10 @@ case class AnnotationExtractor(doc: Elem, ignore: Set[String]) {
     }
   }
 
+  /*def isAuthorial(addElem: Node) = (addElem \ "note").headOption.flatMap(
+    _.attributes.asAttrMap.get("type").exists(_ == "authorial")
+  )*/
+
   def additions: ValidationNel[String, List[Annotation]] =
     (doc \\ "addSpan").toList.traverseU(fromMilestone).map(
       _.flatten ++ (doc \\ "add").map(fromElem)

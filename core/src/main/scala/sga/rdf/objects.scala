@@ -88,7 +88,13 @@ trait ObjectBinders {
           case _ => None
         }
 
-        val lines = (canvas.transcription \\ "line").toList.zipWithIndex.map { case (line, i) =>
+        def isAuthorialLine(lineElem: xml.Node) =
+          (lineElem \ "add" \ "note" \ "@type").exists {
+            case xml.Text("authorial") => true
+            case _ => false
+          } 
+
+        val (linesWithIds, marginalia) = (canvas.transcription \\ "line").toList.zipWithIndex.map { case (line, i) =>
           val attrs = line.attributes.asAttrMap
 
           val inLibraryZone = (canvas.transcription \\ "zone").filter(
@@ -100,7 +106,7 @@ trait ObjectBinders {
             case false => None
           }
 
-          (
+          val lineAnnotation = (
             URI(canvas.uri.toString + "/line-annotations/%04d".format(i + 1))
               .a(oa.Annotation)
               .a(sga.LineAnnotation)
@@ -117,43 +123,81 @@ trait ObjectBinders {
               -- sga.textAlignment ->- attrs.get("rend").filterNot(_.startsWith("indent"))
               -- sga.textIndentLevel ->- attrs.get("rend").filter(_.startsWith("indent")).map(_.drop(6).toInt)
           )
-        }
 
-    val additions = annotationExtractor.additions.valueOr(es => sys.error(es.toList.mkString("\n"))).map {
-      case Annotation((b, e), place, attrs) =>
-        val placeCss = place.flatMap {
-          case "superlinear" => Some("vertical-align: super;")
-          case "sublinear"   => Some("vertical-align: sub;")
-          case _ => None
-        }
+          val marginalia = if (isAuthorialLine(line)) {
+            (canvas.transcription \\ "zone").filter(
+              zone => (zone \\ "line").contains(line)
+            ).headOption.flatMap {
+              zone =>
+                val attrs = zone.attributes.asAttrMap
+                
+                for {
+                  target <- attrs.get("target").map(_.tail)
+                  zoneType <- attrs.get("type")
+                } yield target -> (zoneType, lineAnnotation)
+            }
+          } else None
 
-        val Hand = "#(\\S+)".r
-        val BrokenHand = "(\\S+)".r
+          (attrs.get("xml:id") -> lineAnnotation, marginalia)
+        }.unzip
 
-        val handClass = attrs.get("hand").flatMap {
-          case Hand(hand) => Some(s"hand-$hand")
-          case BrokenHand(hand) => Some(s"hand-$hand")
-          case _ => None
-        }
+        val lines = linesWithIds.map(_._2)
 
-        (
-          bnode()
-            .a(oa.Annotation)
-            .a(sga.AdditionAnnotation)
-            .a(oax.Highlight)
-            -- oa.hasTarget ->- (
-              textOffsetSelection(canvas.source, b, e)
-                -- oa.hasStyle ->- (
-                  placeCss.map { css => (
-                    bnode().a(cnt.ContentAsText)
-                      -- dc.format ->- "text/css"
-                      -- cnt.chars ->- css
-                  )}
-                )
-                -- sga.hasClass ->- handClass
+        val linesById = linesWithIds.collect {
+          case (Some(id), line) => id -> line
+        }.toMap
+
+        val marginaliaAnnotations = marginalia.flatten.groupBy(_._1).map {
+          case (id, lines) =>
+            val targetLine = linesById.getOrElse(id, throw new RuntimeException(f"No line with id $id%s!"))
+
+            val place = lines.head._2._1
+
+            (
+              bnode()
+                .a(oa.Annotation)
+                .a(sga.MarginalAnnotation)
+                -- sga.hasPlace ->- place
+                -- oa.hasTarget ->- targetLine
+                -- oa.hasBody ->- lines.map(_._2._2)
             )
-        )
-    }
+        }.toList
+
+        val additions = annotationExtractor.additions.valueOr(es => sys.error(es.toList.mkString("\n"))).map {
+          case Annotation((b, e), place, attrs) =>
+            val placeCss = place.flatMap {
+              case "superlinear" => Some("vertical-align: super;")
+              case "sublinear"   => Some("vertical-align: sub;")
+              case _ => None
+            }
+
+            val Hand = "#(\\S+)".r
+            val BrokenHand = "(\\S+)".r
+
+            val handClass = attrs.get("hand").flatMap {
+              case Hand(hand) => Some(s"hand-$hand")
+              case BrokenHand(hand) => Some(s"hand-$hand")
+              case _ => None
+            }
+
+            (
+              bnode()
+                .a(oa.Annotation)
+                .a(sga.AdditionAnnotation)
+                .a(oax.Highlight)
+                -- oa.hasTarget ->- (
+                  textOffsetSelection(canvas.source, b, e)
+                    -- oa.hasStyle ->- (
+                      placeCss.map { css => (
+                        bnode().a(cnt.ContentAsText)
+                          -- dc.format ->- "text/css"
+                          -- cnt.chars ->- css
+                      )}
+                    )
+                    -- sga.hasClass ->- handClass
+                )
+            )
+        }
 
         val deletions = annotationExtractor.deletions.valueOr(es => sys.error(es.toList.mkString("\n"))).map {
           case Annotation((b, e), _, attrs) =>
@@ -198,7 +242,7 @@ trait ObjectBinders {
           bnode().a(oa.Annotation).a(oax.Highlight) -- oa.hasTarget ->- offset
         }
 
-        lines ::: additions ::: deletions ::: highlights
+        lines ::: additions ::: deletions ::: highlights ::: marginaliaAnnotations
       }
 
       override def toPG(manifest: SgaManifest) = {
