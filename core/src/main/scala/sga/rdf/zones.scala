@@ -53,8 +53,20 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
       Some((0.125, topHeight) -> (0.875, 1 - topHeight)).success
     case ("main", _) => Some((0.25, topHeight) -> (0.75, 1 - topHeight)).success
     case ("logical", _) => None.success
-    case ("marginalia_left", _) => None.success
-    case ("marginalia_right", _) => None.success
+    case ("marginalia_left", _) => 
+      val margLeftCount = typeCounts("marginalia_left")
+      val margLeftIdx = past.count(_ == "marginalia_left")
+      Some(
+        ((0.0, topHeight + (1 - topHeight) * (margLeftIdx.toDouble / margLeftCount)),
+        (extraLeft, (1 - topHeight) / margLeftCount))
+      ).success
+    case ("marginalia_right", _) => 
+      val margRightCount = typeCounts("marginalia_right")
+      val margRightIdx = past.count(_ == "marginalia_right")
+      Some(
+        ((1 - extraRight, topHeight + (1 - topHeight) * (margRightIdx.toDouble / margRightCount)),
+        (1.0, (1 - topHeight) / margRightCount))
+      ).success
     case ("top_marginalia_left", _) => Some((0.0, 0.0) -> (1.0, topHeight)).success
     case ("top_marginalia_right", _) => Some((0.5, 0.0) -> (1.0, topHeight)).success
     case ("column", past) => 
