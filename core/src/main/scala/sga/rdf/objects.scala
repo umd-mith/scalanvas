@@ -242,7 +242,36 @@ trait ObjectBinders {
           bnode().a(oa.Annotation).a(oax.Highlight) -- oa.hasTarget ->- offset
         }
 
-        lines ::: additions ::: deletions ::: highlights ::: marginaliaAnnotations
+        val metamarkHighlights = annotationExtractor.marginaliaMetamarks.valueOr(
+          errors => sys.error(errors.toList.mkString("\n"))
+        ).map {
+          case Annotation((b, e), _, attrs) =>
+            val borderCss = attrs.get("rend").flatMap {
+              case "singleLine-left" => Some("border-left-style: solid")
+              case "singleLine-right" => Some("border-right-style: solid")
+              case "doubleLine-left" => Some("border-left-style: double")
+              case "doubleLine-right" => Some("border-right-style: double")
+              case _ => None
+            }
+
+            (
+              bnode()
+                .a(oa.Annotation)
+                .a(oax.Highlight)
+                -- oa.hasTarget ->- (
+                  textOffsetSelection(canvas.source, b, e)
+                    -- oa.hasStyle ->- (
+                      borderCss.map { css => (
+                        bnode().a(cnt.ContentAsText)
+                          -- dc.format ->- "text/css"
+                          -- cnt.chars ->- css
+                      )}
+                    )
+                )
+            )
+        }
+
+        lines ::: additions ::: deletions ::: (highlights ++ metamarkHighlights) ::: marginaliaAnnotations
       }
 
       override def toPG(manifest: SgaManifest) = {
