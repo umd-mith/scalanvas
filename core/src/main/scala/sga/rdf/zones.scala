@@ -20,19 +20,31 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
     case (key, values) => key -> values.size  
   }.withDefaultValue(0)
 
-  val topHeight = 0.05
+  val needExtraTop = if (typeCounts("top_marginalia_left") > 0 || typeCounts("top_marginalia_right") > 0) 
+    true
+  else
+    false
+
+  val extraRight = if (typeCounts("marginalia_right") > 0) 0.1 else 0.0
+
+  val extraLeft = if (typeCounts("marginalia_left") > 0) 0.1 else 0.0
+
+  val topHeight = if (needExtraTop) 0.10 else 0.05
 
   private def coords(current: String, past: List[String]) = (current, past) match {
-    case ("top", _) => Some((0.4, 0.0) -> (0.2, topHeight)).success
+    case ("running_head", past) =>
+      val runningHeadCount = typeCounts("running_head")
+      val runningHeadIdx = past.count(_ == "running_head") + 1
+      Some(
+        ((runningHeadIdx.toDouble / runningHeadCount) - (1 / runningHeadCount.toDouble),  if (needExtraTop) 0.05 else 0.0),
+        (1 / runningHeadCount.toDouble, topHeight)
+      ).success
     case ("pagination", _) =>
-      //Some((0.8, 0.1) -> (0.1, 0.05)).success
       Some((0.8, 0.0) -> (0.1, topHeight)).success
-    //case ("library", _) => Some((0.9, 0.10) -> (0.1, 0.05)).success
     case ("library", _) => Some((0.9, 0.0) -> (0.1, topHeight)).success
     case ("left_margin", past) =>
       val leftMarginCount = typeCounts("left_margin")
       val leftMarginIdx = past.count(_ == "left_margin")
-      //val blockHeight = 1 / leftMarginCount
       Some(
         (0.0,  topHeight + (1 - topHeight) * (leftMarginIdx.toDouble / leftMarginCount)),
         (0.25, (1 - topHeight) / leftMarginCount)
@@ -40,6 +52,21 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
     case ("main", _) if typeCounts("left_margin") == 0 =>
       Some((0.125, topHeight) -> (0.875, 1 - topHeight)).success
     case ("main", _) => Some((0.25, topHeight) -> (0.75, 1 - topHeight)).success
+    case ("logical", _) => None.success
+    case ("marginalia_left", _) => None.success
+    case ("marginalia_right", _) => None.success
+    case ("top_marginalia_left", _) => Some((0.0, 0.0) -> (1.0, topHeight)).success
+    case ("top_marginalia_right", _) => Some((0.5, 0.0) -> (1.0, topHeight)).success
+    case ("column", past) => 
+      val columnCount = typeCounts("column")
+      val columnIdx = past.count(_ == "column") + 1
+      val start = 0 + extraLeft
+      val end = 1 - extraRight
+      val area = (end - start) / columnCount.toDouble
+      Some(
+        ((area * (columnIdx.toDouble - 1) + extraLeft,  topHeight),
+        (area, 1 - topHeight))
+      ).success
     case ("", _) => None.success
     case other => 
        "Unknown zone in %s: %s!".format(canvas.shelfmark, other).fail

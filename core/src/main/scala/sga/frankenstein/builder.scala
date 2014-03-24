@@ -6,13 +6,9 @@ import org.w3.banana.syntax._
 import edu.umd.mith.sga.model.SgaManifest
 import edu.umd.mith.sga.json.IndexManifest
 import edu.umd.mith.sga.rdf._
-//import edu.umd.mith.banana.io._
-//import edu.umd.mith.banana.io.jena._
+import edu.umd.mith.banana.io._
+import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
-
-trait Cratylus { this: FrankensteinConfiguration =>
-  val teiDir = new File("/home/travis/code/projects/sg-data/data/tei/ox/")
-}
 
 object DevelopmentBuilder extends Builder with App {
   val outputDir = new File(new File("output", "development"), "primary")
@@ -20,8 +16,7 @@ object DevelopmentBuilder extends Builder with App {
   trait Dev extends FrankensteinConfiguration
     with DevelopmentConfiguration
     with BodleianImages
-    with SgaTei
-    with Cratylus { this: FrankensteinManifest => }
+    with SgaTei { this: FrankensteinManifest => }
 
    save(new NotebookAManifest with Dev, outputDir)
    save(new NotebookBManifest with Dev, outputDir)
@@ -30,15 +25,13 @@ object DevelopmentBuilder extends Builder with App {
    save(new VolumeIManifest with Dev, outputDir)
    save(new VolumeIIManifest with Dev, outputDir)
    save(new VolumeIIIManifest with Dev, outputDir)
-  //save(new LessingManifest with Dev, outputDir)
 }
 
 object ProductionBuilder extends Builder with App {
   val outputDir = new File("output", "production")
   
   trait Production extends FrankensteinConfiguration
-    with SgaTei
-    with Cratylus { this: FrankensteinManifest => }
+    with SgaTei { this: FrankensteinManifest => }
 
   val primaryOutputDir = new File(outputDir, "primary")
   save(new NotebookAManifest with Production with BodleianImages, primaryOutputDir)
@@ -70,6 +63,7 @@ object ProductionBuilder extends Builder with App {
 
 trait Builder {
   def save(manifest: SgaManifest, outputDir: File) = {
+    import ops._
 
     val dir = new File(outputDir, manifest.id)
     dir.mkdirs
@@ -77,17 +71,7 @@ trait Builder {
     val output = new File(dir, "Manifest.jsonld")
     if (output.exists) output.delete()
 
-    val writer = RDFWriter[Rdf, RDFJson]
-
-    import ops._
-
-    writer.write(
-      manifest.jsonResource.toPG.graph,
-      new java.io.FileOutputStream(output),
-      manifest.base.toString
-    )
-
-    /*implicit object MSOContext extends JsonLDContext[java.util.Map[String, Object]] {
+    implicit object MSOContext extends JsonLDContext[java.util.Map[String, Object]] {
       def toMap(ctx: java.util.Map[String, Object]) = ctx
     }
 
@@ -100,10 +84,10 @@ trait Builder {
     }
 
     writer.write(
-      manifest.jsonResource.toPG[Rdf].graph,
-      Resource.fromFile(output),
+      manifest.jsonResource.toPG.graph,
+      new java.io.FileOutputStream(output),
       manifest.base.toString
-    )*/
+    )
   }
 }
 

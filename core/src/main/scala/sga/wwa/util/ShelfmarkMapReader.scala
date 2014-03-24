@@ -1,10 +1,10 @@
-package edu.umd.mith.sga.frankenstein.util
+package edu.umd.mith.sga.wwa.util
 
 import scala.io.Source
 
 trait ShelfmarkMapReader {
   private val stream = getClass.getResourceAsStream(
-    "/edu/umd/mith/sga/frankenstein/shelfmark-map.txt"
+    "/edu/umd/mith/sga/wwa/shelfmark-map.txt"
   )
 
   private val Line = """^(duk\.[^-]+-\d\d\d\d)\s+([^,]+),\s(.+)$""".r
