@@ -31,6 +31,10 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
 
   val topHeight = if (needExtraTop) 0.10 else 0.05
 
+  // HACK for tracking space taken in grid
+  var curGridX: Int = 0
+  var curGridY: Int = 0
+
   private def coords(current: String, attrs: Map[String, String], past: List[String], pastRend: List[String]) = (current, past) match {
     case ("running_head", past) =>
       val runningHeadCount = typeCounts("running_head")
@@ -96,9 +100,44 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         totColumns = cols.head + 1
       }
 
-      if (isNewCol) { columnIndex = columnIndex + 1 }
+      if (isNewCol) { 
+        columnIndex = columnIndex + 1 
+      }
 
-      None.success
+      val c = """.*col-(\d).*""".r
+      val r = """.*row-(\d).*""".r
+      val rend = attrs("rend").toString
+
+      val colSpan = rend match {
+        case c(num) => num.toInt
+        case _ => throw new RuntimeException(
+          s"No column span specified in grid!"
+        )
+      }    
+
+      val rowSpan = rend match {
+        case r(num) => num.toInt
+        case _ => throw new RuntimeException(
+          s"No row span specified in grid!"
+        )
+      }      
+
+      val startX = if (curGridX == 0) 0 else 1 / (12 / curGridX).toDouble
+      val startY = if (curGridY == 0) 0 else 1 / (6 / curGridY).toDouble
+      val extX = 1 / (12 / colSpan).toDouble
+      val extY = 1 / (6 / rowSpan).toDouble
+
+      // Done calculating. Now update hack-y grid position trackers
+      if (curGridX < colSpan) { curGridX = curGridX + colSpan }
+      if (curGridY < rowSpan) { curGridY = curGridY + rowSpan }
+
+      if (isNewCol) { curGridY = 0 }
+      if (columnIndex == 0) { curGridX = 0 }
+
+      Some(
+        ((startX, startY),
+        (extX, extY))
+      ).success
     case ("", _) => None.success
     case other => 
        "Unknown zone in %s: %s!".format(canvas.shelfmark, other).fail
