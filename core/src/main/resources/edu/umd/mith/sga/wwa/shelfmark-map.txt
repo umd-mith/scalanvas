@@ -46,6 +46,10 @@ duk.00687-0001		Some work, page 1
 duk.00693-0001		Some work, page 1
 duk.00694-0001		Some work, page 1
 duk.00694-0002		Some work, page 2
+duk.00695-0001		Some work, page 1
+duk.00695-0002		Some work, page 2
+duk.00695-0003		Some work, page 3
+duk.00695-0004		Some work, page 4
 duk.00696-0001		Some work, page 1
 duk.00696-0002		Some work, page 2
 duk.00696-0003		Some work, page 3
