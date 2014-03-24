@@ -5,7 +5,7 @@ import org.w3.banana.jena._
 package object frankenstein extends JenaModule {
   type Rdf = Jena
 
-  trait RDFJson
+  /*trait RDFJson
 
   import org.w3.banana.{ MimeType, Syntax }
   import scalaz.NonEmptyList
@@ -40,6 +40,6 @@ package object frankenstein extends JenaModule {
       //new JenaWriterRdfJson().write(model, new java.io.OutputStreamWriter(os), null)
       os.close()
     }
-  }
+  }*/
 }
 

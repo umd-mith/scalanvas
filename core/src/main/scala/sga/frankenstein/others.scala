@@ -6,8 +6,11 @@ import org.w3.banana.syntax._
 import edu.umd.mith.scalanvas.model.{ ImageForPainting, Link, Sequence }
 import edu.umd.mith.sga.model.{ SgaCanvas, SgaManifest }
 import edu.umd.mith.sga.rdf._
+import edu.umd.mith.banana.io._
+import edu.umd.mith.banana.io.jena._
 import java.io.{ File, FileReader, PrintWriter }
 import au.com.bytecode.opencsv.CSVReader
+import scalax.io.Resource
 
 object SpreadsheetReader extends App {
   import scala.collection.JavaConverters._
@@ -58,7 +61,7 @@ object SpreadsheetReader extends App {
 
   writer.write(
     manifest.jsonResource.toPG.graph,
-    new java.io.FileOutputStream(output),
+    Resource.fromFile(output),
     manifest.base.toString
   )
 }

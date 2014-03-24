@@ -20,7 +20,8 @@ trait TeiManager {
       )
     }
 
-    val file = new File(teiDir, idWithSeq + ".xml")
+    val file = new File(new File(new File(teiDir, idWithSeq.take(2)), idWithSeq.split("-").init.mkString("-")), idWithSeq + ".xml")
+
     val surface = XmlLabeler.addCharOffsets(XML.loadFile(file))
     val attrs = surface.attributes.asAttrMap
     val _uri = basePlus("/%s/canvas/%s".format(fullId, pageSeq))

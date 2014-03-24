@@ -8,8 +8,8 @@ object Scalanvas extends Build {
     dependencies = Seq(schemas),
     settings = commonSettings ++ Seq(
       libraryDependencies <++= scalaVersion { sv => Seq(
-        "org.w3" %% "banana-rdf" % "0.4",
-        "org.w3" %% "banana-jena" % "0.4",
+        //"org.w3" %% "banana-rdf" % "0.4",
+        //"org.w3" %% "banana-jena" % "0.4",
         "net.sf.opencsv" % "opencsv" % "2.3",
         "org.apache.jena" % "jena-arq" % "2.11.1",
         "com.github.jsonld-java" % "jsonld-java-jena" % "0.2" excludeAll(
@@ -19,10 +19,10 @@ object Scalanvas extends Build {
       )}
     )
   ).dependsOn(
-    //ProjectRef(uri("git://github.com/w3c/banana-rdf.git#259d7e17a9c7aa72dec9abe8c0bb61ea9e49e3bd"), "banana-jena"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#updates"), "banana-io-jena"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#updates"), "banana-prefixes"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#updates"), "banana-argonaut")
+    ProjectRef(uri("git://github.com/w3c/banana-rdf.git#e641b8a5fccc5e8efa9a74c2a420462ee826f8ea"), "banana-jena"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#arq-2.11"), "banana-io-jena"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#arq-2.11"), "banana-prefixes"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#arq-2.11"), "banana-argonaut")
   )
 
   lazy val schemas: Project = Project(
