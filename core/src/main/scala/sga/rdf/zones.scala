@@ -31,7 +31,7 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
 
   val topHeight = if (needExtraTop) 0.10 else 0.05
 
-  private def coords(current: String, past: List[String]) = (current, past) match {
+  private def coords(current: String, attrs: Map[String, String], past: List[String], pastRend: List[String]) = (current, past) match {
     case ("running_head", past) =>
       val runningHeadCount = typeCounts("running_head")
       val runningHeadIdx = past.count(_ == "running_head") + 1
@@ -50,7 +50,7 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         (0.25, (1 - topHeight) / leftMarginCount)
       ).success
     case ("main", _) if typeCounts("left_margin") == 0 =>
-      Some((0.125, topHeight) -> (0.875, 1 - topHeight)).success
+      Some((0.125 + extraLeft, topHeight) -> (0.875 - extraRight, 1 - topHeight)).success
     case ("main", _) => Some((0.25, topHeight) -> (0.75, 1 - topHeight)).success
     case ("logical", _) => None.success
     // Unlike left_margins in SGA, these zones must occupy all the vertical space.
@@ -81,6 +81,24 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         ((area * (columnIdx.toDouble - 1) + extraLeft,  topHeight),
         (area, 1 - topHeight))
       ).success
+    case ("pasteon", past) =>
+     
+      var columnIndex = pastRend.count(rend => rend contains "new")
+      val isNewCol = attrs.values.exists(_ contains "new")
+      var totColumns = 0
+
+      val cols = zones.map(
+        zone => (zone \ "@rend").text
+      ).filter(z => z contains "new").groupBy(identity).map{
+        case (key, values) => values.size
+      }
+      if (!cols.isEmpty) { 
+        totColumns = cols.head + 1
+      }
+
+      if (isNewCol) { columnIndex = columnIndex + 1 }
+
+      None.success
     case ("", _) => None.success
     case other => 
        "Unknown zone in %s: %s!".format(canvas.shelfmark, other).fail
@@ -89,12 +107,15 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
   def readZones: List[PointedGraph[Rdf]] =
     zones.foldLeft(
       List.empty[PointedGraph[Rdf]],
+      List.empty[String],
       List.empty[String]
     ) {
-      case ((annotations, past), zone) =>
+      case ((annotations, past, pastRend), zone) =>
         val zoneType = (zone \ "@type").text
+        val zoneRend = (zone \ "@rend").text
+        val attrs = zone.attributes.asAttrMap
 
-        coords(zoneType, past).fold(
+        coords(zoneType, attrs, past, pastRend).fold(
           message => throw new RuntimeException(message),
           {
             case Some(((x, y), (zw, zh))) =>
@@ -116,8 +137,8 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
                 fragmentSelection(canvas, xywh)
               )
 
-              (annotations :+ annotation, zoneType :: past)
-            case _ => (annotations, zoneType :: past)
+              (annotations :+ annotation, zoneType :: past, zoneRend :: pastRend)
+            case _ => (annotations, zoneType :: past, zoneRend :: pastRend)
           }
         )
     }._1
