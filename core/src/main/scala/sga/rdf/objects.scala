@@ -76,7 +76,7 @@ trait ObjectBinders {
         val hand = (canvas.transcription \\ "handShift").toList match {
           case List(handShift) => handShift.attributes.asAttrMap.get("new").filter(_ == "#pbs")
           case Nil => None
-          case _ => throw new RuntimeException("Too many hand shifts.")
+          case _ => None //throw new RuntimeException("Too many hand shifts.")
         }
 
         val Hand = "#(\\S+)".r
@@ -235,6 +235,9 @@ trait ObjectBinders {
             case Some("sup") => addCssStyle(os, "vertical-align: super")
             case Some("superscript") => addCssStyle(os, "vertical-align: super")
             case Some("subscript") => addCssStyle(os, "vertical-align: sub")
+            case Some("circled") => addCssStyle(os, "ignore: ignore")
+            case Some("right") => addCssStyle(os, "ignore: ignore")
+            case Some("smallcaps") => addCssStyle(os, "font-variant: small-caps")
             case Some(rend) => sys.error(s"Unexpected rend value: $rend.")
             case None => os
           }
