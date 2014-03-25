@@ -8,32 +8,25 @@ object Scalanvas extends Build {
     settings = commonSettings ++ Seq(
       libraryDependencies ++= Seq(
         "org.apache.jena" % "jena-arq" % "2.11.1",
-        "com.github.jsonld-java" % "jsonld-java-jena" % "0.3"
+        "com.github.jsonld-java" % "jsonld-java-jena" % "0.4-SNAPSHOT"
       )
     )
   ).dependsOn(
     ProjectRef(uri("git://github.com/w3c/banana-rdf.git"), "banana-jena")
   )
 
-  
-  /* lazy val core: Project = Project(
+  lazy val core: Project = Project(
     id = "scalanvas-core",
     base = file("core"),
-    dependencies = Seq(schemas),
-    settings = commonSettings ++ Seq(
-      libraryDependencies <++= scalaVersion { sv => Seq(
-        "net.sf.opencsv" % "opencsv" % "2.3",
-        "org.apache.jena" % "jena-arq" % "2.11.1",
-        "com.github.jsonld-java" % "jsonld-java-jena" % "0.2" excludeAll(
-          ExclusionRule(organization = "org.apache.jena"),
-          ExclusionRule(organization = "org.slf4j")
-        )
-      )}
-    )
-  ).dependsOn(
-    ProjectRef(uri("git://github.com/w3c/banana-rdf.git"), "banana-jena"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-jena"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-io-jena")
+    dependencies = Seq(bananaUtils),
+    settings = commonSettings
+  )
+
+  /*lazy val sga: Project = Project(
+    id = "scalanvas-sga",
+    base = file("sga"),
+    dependencies = Seq(core),
+    settings = commonSettings
   )
 
   lazy val schemas: Project = Project(
