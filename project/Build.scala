@@ -2,14 +2,26 @@ import sbt._
 import Keys._
 
 object Scalanvas extends Build {
-  lazy val core: Project = Project(
+  lazy val bananaUtils: Project = Project(
+    id = "banana-utils",
+    base = file("banana"),
+    settings = commonSettings ++ Seq(
+      libraryDependencies ++= Seq(
+        "org.apache.jena" % "jena-arq" % "2.11.1",
+        "com.github.jsonld-java" % "jsonld-java-jena" % "0.3"
+      )
+    )
+  ).dependsOn(
+    ProjectRef(uri("git://github.com/w3c/banana-rdf.git"), "banana-jena")
+  )
+
+  
+  /* lazy val core: Project = Project(
     id = "scalanvas-core",
     base = file("core"),
     dependencies = Seq(schemas),
     settings = commonSettings ++ Seq(
       libraryDependencies <++= scalaVersion { sv => Seq(
-        //"org.w3" %% "banana-rdf" % "0.4",
-        //"org.w3" %% "banana-jena" % "0.4",
         "net.sf.opencsv" % "opencsv" % "2.3",
         "org.apache.jena" % "jena-arq" % "2.11.1",
         "com.github.jsonld-java" % "jsonld-java-jena" % "0.2" excludeAll(
@@ -21,9 +33,7 @@ object Scalanvas extends Build {
   ).dependsOn(
     ProjectRef(uri("git://github.com/w3c/banana-rdf.git"), "banana-jena"),
     ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-jena"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-io-jena"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-prefixes"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-argonaut")
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-io-jena")
   )
 
   lazy val schemas: Project = Project(
@@ -36,13 +46,13 @@ object Scalanvas extends Build {
     id = "scalanvas",
     base = file("."),
     settings = commonSettings
-  ).aggregate(schemas, core)
+  ).aggregate(schemas, core)*/
 
   def commonSettings = Defaults.defaultSettings ++ Seq(
     organization := "edu.umd.mith",
     version := "0.0.0-SNAPSHOT",
     resolvers += Resolver.sonatypeRepo("snapshots"),
-    scalaVersion := "2.10.3",
+    scalaVersion := "2.10.4",
     scalacOptions := Seq(
       "-feature",
       "-language:implicitConversions",
@@ -51,8 +61,7 @@ object Scalanvas extends Build {
     ),
     libraryDependencies <++= scalaVersion(sv => Seq(
       "com.typesafe" % "config" % "1.2.0",
-      "org.slf4j" % "slf4j-simple" % "1.7.6",
-      "io.argonaut" %% "argonaut" % "6.0"
+      "org.slf4j" % "slf4j-simple" % "1.7.6"
     ))
   )
 }
