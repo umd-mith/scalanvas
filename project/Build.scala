@@ -19,10 +19,11 @@ object Scalanvas extends Build {
       )}
     )
   ).dependsOn(
-    ProjectRef(uri("git://github.com/w3c/banana-rdf.git#e641b8a5fccc5e8efa9a74c2a420462ee826f8ea"), "banana-jena"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#arq-2.11"), "banana-io-jena"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#arq-2.11"), "banana-prefixes"),
-    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git#arq-2.11"), "banana-argonaut")
+    ProjectRef(uri("git://github.com/w3c/banana-rdf.git"), "banana-jena"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-jena"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-io-jena"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-prefixes"),
+    ProjectRef(uri("git://github.com/umd-mith/banana-utils.git"), "banana-argonaut")
   )
 
   lazy val schemas: Project = Project(
@@ -50,7 +51,7 @@ object Scalanvas extends Build {
     ),
     libraryDependencies <++= scalaVersion(sv => Seq(
       "com.typesafe" % "config" % "1.2.0",
-      "org.slf4j" % "slf4j-simple" % "1.6.4",
+      "org.slf4j" % "slf4j-simple" % "1.7.6",
       "io.argonaut" %% "argonaut" % "6.0"
     ))
   )

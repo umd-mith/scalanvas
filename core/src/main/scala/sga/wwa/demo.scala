@@ -10,8 +10,7 @@ import edu.umd.mith.sga.rdf._
 //import edu.umd.mith.banana.argo._
 import edu.umd.mith.banana.io._
 import edu.umd.mith.banana.io.jena._
-import java.io.{ File, PrintWriter }
-import scalax.io.Resource
+import java.io.{ BufferedOutputStream, File, FileOutputStream }
 
 // object JsonLdDemoBuilder extends JsonLdBuilder with App {
 //   val outputDir = new File("jsonld-demo")
@@ -47,7 +46,7 @@ trait JsonLdBuilder {
 
     writer.write(
       manifest.jsonResource.toPG.graph,
-      Resource.fromFile(output),
+      new BufferedOutputStream(new FileOutputStream(output)),
       manifest.base.toString
     )
   }

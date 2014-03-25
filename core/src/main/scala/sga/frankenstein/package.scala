@@ -1,6 +1,7 @@
 package edu.umd.mith.sga
 
-import org.w3.banana.jena._
+import edu.umd.mith.banana.jena.JenaModule
+import org.w3.banana.jena.Jena
 
 package object frankenstein extends JenaModule {
   type Rdf = Jena

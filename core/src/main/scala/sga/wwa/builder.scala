@@ -8,8 +8,7 @@ import edu.umd.mith.sga.json.IndexManifest
 import edu.umd.mith.sga.rdf._
 import edu.umd.mith.banana.io._
 import edu.umd.mith.banana.io.jena._
-import java.io.{ File, PrintWriter }
-import scalax.io.Resource
+import java.io.{ BufferedOutputStream, File, FileOutputStream }
 
 object DevelopmentBuilder extends Builder with App {
   val outputDir = new File(new File("output", "development"), "primary")
@@ -47,7 +46,7 @@ trait Builder {
 
     writer.write(
       manifest.jsonResource.toPG.graph,
-      Resource.fromFile(output),
+      new BufferedOutputStream(new FileOutputStream(output)),
       manifest.base.toString
     )
   }

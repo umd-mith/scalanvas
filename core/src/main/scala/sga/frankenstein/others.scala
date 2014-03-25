@@ -8,9 +8,8 @@ import edu.umd.mith.sga.model.{ SgaCanvas, SgaManifest }
 import edu.umd.mith.sga.rdf._
 import edu.umd.mith.banana.io._
 import edu.umd.mith.banana.io.jena._
-import java.io.{ File, FileReader, PrintWriter }
+import java.io.{ BufferedOutputStream, File, FileOutputStream, FileReader, PrintWriter }
 import au.com.bytecode.opencsv.CSVReader
-import scalax.io.Resource
 
 object SpreadsheetReader extends App {
   import scala.collection.JavaConverters._
@@ -61,7 +60,7 @@ object SpreadsheetReader extends App {
 
   writer.write(
     manifest.jsonResource.toPG.graph,
-    Resource.fromFile(output),
+    new BufferedOutputStream(new FileOutputStream(output)),
     manifest.base.toString
   )
 }
