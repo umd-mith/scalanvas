@@ -34,6 +34,7 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
   // HACK for tracking space taken in grid
   var curGridX: Int = 0
   var curGridY: Int = 0
+  var widestGridX: Int = 0
 
   private def coords(current: String, attrs: Map[String, String], past: List[String], pastRend: List[String]) = (current, past) match {
     case ("running_head", past) =>
@@ -104,6 +105,14 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         columnIndex = columnIndex + 1 
       }
 
+      if (isNewCol) { 
+        curGridY = 0 
+        curGridX = widestGridX 
+      }
+
+      // println("==newDoc/Col update==")
+      // println(curGridX, curGridY)
+
       val c = """.*col-(\d).*""".r
       val r = """.*row-(\d).*""".r
       val rend = attrs("rend").toString
@@ -122,17 +131,20 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         )
       }      
 
-      val startX = if (curGridX == 0) 0 else 1 / (12 / curGridX).toDouble
-      val startY = if (curGridY == 0) 0 else 1 / (6 / curGridY).toDouble
-      val extX = 1 / (12 / colSpan).toDouble
-      val extY = 1 / (6 / rowSpan).toDouble
+      val startX = if (curGridX == 0) 0.0 else 1.0 / (12.0 / curGridX).toDouble
+      val startY = if (curGridY == 0) 0.0 else 1.0 / (6.0 / curGridY).toDouble
+      val extX = 1.0 / (12.0 / colSpan).toDouble
+      val extY = 1.0 / (6.0 / rowSpan).toDouble
+
+      // println("==")
+      // println(startX, startY, extX, extY)
 
       // Done calculating. Now update hack-y grid position trackers
-      if (curGridX < colSpan) { curGridX = curGridX + colSpan }
-      if (curGridY < rowSpan) { curGridY = curGridY + rowSpan }
+      if (widestGridX < curGridX + colSpan) { widestGridX = curGridX + colSpan }
+      curGridY = curGridY + rowSpan
 
-      if (isNewCol) { curGridY = 0 }
-      if (columnIndex == 0) { curGridX = 0 }
+      // println("==updated==")
+      // println(curGridX, curGridY)
 
       Some(
         ((startX, startY),
