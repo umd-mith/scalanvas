@@ -35,6 +35,7 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
   var curGridX: Int = 0
   var curGridY: Int = 0
   var widestGridX: Int = 0
+  var tallestGridY: Int = 0
 
   private def coords(current: String, attrs: Map[String, String], past: List[String], pastRend: List[String]) = (current, past) match {
     case ("running_head", past) =>
@@ -53,6 +54,35 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
       Some(
         (0.0,  topHeight + (1 - topHeight) * (leftMarginIdx.toDouble / leftMarginCount)),
         (0.25, (1 - topHeight) / leftMarginCount)
+      ).success
+    case ("main", _) if attrs("rend").toString contains "col" =>
+      
+      val c = """.*col-(\d+).*""".r
+      val r = """.*row-(\d+).*""".r
+      val rend = attrs("rend").toString
+
+      val colSpan = rend match {
+        case c(num) => num.toInt
+        case _ => throw new RuntimeException(
+          s"No column span specified in grid!"
+        )
+      }    
+
+      val rowSpan = rend match {
+        case r(num) => num.toInt
+        case _ => throw new RuntimeException(
+          s"No row span specified in grid!"
+        )
+      }    
+
+      curGridY = rowSpan 
+      tallestGridY = rowSpan
+
+      println(curGridX)
+
+      Some(
+        ((0.0, 0.0),
+        (1.0 / (12.0 / colSpan.toDouble), 1.0 / (6.0 / rowSpan.toDouble)))
       ).success
     case ("main", _) if typeCounts("left_margin") == 0 =>
       Some((0.125 + extraLeft, topHeight) -> (0.875 - extraRight, 1 - topHeight)).success
@@ -103,15 +133,12 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
 
       if (isNewCol) { 
         columnIndex = columnIndex + 1 
-      }
-
-      if (isNewCol) { 
-        curGridY = 0 
+        curGridY = tallestGridY
         curGridX = widestGridX 
       }
 
       // println("==newDoc/Col update==")
-      // println(curGridX, curGridY)
+      println(curGridX, curGridY)
 
       val c = """.*col-(\d).*""".r
       val r = """.*row-(\d).*""".r
