@@ -23,5 +23,10 @@ package object io {
       javaContext
     }
   }
+
+  implicit object NamespaceJavaMapJsonLdContext
+    extends JsonLDContext[java.util.Map[String, Object]] {
+    def toMap(context: java.util.Map[String, Object]) = context
+  }
 }
 

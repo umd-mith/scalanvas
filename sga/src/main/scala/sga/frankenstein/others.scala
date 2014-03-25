@@ -1,13 +1,13 @@
 package edu.umd.mith.sga.frankenstein
 
-import com.github.jsonldjava.utils.JSONUtils
+import com.github.jsonldjava.utils.JsonUtils
 import org.w3.banana._
 import org.w3.banana.syntax._
 import edu.umd.mith.scalanvas.model.{ ImageForPainting, Link, Sequence }
 import edu.umd.mith.sga.model.{ SgaCanvas, SgaManifest }
 import edu.umd.mith.sga.rdf._
 import edu.umd.mith.banana.io._
-import edu.umd.mith.banana.io.jena._
+import edu.umd.mith.banana.jena.io._
 import java.io.{ BufferedOutputStream, File, FileOutputStream, FileReader, PrintWriter }
 import au.com.bytecode.opencsv.CSVReader
 

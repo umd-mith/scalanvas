@@ -1,9 +1,9 @@
 package edu.umd.mith.sga
 
-import edu.umd.mith.banana.jena.JenaModule
+import edu.umd.mith.banana.jena.DefaultGraphJenaModule
 import org.w3.banana.jena.Jena
 
-package object frankenstein extends JenaModule {
+package object frankenstein extends DefaultGraphJenaModule {
   type Rdf = Jena
 
   /*trait RDFJson

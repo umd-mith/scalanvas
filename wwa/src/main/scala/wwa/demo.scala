@@ -1,6 +1,6 @@
 package edu.umd.mith.sga.wwa
 
-import com.github.jsonldjava.utils.JSONUtils
+import com.github.jsonldjava.utils.JsonUtils
 //import argonaut._, Argonaut._
 import org.w3.banana._
 import org.w3.banana.syntax._
@@ -9,7 +9,7 @@ import edu.umd.mith.sga.json.IndexManifest
 import edu.umd.mith.sga.rdf._
 //import edu.umd.mith.banana.argo._
 import edu.umd.mith.banana.io._
-import edu.umd.mith.banana.io.jena._
+import edu.umd.mith.banana.jena.io._
 import java.io.{ BufferedOutputStream, File, FileOutputStream }
 
 // object JsonLdDemoBuilder extends JsonLdBuilder with App {
@@ -31,10 +31,6 @@ trait JsonLdBuilder {
 
     val output = new File(dir, "Manifest.jsonld")
     if (output.exists) output.delete()
-
-    implicit object MSOContext extends JsonLDContext[java.util.Map[String, Object]] {
-      def toMap(ctx: java.util.Map[String, Object]) = ctx
-    }
 
     val writer = new JsonLDWriter[java.util.Map[String, Object]] {
       val context = JSONUtils.fromString(

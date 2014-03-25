@@ -1,6 +1,6 @@
 package edu.umd.mith.sga.frankenstein
 
-import com.github.jsonldjava.utils.JSONUtils
+import com.github.jsonldjava.utils.JsonUtils
 //import argonaut._, Argonaut._
 import org.w3.banana._
 import org.w3.banana.syntax._
@@ -30,10 +30,6 @@ trait JsonLdBuilder {
 
     /*val output = new File(dir, "Manifest.jsonld")
     if (output.exists) output.delete()
-
-    implicit object MSOContext extends JsonLDContext[java.util.Map[String, Object]] {
-      def toMap(ctx: java.util.Map[String, Object]) = ctx
-    }
 
     val writer = new JsonLDWriter[java.util.Map[String, Object]] {
       val context = JSONUtils.fromString(

@@ -22,16 +22,28 @@ object Scalanvas extends Build {
     settings = commonSettings
   )
 
-  /*lazy val sga: Project = Project(
-    id = "scalanvas-sga",
-    base = file("sga"),
+  lazy val extensions: Project = Project(
+    id = "scalanvas-extensions",
+    base = file("extensions"),
     dependencies = Seq(core),
     settings = commonSettings
   )
 
-  lazy val schemas: Project = Project(
-    id = "scalanvas-schemas",
-    base = file("schemas"),
+  lazy val sga: Project = Project(
+    id = "scalanvas-sga",
+    base = file("sga"),
+    dependencies = Seq(extensions),
+    settings = commonSettings ++ Seq(
+      libraryDependencies ++= Seq(
+        "net.sf.opencsv" % "opencsv" % "2.3"
+      )
+    )
+  )
+
+  lazy val wwa: Project = Project(
+    id = "scalanvas-wwa",
+    base = file("wwa"),
+    dependencies = Seq(extensions),
     settings = commonSettings
   )
 
@@ -39,7 +51,7 @@ object Scalanvas extends Build {
     id = "scalanvas",
     base = file("."),
     settings = commonSettings
-  ).aggregate(schemas, core)*/
+  ).aggregate(sga, wwa)
 
   def commonSettings = Defaults.defaultSettings ++ Seq(
     organization := "edu.umd.mith",

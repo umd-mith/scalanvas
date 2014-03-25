@@ -7,7 +7,7 @@ import edu.umd.mith.sga.wwa.util.ShelfmarkMapReader
 import java.io.File
 import java.net.URI
 
-trait WwaManifest extends SgaManifest with ShelfmarkMapReader with TeiManager {
+trait WwaManifest extends MithManifest with ShelfmarkMapReader with TeiManager {
   this: WwaConfiguration =>
 
   def resolvableDomain = "%sshelleygodwinarchive.org".format(

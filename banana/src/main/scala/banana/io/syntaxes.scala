@@ -8,6 +8,6 @@ trait RDFJson
 
 /** Represents evidence that a type can be used as a JSON-LD context. */
 trait JsonLDContext[C] {
-  def toMap(ctx: C): java.util.Map[String, Object]
+  def toMap(context: C): java.util.Map[String, Object]
 }
 
