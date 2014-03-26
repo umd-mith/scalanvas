@@ -1,29 +1,16 @@
-package edu.umd.mith.sga.wwa
+package edu.umd.mith.wwa
 
 import com.github.jsonldjava.utils.JsonUtils
-//import argonaut._, Argonaut._
 import org.w3.banana._
 import org.w3.banana.syntax._
-import edu.umd.mith.sga.model.SgaManifest
-import edu.umd.mith.sga.json.IndexManifest
-import edu.umd.mith.sga.rdf._
-//import edu.umd.mith.banana.argo._
+import edu.umd.mith.wwa.model.WwaManifest
+import edu.umd.mith.rdf._
 import edu.umd.mith.banana.io._
 import edu.umd.mith.banana.jena.io._
 import java.io.{ BufferedOutputStream, File, FileOutputStream }
 
-// object JsonLdDemoBuilder extends JsonLdBuilder with App {
-//   val outputDir = new File("jsonld-demo")
-
-//   trait Dev extends WwaConfiguration
-//     with BodleianImages
-//     with SgaTei { this: WwaManifest => }
-
-//   save(new LessingManifest with Dev, outputDir)
-// }
-
 trait JsonLdBuilder {
-  def save(manifest: SgaManifest, outputDir: File) = {
+  def save(manifest: WwaManifest, outputDir: File) = {
     import ops._
 
     val dir = new File(outputDir, manifest.id)
@@ -33,7 +20,7 @@ trait JsonLdBuilder {
     if (output.exists) output.delete()
 
     val writer = new JsonLDWriter[java.util.Map[String, Object]] {
-      val context = JSONUtils.fromString(
+      val context = JsonUtils.fromString(
         io.Source.fromInputStream(
           getClass.getResourceAsStream("/edu/umd/mith/scalanvas/context.json")
         ).mkString

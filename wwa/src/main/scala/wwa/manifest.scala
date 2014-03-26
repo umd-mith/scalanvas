@@ -1,13 +1,13 @@
-package edu.umd.mith.sga.wwa
+package edu.umd.mith.wwa
 
 import edu.umd.mith.scalanvas.model.Service
-import edu.umd.mith.sga.model.SgaManifest
-import edu.umd.mith.sga.wwa.util.ShelfmarkMapReader
+import edu.umd.mith.wwa.model.WwaManifest
+import edu.umd.mith.wwa.util.ShelfmarkMapReader
 
 import java.io.File
 import java.net.URI
 
-trait WwaManifest extends MithManifest with ShelfmarkMapReader with TeiManager {
+trait MarginaliaManifest extends WwaManifest with ShelfmarkMapReader with TeiManager {
   this: WwaConfiguration =>
 
   def resolvableDomain = "%sshelleygodwinarchive.org".format(
@@ -56,13 +56,13 @@ trait WwaManifest extends MithManifest with ShelfmarkMapReader with TeiManager {
     }
   )
 
-  import WwaManifest.IdWithSeq
+  import MarginaliaManifest.IdWithSeq
 
   override val agent = Some("...")
   override val attribution = Some("...")
 }
 
-object WwaManifest {
+object MarginaliaManifest {
   val IdWithSeq = """duk\.([^-]+)-(\d\d\d\d)""".r
 }
 

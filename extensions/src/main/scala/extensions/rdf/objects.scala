@@ -1,76 +1,49 @@
-package edu.umd.mith.sga.rdf
+package edu.umd.mith.scalanvas.extensions.rdf
 
 import edu.umd.mith.scalanvas.model._
-import edu.umd.mith.scalanvas.rdf.{
-  ObjectBinders => ScalanvasObjectBinders,
-  PropertyBinders => ScalanvasPropertyBinders,
-  ScalanvasPrefixes
-}
-
+import edu.umd.mith.scalanvas.rdf.{ ObjectBinders, PropertyBinders, ScalanvasPrefixes }
 import edu.umd.mith.scalanvas.util.xml.tei.{ Annotation, AnnotationExtractor }
-import edu.umd.mith.sga.model._
+import edu.umd.mith.scalanvas.extensions.model._
 
 import org.w3.banana._
 import org.w3.banana.binder._
 import org.w3.banana.diesel._
 import org.w3.banana.syntax._
 
-import scalaz.{ Source => _, _ }, Scalaz._
+//import scalaz.{ Source => _, _ }, Scalaz._
 
-trait ObjectBinders {
-  this: PropertyBinders with ScalanvasPropertyBinders with ScalanvasObjectBinders =>
-
+trait MithObjectBinders { this: MithPropertyBinders with PropertyBinders with ObjectBinders =>
   implicit def ImageToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, Image] =
-    new SgaPrefixes[Rdf]
-      with ResourceToPG[Rdf, Image]
-      with RectToPG[Rdf, Image]
-      with FormattedToPG[Rdf, Image]
-      with HasRelatedServiceToPG[Rdf, Image]
-      with MotivatedToPG[Rdf, Image] {
-      override def toPG(image: Image) = super.toPG(image)
-    }
+    new MithPrefixes[Rdf] with ImageToPG[Rdf, Image] with MithMotivationHelpers[Rdf] {}
 
-  implicit def SgaCanvasToPG[Rdf <: RDF](implicit
-    ops: RDFOps[Rdf]
-  ): ToPG[Rdf, SgaCanvas] =
-    new SgaPrefixes[Rdf]
-      with ResourceToPG[Rdf, SgaCanvas]
-      with LabeledToPG[Rdf, SgaCanvas]
-      with RectToPG[Rdf, SgaCanvas]
-      with MetadataLabeledToPG[Rdf, SgaCanvas]
-      with SgaMetadataLabeledToPG[Rdf, SgaCanvas]
-      with HasRelatedServiceToPG[Rdf, SgaCanvas] {
-      override def toPG(canvas: SgaCanvas) = (
-        super.toPG(canvas)
-          .a(sc.Canvas)
-          //.a(dms.Canvas)
-      )
-    }
+  implicit def MithCanvasToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithCanvas] =
+    new MithPrefixes[Rdf] with CanvasToPG[Rdf, MithCanvas] with MithMetadataLabeledToPG[Rdf, MithCanvas] {}
 
-  implicit def SgaManifestToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, SgaManifest] =
-    new SgaPrefixes[Rdf] with OreHelper[Rdf] with SpecificResourceHelper[Rdf]
-      with ResourceToPG[Rdf, SgaManifest]
-      with LabeledToPG[Rdf, SgaManifest]
-      with MetadataLabeledToPG[Rdf, SgaManifest]
-      with SgaMetadataLabeledToPG[Rdf, SgaManifest]
-      with HasRelatedServiceToPG[Rdf, SgaManifest] {
+  trait MithManifestToPG[Rdf <: RDF, C <: MithCanvas, A <: MithManifest[C, A]] extends ManifestToPG[Rdf, C, A] { this: MithPrefixes[Rdf] with MithMetadataLabeledToPG[Rdf, A] =>
+    def addCssStyle(g: PointedGraph[Rdf], css: String) = g -- oa.hasStyle ->- (
+      ops.bnode().a(cnt.ContentAsText)
+        -- dc.format ->- "text/css"
+        -- cnt.chars ->- css
+    )
+
+    def addCssClass(g: PointedGraph[Rdf], cls: String) = g -- mith.hasClass ->- cls
+  }
+  /* 
+  (implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithManifest] =
+    new MithPrefixes[Rdf] with OreHelper[Rdf] with SpecificResourceHelper[Rdf]
+      with ResourceToPG[Rdf, MithManifest]
+      with LabeledToPG[Rdf, MithManifest]
+      with MithMetadataLabeledToPG[Rdf, MithManifest]
+      with HasRelatedServiceToPG[Rdf, MithManifest] {
 
       import ops._
 
-      def readZones(canvas: SgaCanvas): List[PointedGraph[Rdf]] = {
+      def readZones(canvas: MithCanvas): List[PointedGraph[Rdf]] = {
         val zoneReader = new ZoneReader(canvas)
         zoneReader.readZones
       }
 
-      def addCssStyle(g: PointedGraph[Rdf], css: String) = g -- oa.hasStyle ->- (
-        bnode().a(cnt.ContentAsText)
-          -- dc.format ->- "text/css"
-          -- cnt.chars ->- css
-      )
-
-      def addCssClass(g: PointedGraph[Rdf], cls: String) = g -- sga.hasClass ->- cls
-
-      def readTextAnnotations(canvas: SgaCanvas): List[PointedGraph[Rdf]] = {
+      def readTextAnnotations(canvas: MithCanvas): List[PointedGraph[Rdf]] = {
         val annotationExtractor = AnnotationExtractor(canvas.transcription.get, Set("c56-0113.02"))
 
         val hand = (canvas.transcription.get \\ "handShift").toList match {
@@ -109,19 +82,19 @@ trait ObjectBinders {
           val lineAnnotation = (
             URI(canvas.uri.toString + "/line-annotations/%04d".format(i + 1))
               .a(oa.Annotation)
-              .a(sga.LineAnnotation)
+              .a(mith.LineAnnotation)
               .a(oax.Highlight)
               -- oa.hasTarget ->- (
                 textOffsetSelection(canvas.source, attrs("mu:b").toInt, attrs("mu:e").toInt)
-                  -- sga.hasClass ->- libraryHand.orElse(
+                  -- mith.hasClass ->- libraryHand.orElse(
                     handClass.filter { _ =>
                       // This is a horrible hack.
                       !canvas.uri.toString.endsWith("ox-ms_abinger_c58/canvas/0047") || i > 7 
                     }
                   )
               )
-              -- sga.textAlignment ->- attrs.get("rend").filterNot(_.startsWith("indent"))
-              -- sga.textIndentLevel ->- attrs.get("rend").filter(_.startsWith("indent")).map(_.drop(6).toInt)
+              -- mith.textAlignment ->- attrs.get("rend").filterNot(_.startsWith("indent"))
+              -- mith.textIndentLevel ->- attrs.get("rend").filter(_.startsWith("indent")).map(_.drop(6).toInt)
           )
 
           val marginalia = if (isAuthorialLine(line)) {
@@ -156,8 +129,8 @@ trait ObjectBinders {
             (
               bnode()
                 .a(oa.Annotation)
-                .a(sga.MarginalAnnotation)
-                -- sga.hasPlace ->- place
+                .a(mith.MarginalAnnotation)
+                -- mith.hasPlace ->- place
                 -- oa.hasTarget ->- targetLine
                 -- oa.hasBody ->- lines.map(_._2._2)
             )
@@ -183,7 +156,7 @@ trait ObjectBinders {
             (
               bnode()
                 .a(oa.Annotation)
-                .a(sga.AdditionAnnotation)
+                .a(mith.AdditionAnnotation)
                 .a(oax.Highlight)
                 -- oa.hasTarget ->- (
                   textOffsetSelection(canvas.source, b, e)
@@ -194,7 +167,7 @@ trait ObjectBinders {
                           -- cnt.chars ->- css
                       )}
                     )
-                    -- sga.hasClass ->- handClass
+                    -- mith.hasClass ->- handClass
                 )
             )
         }
@@ -211,11 +184,11 @@ trait ObjectBinders {
             (
               bnode()
                 .a(oa.Annotation)
-                .a(sga.DeletionAnnotation)
+                .a(mith.DeletionAnnotation)
                 .a(oax.Highlight)
                 -- oa.hasTarget ->- (
                   textOffsetSelection(canvas.source, b, e)
-                    -- sga.hasClass ->- handClass
+                    -- mith.hasClass ->- handClass
                 )
             )
         }
@@ -307,7 +280,7 @@ trait ObjectBinders {
                 .a(sc.AnnotationList)
                 .a(sc.Layer)
                 -- rdfs.label ->- "Reading layer"
-                -- sc.forMotivation ->- sga.reading
+                -- sc.forMotivation ->- mith.reading
             ).aggregates(
               manifest.sequence.canvases.map { canvas =>
                 List(
@@ -316,7 +289,7 @@ trait ObjectBinders {
                     .a(oa.Annotation)
                     -- oa.hasTarget ->- canvas
                     -- oa.hasBody ->- canvas.reading
-                    -- sc.motivatedBy ->- sga.reading
+                    -- sc.motivatedBy ->- mith.reading
                 )
               }
             )) else None
@@ -328,7 +301,7 @@ trait ObjectBinders {
                 .a(sc.AnnotationList)
                 .a(sc.Layer)
                 -- rdfs.label ->- "TEI source"
-                -- sc.forMotivation ->- sga.source
+                -- sc.forMotivation ->- mith.source
             ).aggregates(
               manifest.sequence.canvases.map { canvas =>
                 List(
@@ -378,6 +351,6 @@ trait ObjectBinders {
             ).aggregates(range.canvases)
         }
       }
-    }
+    }*/
 }
 

@@ -42,8 +42,6 @@ trait MetadataLabeled {
   def date: Option[String] = None
 }
 
-sealed trait Motivation
+trait Motivation
 case object Painting extends Motivation
-case object Reading extends Motivation
-case object Source extends Motivation
 

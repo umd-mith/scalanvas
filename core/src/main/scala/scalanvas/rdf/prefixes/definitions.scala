@@ -154,3 +154,4 @@ object DmsPrefix {
   def apply[Rdf <: RDF](implicit ops: RDFOps[Rdf]) =
     new DmsPrefix[Rdf](ops)
 }
+

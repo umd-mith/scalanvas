@@ -1,14 +1,14 @@
-package edu.umd.mith.sga.wwa.util
+package edu.umd.mith.wwa.util
 
-import edu.umd.mith.sga.wwa.LogicalManifest
-import edu.umd.mith.sga.model.SgaManifest
+import edu.umd.mith.wwa.LogicalManifest
+import edu.umd.mith.wwa.model.WwaManifest
 import scala.io.Source
 
-trait ChapterMapReader { this: SgaManifest =>
+trait ChapterMapReader { this: WwaManifest =>
   private[this] val IdPattern = "ox-wwa-(volume_i{1,3})".r
 
   private[this] lazy val stream = getClass.getResourceAsStream(
-    "/edu/umd/mith/sga/wwa/%s-chapters.txt".format(
+    "/edu/umd/mith/wwa/%s-chapters.txt".format(
       id match {
         case IdPattern(volume) => volume
         case id => throw new RuntimeException(

@@ -1,9 +1,9 @@
-package edu.umd.mith.sga.wwa
+package edu.umd.mith.wwa
 
 import edu.umd.mith.scalanvas.model.Sequence
-import edu.umd.mith.sga.model.SgaCanvas
+import edu.umd.mith.wwa.model.WwaCanvas
 
-trait PhysicalManifest extends WwaManifest {
+trait PhysicalManifest extends MarginaliaManifest {
   this: WwaConfiguration =>
   val ranges = Nil
 
@@ -16,7 +16,7 @@ trait PhysicalManifest extends WwaManifest {
     case (fileId, (shelfmark, folio)) => parseTeiFile(fileId, shelfmark, folio)
   }
 
-  lazy val sequence = Sequence[SgaCanvas](
+  lazy val sequence = Sequence[WwaCanvas](
     Some(itemBasePlus("/physical-sequence")),
     "Physical sequence",
     canvases

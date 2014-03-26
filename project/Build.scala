@@ -29,10 +29,20 @@ object Scalanvas extends Build {
     settings = commonSettings
   )
 
+  lazy val teiUrils: Project = Project(
+    id = "tei-utils",
+    base = file("tei"),
+    dependencies = Seq(extensions, teiUtils),
+    settings = commonSettings ++ Seq(
+      libraryDependencies ++= Seq(
+      )
+    )
+  )
+
   lazy val sga: Project = Project(
     id = "scalanvas-sga",
     base = file("sga"),
-    dependencies = Seq(extensions),
+    dependencies = Seq(extensions, teiUtils),
     settings = commonSettings ++ Seq(
       libraryDependencies ++= Seq(
         "net.sf.opencsv" % "opencsv" % "2.3"
@@ -43,7 +53,7 @@ object Scalanvas extends Build {
   lazy val wwa: Project = Project(
     id = "scalanvas-wwa",
     base = file("wwa"),
-    dependencies = Seq(extensions),
+    dependencies = Seq(extensions, teiUtils),
     settings = commonSettings
   )
 

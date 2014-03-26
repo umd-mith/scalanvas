@@ -1,4 +1,4 @@
-package edu.umd.mith.sga.wwa
+package edu.umd.mith.wwa
 
 import com.typesafe.config.ConfigFactory
 import edu.umd.mith.scalanvas.model.Service
@@ -6,7 +6,7 @@ import edu.umd.mith.scalanvas.model.Service
 import java.io.File
 import java.net.URI
 
-trait WwaConfiguration { this: WwaManifest =>
+trait WwaConfiguration { this: MarginaliaManifest =>
   def development: Boolean = false
   def constructReadingUri(idWithSeq: String): URI
   def imageService: Option[Service]
@@ -67,7 +67,7 @@ trait MithStaticImages { this: WwaConfiguration =>
   override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)
 }
 
-trait SgaTei { this: WwaConfiguration with WwaManifest =>
+trait WwaTei { this: WwaConfiguration with MarginaliaManifest =>
   def constructReadingUri(idWithSeq: String) = new URI(
     "http://%s/tei/readingTEI/html/%s.html".format(resolvableDomain, idWithSeq)
   )

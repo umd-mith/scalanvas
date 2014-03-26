@@ -1,17 +1,17 @@
-package edu.umd.mith.sga.wwa
+package edu.umd.mith.wwa
 
 import edu.umd.mith.scalanvas.model.{ ImageForPainting, Link }
 import edu.umd.mith.scalanvas.util.xml.XmlLabeler
-import edu.umd.mith.sga.model.SgaCanvas
+import edu.umd.mith.wwa.model.WwaCanvas
 
 import java.io.File
 import scala.xml.XML
 import java.net.URI
 
 trait TeiManager {
-  self: WwaManifest with WwaConfiguration =>
-  def parseTeiFile(idWithSeq: String, itemShelfmark: String, pageFolio: String): SgaCanvas = {
-    import WwaManifest.IdWithSeq
+  self: MarginaliaManifest with WwaConfiguration =>
+  def parseTeiFile(idWithSeq: String, itemShelfmark: String, pageFolio: String): WwaCanvas = {
+    import MarginaliaManifest.IdWithSeq
 
     val (fullId, pageSeq) = idWithSeq match {
       case IdWithSeq(itemId, seq) => (itemId, seq)
@@ -32,7 +32,7 @@ trait TeiManager {
 
     val (w, h) = adjustDimensions(attrs("lrx").toInt, attrs("lry").toInt) 
  
-    new SgaCanvas {
+    new WwaCanvas {
       val uri = basePlus("/%s/canvas/%s".format(fullId, pageSeq))
       val seq = pageSeq
       // Awful hack coming...

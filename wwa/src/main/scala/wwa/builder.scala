@@ -1,11 +1,10 @@
-package edu.umd.mith.sga.wwa
+package edu.umd.mith.wwa
 
 import com.github.jsonldjava.utils.JsonUtils
 import org.w3.banana._
 import org.w3.banana.syntax._
-import edu.umd.mith.sga.model.SgaManifest
-import edu.umd.mith.sga.json.IndexManifest
-import edu.umd.mith.sga.rdf._
+import edu.umd.mith.wwa.model.WwaManifest
+import edu.umd.mith.wwa.rdf._
 import edu.umd.mith.banana.io._
 import edu.umd.mith.banana.jena.io._
 import java.io.{ BufferedOutputStream, File, FileOutputStream }
@@ -16,14 +15,14 @@ object DevelopmentBuilder extends Builder with App {
   trait Dev extends WwaConfiguration
     with DevelopmentConfiguration
     with BodleianImages
-    with SgaTei { this: WwaManifest => }
+    with WwaTei { this: WwaManifest => }
 
   save(new LessingManifest with Dev, outputDir)
   save(new BunsenManifest with Dev, outputDir)
 }
 
 trait Builder {
-  def save(manifest: SgaManifest, outputDir: File) = {
+  def save(manifest: WwaManifest, outputDir: File) = {
     import ops._
 
     val dir = new File(outputDir, manifest.id)

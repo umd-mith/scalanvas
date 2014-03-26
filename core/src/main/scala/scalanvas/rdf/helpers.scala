@@ -9,27 +9,23 @@ trait Helpers {
   trait SpecificResourceHelper[Rdf <: RDF] { this: ScalanvasPrefixes[Rdf] =>
     def ops: RDFOps[Rdf]
 
-    def base[A](source: A)(selector: PointedGraph[Rdf])(implicit
-      aToPG: ToPG[Rdf, A]
-    ) = ( 
+    def base[A](source: A)(selector: PointedGraph[Rdf])(implicit aToPG: ToPG[Rdf, A]) = ( 
       ops.bnode().a(oa.SpecificResource)
         -- oa.hasSource ->- source
         -- oa.hasSelector ->- selector
     )
 
-    def textOffsetSelection[A](source: A, begin: Int, end: Int)(implicit
-      aToPG: ToPG[Rdf, A]
-    ) = base(source)(
-      ops.bnode().a(oax.TextOffsetSelector)
-        -- oax.begin ->- begin
-        -- oax.end ->- end
-    )
+    def textOffsetSelection[A](source: A, begin: Int, end: Int)(implicit aToPG: ToPG[Rdf, A]) =
+      base(source)(
+        ops.bnode().a(oax.TextOffsetSelector)
+          -- oax.begin ->- begin
+          -- oax.end ->- end
+      )
   
-    def fragmentSelection[A](source: A, value: String)(implicit
-      aToPG: ToPG[Rdf, A]
-    ) = base(source)(
-      ops.bnode().a(oa.FragmentSelector) -- rdf.value ->- value
-    )
+    def fragmentSelection[A](source: A, value: String)(implicit aToPG: ToPG[Rdf, A]) =
+      base(source)(
+        ops.bnode().a(oa.FragmentSelector) -- rdf.value ->- value
+      )
   }
 
   trait AnnotationHelper[Rdf <: RDF] { this: ScalanvasPrefixes[Rdf] =>

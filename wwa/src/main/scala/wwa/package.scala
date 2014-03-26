@@ -1,4 +1,4 @@
-package edu.umd.mith.sga
+package edu.umd.mith
 
 import edu.umd.mith.banana.jena.DefaultGraphJenaModule
 import org.w3.banana.jena.Jena
