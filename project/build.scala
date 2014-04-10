@@ -19,7 +19,11 @@ object Scalanvas extends Build {
     id = "scalanvas-core",
     base = file("core"),
     dependencies = Seq(bananaUtils),
-    settings = commonSettings
+    settings = commonSettings ++ Seq(
+      libraryDependencies ++= Seq(
+        "org.scalesxml" % "scales-xml_2.10" % "0.6.0-M1"
+      )
+    )
   )
 
   lazy val extensions: Project = Project(
@@ -29,10 +33,9 @@ object Scalanvas extends Build {
     settings = commonSettings
   )
 
-  lazy val teiUrils: Project = Project(
+  lazy val teiUtils: Project = Project(
     id = "tei-utils",
     base = file("tei"),
-    dependencies = Seq(extensions, teiUtils),
     settings = commonSettings ++ Seq(
       libraryDependencies ++= Seq(
       )
@@ -67,7 +70,7 @@ object Scalanvas extends Build {
     organization := "edu.umd.mith",
     version := "0.0.0-SNAPSHOT",
     resolvers += Resolver.sonatypeRepo("snapshots"),
-    scalaVersion := "2.10.4",
+    scalaVersion := "2.10.3",
     scalacOptions := Seq(
       "-feature",
       "-language:implicitConversions",
