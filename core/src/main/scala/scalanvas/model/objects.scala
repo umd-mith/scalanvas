@@ -19,7 +19,6 @@ trait Canvas extends LocatedResource
   with MetadataLabeled
   with HasRelatedService {
   def uri: URI
-  def seq: String
   def label: String
   def width: Int
   def height: Int

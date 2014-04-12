@@ -25,7 +25,7 @@ package object xml {
     Nondeterminism[Task].gatherUnordered(files map loadFile).map(_.toMap)
 
   object implicits {
-    implicit class OffsetElem(val elem: Elem) extends AnyVal {
+    implicit class RichElem(val elem: Elem) extends AnyVal {
       def beginningOffset: Validation[Throwable, Int] =
         elem.attributes(beginOffset).map(_.value).toSuccess(
           MissingBeginningOffsetError(elem.name.local)
@@ -35,20 +35,27 @@ package object xml {
         elem.attributes(endOffset).map(_.value).toSuccess(
           MissingEndingOffsetError(elem.name.local)
         ).flatMap(_.parseInt)
-    }
 
-    implicit class RichElem(val elem: Elem) extends AnyVal {
       def xmlId: Validation[Throwable, String] =
         elem.attributes(xmlIdAttr).map(_.value).toSuccess(
           MissingXmlIdError(elem.name.local)
         )
     }
 
-    implicit class RichXPath[PT <: Iterable[XmlPath]](val xpath: XPath[PT]) {
+    implicit class RichXPath[PT <: Iterable[XmlPath]](val xpath: XPath[PT]) extends AnyVal {
       def withId(id: String): AttributePaths[PT] = xpath \@ xmlIdAttr === id
     }
 
-    implicit class RichAttributes(val attributes: Attributes) {
+    implicit class RichXmlPath(val xpath: XmlPath) extends AnyVal {
+      def getAttribute(name: String): Validation[Throwable, String] =
+        (xpath \@ NoNamespaceQName(name)).one.headOption.map(_.attribute.value).toSuccess(
+          MissingAttributeError(name)
+        )
+
+      def root: XmlPath = xpath.ancestor_::.head
+    }
+
+    implicit class RichAttributes(val attributes: Attributes) extends AnyVal {
       def get[B, C](b: B)(implicit
         equiv: Equiv[C],
         viewA: Attribute => C,
