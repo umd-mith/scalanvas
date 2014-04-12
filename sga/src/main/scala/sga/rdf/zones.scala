@@ -1,13 +1,13 @@
 package edu.umd.mith.sga.rdf
 
-import edu.umd.mith.sga.model.SgaCanvas
+import edu.umd.mith.sga.model.MithCanvas
 import org.w3.banana._
 import org.w3.banana.binder._
 import org.w3.banana.diesel._
 import org.w3.banana.syntax._
 import scalaz._, Scalaz._
 
-class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
+class ZoneReader[Rdf <: RDF](canvas: MithCanvas)(implicit ops: RDFOps[Rdf])
   extends SgaPrefixes[Rdf]
   with SpecificResourceHelper[Rdf]
   with AnnotationHelper[Rdf] {

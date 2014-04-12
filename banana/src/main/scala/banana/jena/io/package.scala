@@ -1,6 +1,6 @@
 package edu.umd.mith.banana.jena.io
 
-import edu.umd.mith.banana.io.JsonLDContext
+import edu.umd.mith.banana.io.JsonLdContext
 
 /** Provides Jena implementations of JSON serializations.
   *
@@ -8,10 +8,10 @@ import edu.umd.mith.banana.io.JsonLDContext
   * @todo Should also provide readers. 
   */
 package object jena {
-  implicit def JsonLDWriter[C: JsonLDContext](implicit ctx: C) = new JsonLDWriter[C] {
+  implicit def JsonLdWriter[C: JsonLdContext](implicit ctx: C) = new JsonLdWriter[C] {
     val context = ctx
   }
 
-  implicit def RDFJsonWriter = new RDFJsonWriter {}
+  implicit def RdfJsonWriter = new RdfJsonWriter {}
 }
 

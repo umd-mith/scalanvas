@@ -1,13 +1,13 @@
 package edu.umd.mith.sga.frankenstein
 
 import edu.umd.mith.scalanvas.model.Service
-import edu.umd.mith.sga.model.SgaManifest
+import edu.umd.mith.scalanvas.extensions.model.{ MithCanvas, MithManifest }
 import edu.umd.mith.sga.frankenstein.util.ShelfmarkMapReader
 
 import java.io.File
 import java.net.URI
 
-trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiManager {
+trait FrankensteinManifest extends MithManifest[MithCanvas, FrankensteinManifest] with ShelfmarkMapReader with TeiManager {
   this: FrankensteinConfiguration =>
 
   def resolvableDomain = "%sshelleygodwinarchive.org".format(

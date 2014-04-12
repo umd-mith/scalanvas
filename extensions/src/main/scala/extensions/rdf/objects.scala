@@ -1,7 +1,7 @@
 package edu.umd.mith.scalanvas.extensions.rdf
 
 import edu.umd.mith.scalanvas.model._
-import edu.umd.mith.scalanvas.rdf.{ ObjectBinders, PropertyBinders, ScalanvasPrefixes }
+import edu.umd.mith.scalanvas.rdf.{ Helpers, ObjectBinders, PropertyBinders, ScalanvasPrefixes }
 import edu.umd.mith.scalanvas.util.xml.tei.{ Annotation, AnnotationExtractor }
 import edu.umd.mith.scalanvas.extensions.model._
 
@@ -12,7 +12,7 @@ import org.w3.banana.syntax._
 
 //import scalaz.{ Source => _, _ }, Scalaz._
 
-trait MithObjectBinders { this: MithPropertyBinders with PropertyBinders with ObjectBinders =>
+trait MithObjectBinders extends ObjectBinders { this: MithPropertyBinders with Helpers =>
   implicit def ImageToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, Image] =
     new MithPrefixes[Rdf] with ImageToPG[Rdf, Image] with MithMotivationHelpers[Rdf] {}
 
@@ -20,13 +20,6 @@ trait MithObjectBinders { this: MithPropertyBinders with PropertyBinders with Ob
     new MithPrefixes[Rdf] with CanvasToPG[Rdf, MithCanvas] with MithMetadataLabeledToPG[Rdf, MithCanvas] {}
 
   trait MithManifestToPG[Rdf <: RDF, C <: MithCanvas, A <: MithManifest[C, A]] extends ManifestToPG[Rdf, C, A] { this: MithPrefixes[Rdf] with MithMetadataLabeledToPG[Rdf, A] =>
-    def addCssStyle(g: PointedGraph[Rdf], css: String) = g -- oa.hasStyle ->- (
-      ops.bnode().a(cnt.ContentAsText)
-        -- dc.format ->- "text/css"
-        -- cnt.chars ->- css
-    )
-
-    def addCssClass(g: PointedGraph[Rdf], cls: String) = g -- mith.hasClass ->- cls
   }
   /* 
   (implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithManifest] =

@@ -21,7 +21,9 @@ object Scalanvas extends Build {
     dependencies = Seq(bananaUtils),
     settings = commonSettings ++ Seq(
       libraryDependencies ++= Seq(
-        "org.scalesxml" % "scales-xml_2.10" % "0.6.0-M1"
+        "org.scalesxml" % "scales-xml_2.10" % "0.6.0-M1",
+        "xalan" % "xalan" % "2.7.1",
+        "xalan" % "serializer" % "2.7.1"
       )
     )
   )
@@ -70,7 +72,7 @@ object Scalanvas extends Build {
     organization := "edu.umd.mith",
     version := "0.0.0-SNAPSHOT",
     resolvers += Resolver.sonatypeRepo("snapshots"),
-    scalaVersion := "2.10.3",
+    scalaVersion := "2.10.4",
     scalacOptions := Seq(
       "-feature",
       "-language:implicitConversions",
@@ -79,7 +81,9 @@ object Scalanvas extends Build {
     ),
     libraryDependencies <++= scalaVersion(sv => Seq(
       "com.typesafe" % "config" % "1.2.0",
-      "org.slf4j" % "slf4j-simple" % "1.7.6"
+      "org.slf4j" % "slf4j-simple" % "1.7.6",
+      "org.scalaz" %% "scalaz-concurrent" % "7.0.6",
+      "org.scalaz" %% "scalaz-core" % "7.0.6"
     ))
   )
 }

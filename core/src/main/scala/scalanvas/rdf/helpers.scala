@@ -44,6 +44,16 @@ trait Helpers {
     )
   }
 
+  trait CssHelper[Rdf <: RDF] { this: ScalanvasPrefixes[Rdf] =>
+    def ops: RDFOps[Rdf]
+
+    def addCssStyle(g: PointedGraph[Rdf], css: String) = g -- oa.hasStyle ->- (
+      ops.bnode().a(cnt.ContentAsText)
+        -- dc.format ->- "text/css"
+        -- cnt.chars ->- css
+    )
+  }
+
   trait OreHelper[Rdf <: RDF] { this: ScalanvasPrefixes[Rdf] =>
     def ops: RDFOps[Rdf]
 

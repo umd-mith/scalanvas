@@ -1,7 +1,7 @@
 package edu.umd.mith.scalanvas.model
 
 import java.net.URI
-import scala.xml.Elem
+import scales.xml.XmlTree
 
 case class Service(
   uri: URI,
@@ -24,7 +24,7 @@ trait Canvas extends LocatedResource
   def width: Int
   def height: Int
   def images: List[Image]
-  def transcription: Option[Elem]
+  def transcription: Option[XmlTree]
   def reading: Option[Link]
   def source: Option[Link]
 }

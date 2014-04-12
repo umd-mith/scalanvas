@@ -4,17 +4,17 @@ import com.github.jsonldjava.core.{ JsonLdOptions, JsonLdProcessor }
 import com.github.jsonldjava.jena.JenaRDFParser
 import com.github.jsonldjava.utils.JsonUtils
 import com.hp.hpl.jena.rdf.model.ModelFactory
-import edu.umd.mith.banana.io.{ JsonLD, JsonLDContext }
+import edu.umd.mith.banana.io.{ JsonLd, JsonLdContext }
 import java.io.{ OutputStream, OutputStreamWriter }
 import org.w3.banana.RDFWriter
 import org.w3.banana.jena.Jena
 import scala.util._
 
-abstract class JsonLDWriter[C: JsonLDContext] extends RDFWriter[Jena, JsonLD] {
-  val syntax = JsonLD
+abstract class JsonLdWriter[C: JsonLdContext] extends RDFWriter[Jena, JsonLd] {
+  val syntax = JsonLd
 
   def context: C
-  def contextMap = implicitly[JsonLDContext[C]].toMap(context)
+  def contextMap = implicitly[JsonLdContext[C]].toMap(context)
 
   def write(graph: Jena#Graph, stream: OutputStream, base: String): Try[Unit] = Try {
     val model = ModelFactory.createModelForGraph(graph)

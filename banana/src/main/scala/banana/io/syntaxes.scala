@@ -1,13 +1,13 @@
 package edu.umd.mith.banana.io
 
 /** Represents JSON-LD serialization. */
-trait JsonLD
+trait JsonLd
 
 /** Represents Talis's RDF JSON serialization. */
-trait RDFJson
+trait RdfJson
 
 /** Represents evidence that a type can be used as a JSON-LD context. */
-trait JsonLDContext[C] {
+trait JsonLdContext[C] {
   def toMap(context: C): java.util.Map[String, Object]
 }
 

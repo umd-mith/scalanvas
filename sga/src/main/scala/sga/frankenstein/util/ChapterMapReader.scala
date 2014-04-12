@@ -1,10 +1,10 @@
 package edu.umd.mith.sga.frankenstein.util
 
 import edu.umd.mith.sga.frankenstein.LogicalManifest
-import edu.umd.mith.sga.model.SgaManifest
+import edu.umd.mith.scalanvas.extensions.MithManifest
 import scala.io.Source
 
-trait ChapterMapReader { this: SgaManifest =>
+trait ChapterMapReader { this: MithManifest =>
   private[this] val IdPattern = "ox-frankenstein-(volume_i{1,3})".r
 
   private[this] lazy val stream = getClass.getResourceAsStream(

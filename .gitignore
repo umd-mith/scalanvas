@@ -2,4 +2,4 @@ target/
 */target/
 tmp/
 core/src/main/resources/application.conf
-
+*.swp

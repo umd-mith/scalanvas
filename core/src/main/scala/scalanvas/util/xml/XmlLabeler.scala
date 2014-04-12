@@ -1,31 +1,40 @@
 package edu.umd.mith.scalanvas.util.xml
 
-import scala.xml._
-import scalaz.{ Node => _, _ }, Scalaz._
+import scala.collection.immutable.IndexedSeq
+import scalaz.std.anyVal._, scalaz.syntax.show._, scalaz.syntax.std.indexedSeq._
+import scales.utils.collection.Tree
+import scales.xml._, ScalesXml._
 
 object XmlLabeler {
-  def addCharOffsets(e: Elem): Elem = {
-    def process(i: Int, n: Node): (Int, Node) = n match {
-      case t @ Text(d) => (i + d.size, t)
-      case p @ PCData(d) => (i + d.size, p)
-      case r @ EntityRef(_) => (i + 1, r)
-      case e: Elem => {
-        val (j, processedChildren) = e.child.toList.mapAccumLeft(i, process)
-        val processedAttrs = new PrefixedAttribute(
-          "mu",
-          "b",
-          i.toString,
-          new PrefixedAttribute("mu", "e", j.toString, e.attributes)
-        )
+  def addCharOffsets(doc: Doc): Doc = doc.copy(
+    rootElem = process(0, doc.rootElem)._2.getRight
+  )
 
-        (j, e.copy(attributes = processedAttrs, child = processedChildren))
-      }
-      case o => (i, o)
-    }
+  private[this] def range(begin: Int, end: Int): List[Attribute] = List(
+    beginOffset -> begin.shows,
+    endOffset -> end.shows
+  )
 
-    val nss = NamespaceBinding("mu", "http://mith.umd.edu/util/1#", e.scope)
-
-    process(0, e.copy(scope = nss))._2.asInstanceOf[Elem]
+  private[this] def itemLength(item: XmlItem) = item match {
+    case Comment(_)   => 0
+    case PI(_, _)     => 0
+    case Text(value)  => value.length
+    case CData(value) => value.length
   }
+
+  private[this] def processTree(i: Int)(tree: XmlTree) = tree match {
+    case Tree(elem, children) =>
+      val (j, processed) = children.to[IndexedSeq].mapAccumLeft(i, process)
+
+      val tree = Tree(
+        elem.copy(attributes = elem.attributes ++ range(i, j)),
+        processed.to[XCC]
+      )
+
+      (j, tree)
+  }
+
+  private[this] def process(i: Int, node: ItemOrElem): (Int, ItemOrElem) =
+    node.fold(item => (i + itemLength(item), item), processTree(i))
 }
 
