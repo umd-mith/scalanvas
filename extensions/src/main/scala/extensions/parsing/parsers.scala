@@ -14,7 +14,27 @@ import scalaz.concurrent._
 import scales.utils._, ScalesUtils._
 import scales.xml._, ScalesXml._
 
-trait MithCanvasParser extends CanvasParser[MithCanvas] { this: TeiCollection with Configuration =>
+object MithTeiCollection {
+  def createHandNames(docs: Map[String, CollectionDoc]) = {
+    docs.values.foldLeft(Map.empty[(String, String), String]) {
+      case (map, CollectionDoc(doc, _, fileName)) =>
+        (top(doc) \\* teiNs("handDesc") \* teiNs("handNote") \* teiNs("persName")).foldLeft(map) {
+          case (map, persName) =>
+            map.updated((fileName, text(persName.\^.\@(xmlIdAttr))), text(persName))
+        }
+    }
+  }
+}
+
+trait MithTeiCollection extends TeiCollection {
+  def handNames: Map[(String, String), String]
+
+  // Abbreviation should not include the pound sign.
+  def lookupHandName(doc: CollectionDoc)(abbrev: String) =
+    handNames.get((doc.fileName, abbrev))
+}
+
+trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollection with Configuration =>
   def parseSurfaceId(surface: XmlPath): Throwable \/ String =
     (surface \@ xmlIdAttr).one.headOption.map(_.attribute.value).toRightDisjunction(
       MissingXmlIdError("surface")
@@ -41,95 +61,54 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: TeiCollection wi
     (hands ++ shiftHands).toSet
   }
 
-  def parseCanvas(surface: XmlPath): Task[MithCanvas] = {
+  def parseCanvas(doc: CollectionDoc)(surface: XmlPath): Task[MithCanvas] = {
     val elem = surface.tree.section
     val root = surface.root
 
     val seq = (root \\* teiNs("surface")).toList.indexOf(surface) + 1
-    val handNames = findHandAbbrevs(surface).map(_.tail).flatMap(handName(root))
+    val handNames = findHandAbbrevs(surface).map(_.tail).flatMap(lookupHandName(doc))
 
-    val msItem: Task[Option[XmlPath]] =
-      surface.getAttribute("partOf").toOption.traverseU(resolveIdRef(root))
+    val msItem: Option[XmlPath] =
+      surface.getAttribute("partOf").toOption.flatMap(resolveIdRef(doc))
 
-    msItem.map(_.flatMap(findStatus)).flatMap { status =>
-
-    new Task(Future.now(for {
-      id <- elem.xmlId.disjunction
-      canvasUri <- parseSurfaceId(surface).map(constructCanvasUri)
-      lrx <- surface.getAttribute("lrx").flatMap(_.parseInt).disjunction
-      lry <- surface.getAttribute("lry").flatMap(_.parseInt).disjunction
-      sm <- surface.getQAttribute(mithNs("shelfmark")).disjunction
-      fo <- surface.getQAttribute(mithNs("folio")).disjunction
-      offset <- elem.beginningOffset.disjunction
-    } yield new MithCanvas {
-      val uri = canvasUri
-      val shelfmark = Some(sm)
-      val folio = Some(fo)
-      val label = f"$sm%s, $fo"
-      val (width, height) = adjustDimensions(lrx, lry)
-      val service = None
-      val transcription = Some(surface)
-      val images = List(
-        ImageForPainting(
-          constructImageUri(id),
-          width,
-          height,
-          imageFormat,
-          imageService
-        )
-      )
-      val reading = Some(Link(constructReadingUri(id), "text/html"))
-      val source = Some(Link(constructSourceUri(id), "application/tei+xml"))
-      val state = status.map {
-        case "draft" => "Draft"
-        case "fair_copy" => "Fair copy"
-      }
-      val hand = if (handNames.isEmpty) None else Some(handNames.mkString(" and "))
-    }))
-    }
-  }
-/*
-      val images = List(
-        ImageForPainting(
-          constructImageUri(idWithSeq),
-          w,
-          h,
-          imageFormat,
-          imageService
-        )
-      )
-      val reading = Some(Link(constructReadingUri(idWithSeq), "text/html"))
-      val source = Some(Link(
-        new URI(
-          //"http://%s/tei/ox/%s.xml".format(
-          "/demo/xml/%s.xml".format(
-            //resolvableDomain,
-            idWithSeq
+    new Task(
+      Future.now(
+        for {
+          id <- elem.xmlId.disjunction
+          canvasUri <- parseSurfaceId(surface).map(constructCanvasUri)
+          lrx <- surface.getAttribute("lrx").flatMap(_.parseInt).disjunction
+          lry <- surface.getAttribute("lry").flatMap(_.parseInt).disjunction
+          sm <- surface.getQAttribute(mithNs("shelfmark")).disjunction
+          fo <- surface.getQAttribute(mithNs("folio")).disjunction
+          offset <- elem.beginningOffset.disjunction
+        } yield new MithCanvas {
+          val uri = canvasUri
+          val shelfmark = Some(sm)
+          val folio = Some(fo)
+          val label = f"$sm%s, $fo"
+          val (width, height) = adjustDimensions(lrx, lry)
+          val service = None
+          val transcription = Some(surface)
+          val images = List(
+            ImageForPainting(
+              constructImageUri(id),
+              width,
+              height,
+              imageFormat,
+              imageService
+            )
           )
-        ),
-        "application/tei+xml"
-      ))
-      override val hand = Some(
-        if (percyOnly) "Percy Shelley" else {
-          if (fullId == "ox-ms_abinger_c58" && pageSeq == "0047")
-            "Mary Shelley and Percy Shelley"
-          else {
-            if ((surface \\ "@hand").exists(_.text == "#pbs"))
-              "Mary Shelley and Percy Shelley"
-            else
-              "Mary Shelley" 
+          val reading = Some(Link(constructReadingUri(id), "text/html"))
+          val source = Some(Link(constructSourceUri(id), "application/tei+xml"))
+          val state = msItem.flatMap(findStatus).map {
+            case "draft" => "Draft"
+            case "fair_copy" => "Fair copy"
           }
+          val hand = if (handNames.isEmpty) None else Some(handNames.mkString(" and "))
         }
       )
-
-      override val shelfmark = Some(itemShelfmark)
-
-      val service = None
-
-      override val folio = Some(pageFolio)
-    }
+    )
   }
-}*/
 }
 
 trait MithRangeParser[C <: Canvas] extends RangeParser[C] { this: CanvasParser[C] with TeiCollection with Configuration =>
@@ -143,7 +122,7 @@ trait MithRangeParser[C <: Canvas] extends RangeParser[C] { this: CanvasParser[C
       new Exception("Missing title on range msItem.")
     )
 
-  def parseRanges(msItem: XmlPath): Task[List[Range[C]]] = {
+  def parseRanges(doc: CollectionDoc)(msItem: XmlPath): Task[List[Range[C]]] = {
     val parentId = parseMsItemId(msItem)
 
     (msItem \* teiNs("msItem")).toList.traverseU { child =>
@@ -154,7 +133,9 @@ trait MithRangeParser[C <: Canvas] extends RangeParser[C] { this: CanvasParser[C
           teiNs("locus") \@
           NoNamespaceQName("target")
         ).flatMap(_.value.split("\\s")).map(idRef =>
-          resolveIdRef(msItem.root)(idRef).flatMap(parseCanvas)
+          resolveIdRef(doc)(idRef).toTask(
+            new Exception(f"Missing xml:id reference $idRef%s in ${ doc.fileName }%s.")
+          ).flatMap(parseCanvas(doc))
         ).toSeq
       )
 
