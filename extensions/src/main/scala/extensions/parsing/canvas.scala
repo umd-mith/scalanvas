@@ -55,6 +55,8 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
         )
       )
 
+    val imageUriAttr = (surface \* teiNs("graphic") \@ NoNamespaceQName("url")).one.headOption.map(text(_))
+
     new Task(
       Future.now(
         for {
@@ -66,6 +68,9 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
           fo <- surface.getQAttribute(mithNs("folio")).disjunction
           offset <- elem.beginningOffset.disjunction
           ranges <- msItems
+          imageUri <- imageUriAttr.toRightDisjunction(
+            new Exception(f"No graphic element for $id%s.")
+          )
         } yield new MithCanvas {
           val uri = canvasUri
           val shelfmark = Some(sm)
@@ -76,7 +81,7 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
           val transcription = Some(surface)
           val images = List(
             ImageForPainting(
-              constructImageUri(id),
+              new URI(imageUri),
               width,
               height,
               imageFormat,

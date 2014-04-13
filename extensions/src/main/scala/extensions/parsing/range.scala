@@ -24,9 +24,12 @@ trait MithRangeParser[C <: Canvas] extends RangeParser[C] { this: CanvasParser[C
       new Exception("Missing title on range msItem.")
     )
 
-  def parseRanges(doc: CollectionDoc)(msItem: XmlPath): Task[List[Range[C]]] = {
-    val parentId = parseMsItemId(msItem)
+  def parseRangeN(msItem: XmlPath): Task[String] =
+    (msItem \@ NoNamespaceQName("n")).one.headOption.map(text(_)).toTask(
+      new Exception("Missing title on range msItem.")
+    )
 
+  def parseRanges(doc: CollectionDoc)(msItem: XmlPath): Task[List[Range[C]]] = {
     (msItem \* teiNs("msItem")).toList.traverseU { child =>
       val surfaces = Nondeterminism[Task].gather(
         (
@@ -41,11 +44,12 @@ trait MithRangeParser[C <: Canvas] extends RangeParser[C] { this: CanvasParser[C
         ).toSeq
       )
 
-      (
-        parentId.map(constructRangeUri) |@|
-        parseRangeLabel(child) |@|
-        surfaces
-      )(Range.apply)
+      for {
+        allSurfaces <- surfaces
+        id <- parseMsItemId(msItem)
+        n <- parseRangeN(child)
+        label <- parseRangeLabel(child)
+      } yield Range(constructRangeUri(id, n), label, allSurfaces)
     }
   }
 }
