@@ -10,7 +10,7 @@ import org.w3.banana.diesel._
 import org.w3.banana.syntax._
 
 trait MithPropertyBinders extends PropertyBinders { this: MithObjectBinders =>
-  trait MithMetadataLabeledToPG[Rdf <: RDF, A <: MithMetadataLabeled] extends ToPG[Rdf, A] { this: MithPrefixes[Rdf] =>
+  trait MithMetadataLabeledToPG[Rdf <: RDF, A <: MithMetadataLabeled] extends MetadataLabeledToPG[Rdf, A] { this: MithPrefixes[Rdf] =>
     abstract override def toPG(a: A) = (
       super.toPG(a)
         -- mith.shelfmarkLabel ->- a.shelfmark

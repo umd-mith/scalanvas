@@ -41,8 +41,8 @@ object Demo extends App {
     def constructManifestLabel(titleText: String): String = titleText.split(", ")(1)
     def constructManifestTitle(titleText: String): String = titleText.split(", ")(0)
 
-    def constructCanvasUri(id: String) = basePlus(id)
-    def constructRangeUri(id: String, n: String) = basePlus(f"$id%s/$n%s")
+    def constructCanvasUri(id: String) = basePlus(f"/$id%s")
+    def constructRangeUri(id: String, n: String) = basePlus(f"/$id%s/$n%s")
     def constructReadingUri(id: String) = new URI(
       f"http://shelleygodwinarchive.org/tei/readingTEI/html/$id%s.html"
     )
@@ -73,5 +73,12 @@ object Demo extends App {
       )
     )
   }
+
+  val doc = parser.docs.toList.apply(2)._2
+  val msItem = (top(doc.doc) \\* teiNs("msItem")).toList.apply(2)
+  val manifest = parser.parseLogicalManifest(doc)(msItem).run
+
+  val writer = new edu.umd.mith.scalanvas.io.JenaManifestWriter {}
+  writer.saveJsonLd[MithCanvas, MithLogicalManifest](manifest)("/edu/umd/mith/scalanvas/context.json", new File("output"))
 }
 
