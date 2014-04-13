@@ -8,8 +8,10 @@ trait MithManifest[C <: MithCanvas, M <: MithManifest[C, M]] extends Manifest[C,
   def hasTranscriptions = true
 }
 
-trait PhysicalManifest[C <: MithCanvas, M <: PhysicalManifest[C, M]] extends MithManifest[C, M] { this: M =>
+trait PhysicalManifest[C <: Canvas, M <: PhysicalManifest[C, M]] extends Manifest[C, M] { this: M =>
   def canvases: List[C]
+
+  def ranges = Nil
 
   lazy val sequence = Sequence[C](
     Some(itemBasePlus("/physical-sequence")),
@@ -18,11 +20,17 @@ trait PhysicalManifest[C <: MithCanvas, M <: PhysicalManifest[C, M]] extends Mit
   )
 }
 
-trait LogicalManifest[C <: MithCanvas, M <: LogicalManifest[C, M]] extends MithManifest[C, M] { this: M =>
+trait LogicalManifest[C <: Canvas, M <: LogicalManifest[C, M]] extends Manifest[C, M] { this: M =>
   lazy val sequence = Sequence[C](
     Some(itemBasePlus("/logical-sequence")),
     "Logical sequence",
     ranges.flatMap(_.canvases)
   )
 }
+
+trait MithPhysicalManifest extends PhysicalManifest[MithCanvas, MithPhysicalManifest]
+  with MithManifest[MithCanvas, MithPhysicalManifest]
+
+trait MithLogicalManifest extends LogicalManifest[MithCanvas, MithLogicalManifest]
+  with MithManifest[MithCanvas, MithLogicalManifest]
 

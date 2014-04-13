@@ -19,7 +19,116 @@ trait MithObjectBinders extends ObjectBinders { this: MithPropertyBinders with H
   implicit def MithCanvasToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithCanvas] =
     new MithPrefixes[Rdf] with CanvasToPG[Rdf, MithCanvas] with MithMetadataLabeledToPG[Rdf, MithCanvas] {}
 
-  trait MithManifestToPG[Rdf <: RDF, C <: MithCanvas, A <: MithManifest[C, A]] extends ManifestToPG[Rdf, C, A] { this: MithPrefixes[Rdf] with MithMetadataLabeledToPG[Rdf, A] =>
+  implicit def MithLogicalManifestToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithLogicalManifest] =
+    new MithPrefixes[Rdf] with MithManifestToPG[Rdf, MithCanvas, MithLogicalManifest] with MithMetadataLabeledToPG[Rdf, MithLogicalManifest] with OreHelper[Rdf]
+
+  implicit def MithPhysicalManifestToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithPhysicalManifest] =
+    new MithPrefixes[Rdf] with MithManifestToPG[Rdf, MithCanvas, MithPhysicalManifest] with MithMetadataLabeledToPG[Rdf, MithPhysicalManifest] with OreHelper[Rdf]
+
+  trait MithManifestToPG[Rdf <: RDF, C <: MithCanvas, M <: MithManifest[C, M]] extends ManifestToPG[Rdf, C, M] { this: MithPrefixes[Rdf] with MithMetadataLabeledToPG[Rdf, M] with OreHelper[Rdf] =>
+    import ops._
+    
+    def readTextAnnotations(canvas: C): List[PointedGraph[Rdf]] = Nil
+    def readZones(canvas: C): List[PointedGraph[Rdf]] = Nil
+
+    override def toPG(manifest: M) = {
+      val imageAnnotations =
+        manifest.sequence.canvases.flatMap { canvas =>
+          canvas.images.map { image =>
+            (
+              bnode()
+                .a(oa.Annotation)
+                .a(dms.ImageAnnotation)
+                -- oa.hasTarget ->- canvas
+                -- oa.hasBody ->- image
+            )
+          }
+        }
+
+      val rangeless = ( 
+        super.toPG(manifest)
+          .a(sc.Manifest)
+          .a(ore.Aggregation)
+          -- dc.title ->- manifest.title
+          -- rdfs.label ->- manifest.label
+          -- tei.idno ->- manifest.id
+          -- sc.hasCanvases ->- manifest.sequence.canvases
+          -- ore.aggregates ->- manifest.sequence
+          -- ore.aggregates ->- {
+            if (manifest.hasTranscriptions)
+              Some((
+                manifest.itemBasePlus("/reading-html").toUri
+                  .a(sc.AnnotationList)
+                  .a(sc.Layer)
+                  -- rdfs.label ->- "Reading layer"
+                  -- sc.forMotivation ->- mith.reading
+              ).aggregates(
+                manifest.sequence.canvases.map { canvas =>
+                  List(
+                    bnode()
+                      .a(oa.Annotation)
+                      -- oa.hasTarget ->- canvas
+                      -- oa.hasBody ->- canvas.reading
+                      -- sc.motivatedBy ->- mith.reading
+                  )
+                }
+              )) else None
+          }
+          -- ore.aggregates ->- {
+            if (manifest.hasTranscriptions)
+              Some((
+                manifest.itemBasePlus("/source-tei").toUri
+                  .a(sc.AnnotationList)
+                  .a(sc.Layer)
+                  -- rdfs.label ->- "TEI source"
+                  -- sc.forMotivation ->- mith.source
+              ).aggregates(
+                manifest.sequence.canvases.map { canvas =>
+                  List(
+                    bnode()
+                      .a(oa.Annotation)
+                      -- oa.hasTarget ->- canvas
+                      -- oa.hasBody ->- canvas.source
+                  )
+                }
+              )) else None
+          }
+          -- sc.hasImageAnnotations ->- (imageAnnotations)
+          -- ore.aggregates ->- (
+            manifest.itemBasePlus("/image-annotations").toUri
+              .a(sc.AnnotationList)
+              -- sc.forMotivation ->- sc.painting
+          ).aggregates(imageAnnotations)
+          -- ore.aggregates ->- (
+            manifest.itemBasePlus("/zone-annotations").toUri
+              .a(sc.AnnotationList)
+          ).aggregates(
+            manifest.sequence.canvases.flatMap(readZones)
+          )
+          -- ore.aggregates ->- {
+            if (manifest.hasTranscriptions)
+              Some((
+                manifest.itemBasePlus("/text-annotations").toUri
+                  .a(sc.AnnotationList)
+                  .a(sc.Layer)
+                  -- rdfs.label ->- "Transcription"
+                  -- sc.forMotivation ->- sc.painting
+              ).aggregates(
+                if (manifest.hasTranscriptions) manifest.sequence.canvases.flatMap(readTextAnnotations) else Nil
+              )) else None
+          }
+        )
+
+      manifest.ranges.foldLeft(rangeless) {
+        case (acc, range) =>
+          acc -- ore.aggregates ->- (
+            range.uri.toUri
+              .a(sc.Range)
+              -- dcterms.isPartOf ->- manifest.sequence
+              -- rdfs.label ->- range.label
+          ).aggregates(range.canvases)
+      }
+    }
   }
   /* 
   (implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithManifest] =

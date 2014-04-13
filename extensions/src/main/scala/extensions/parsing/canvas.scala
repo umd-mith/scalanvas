@@ -1,8 +1,8 @@
 package edu.umd.mith.scalanvas.extensions.parsing
 
 import edu.umd.mith.scalanvas.parsing._
-import edu.umd.mith.scalanvas.extensions.model.MithCanvas
-import edu.umd.mith.scalanvas.model.{ Canvas, Configuration, ImageForPainting, Link }
+import edu.umd.mith.scalanvas.extensions.model.{ MithCanvas, MithConfiguration }
+import edu.umd.mith.scalanvas.model.{ Canvas, ImageForPainting, Link }
 import edu.umd.mith.scalanvas.util.concurrent._
 import edu.umd.mith.scalanvas.util.xml._
 import edu.umd.mith.scalanvas.util.xml.implicits._
@@ -14,7 +14,7 @@ import scalaz.concurrent._
 import scales.utils._, ScalesUtils._
 import scales.xml._, ScalesXml._
 
-trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollection with Configuration =>
+trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollection with MithConfiguration =>
   def parseSurfaceId(surface: XmlPath): Throwable \/ String =
     (surface \@ xmlIdAttr).one.headOption.map(_.attribute.value).toRightDisjunction(
       MissingXmlIdError("surface")
@@ -25,7 +25,7 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
       _.attribute.value
     )
 
-  def findHandAbbrevs(surface: XmlPath): Set[String] = {
+  def findHandAbbrevs(surface: XmlPath): List[String] = {
     val hands = (surface \\@ NoNamespaceQName("hand")).attributes.map(_.attribute.value)
     val shifts = (surface \\* teiNs("line")).toList.lastOption.toList.flatMap { lastLine =>
       val preceding = lastLine.preceding_::.toList
@@ -38,7 +38,7 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
       (shift \@ NoNamespaceQName("new")).one.headOption.map(_.attribute.value)
     )
 
-    (hands ++ shiftHands).toSet
+    (hands ++ shiftHands).toList.distinct
   }
 
   def parseCanvas(doc: CollectionDoc)(surface: XmlPath): Task[MithCanvas] = {
@@ -48,8 +48,12 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
     val seq = (root \\* teiNs("surface")).toList.indexOf(surface) + 1
     val handNames = findHandAbbrevs(surface).map(_.tail).flatMap(lookupHandName(doc))
 
-    val msItem: Option[XmlPath] =
-      surface.getAttribute("partOf").toOption.flatMap(resolveIdRef(doc))
+    val msItems: Throwable \/ List[XmlPath] =
+      surface.getAttribute("partOf").toOption.toList.flatMap(_.split("\\s")).traverseU(idRef =>
+        resolveIdRef(doc)(idRef).toRightDisjunction(
+          new Exception(f"partOf value $idRef%s does not resolve in ${ doc.fileName }%s.")
+        )
+      )
 
     new Task(
       Future.now(
@@ -61,6 +65,7 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
           sm <- surface.getQAttribute(mithNs("shelfmark")).disjunction
           fo <- surface.getQAttribute(mithNs("folio")).disjunction
           offset <- elem.beginningOffset.disjunction
+          ranges <- msItems
         } yield new MithCanvas {
           val uri = canvasUri
           val shelfmark = Some(sm)
@@ -80,11 +85,27 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
           )
           val reading = Some(Link(constructReadingUri(id), "text/html"))
           val source = Some(Link(constructSourceUri(id), "application/tei+xml"))
-          val state = msItem.flatMap(findStatus).map {
-            case "draft" => "Draft"
-            case "fair_copy" => "Fair copy"
+
+          val state = {
+            val states = ranges.flatMap(findStatus).map(expandStateName)
+
+            if (states.isEmpty) None else Some(states.distinct.mkString(" and "))
           }
+
+          val date = {
+            val dates = ranges.flatMap(nearestDate)
+
+            if (dates.isEmpty) None else Some(dates.mkString(" and "))
+          }
+
+          val agent = {
+            val agents = ranges.flatMap(nearestAgent)
+
+            if (agents.isEmpty) None else Some(agents.mkString(" and "))
+          }
+
           val hand = if (handNames.isEmpty) None else Some(handNames.mkString(" and "))
+          val attribution = topLevelRepository(doc)
         }
       )
     )

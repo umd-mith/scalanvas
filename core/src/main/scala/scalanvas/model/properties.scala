@@ -37,9 +37,9 @@ trait ContentsMotivated {
 }
 
 trait MetadataLabeled {
-  def agent: Option[String] = None
-  def attribution: Option[String] = None
-  def date: Option[String] = None
+  def agent: Option[String]
+  def attribution: Option[String]
+  def date: Option[String]
 }
 
 trait Motivation
