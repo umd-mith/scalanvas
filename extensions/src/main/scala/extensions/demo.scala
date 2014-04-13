@@ -29,7 +29,7 @@ object Demo extends App {
     }
   ).run
 
-  val ServicePattern = """ox-frankenstein_([^_]+)_(.+)""".r
+  val FrankensteinServicePattern = """ox-frankenstein_([^_]+)_(.+)""".r
 
   val parser = new MithPhysicalManifestParser with MithLogicalManifestParser
     with MithRangeParser[MithCanvas] with MithCanvasParser with MithConfiguration with MithTeiCollection {
@@ -54,12 +54,16 @@ object Demo extends App {
     def constructManifestService(id: String) =  Some(
       Service(
         id match {
-          case ServicePattern(group, item) =>
+          case FrankensteinServicePattern(group, item) =>
             new URI(
               "http://shelleygodwinarchive.org/sc/oxford/frankenstein/%s/%s".format(
                 group,
                 item
               )
+            )
+          case other =>
+            new URI(
+              f"http://shelleygodwinarchive.org/sc/oxford/$other%s"
             )
         }
       )
@@ -74,11 +78,11 @@ object Demo extends App {
     )
   }
 
-  val doc = parser.docs.toList.apply(2)._2
-  val msItem = (top(doc.doc) \\* teiNs("msItem")).toList.apply(2)
-  val manifest = parser.parseLogicalManifest(doc)(msItem).run
+  val doc = parser.docs.toList.head._2
+  //val msItem = (top(doc.doc) \\* teiNs("msItem")).toList.apply(2)
+  val manifest = parser.parsePhysicalManifest(doc).run
 
   val writer = new edu.umd.mith.scalanvas.io.JenaManifestWriter {}
-  writer.saveJsonLd[MithCanvas, MithLogicalManifest](manifest)("/edu/umd/mith/scalanvas/context.json", new File("output"))
+  writer.saveJsonLd[MithCanvas, MithPhysicalManifest](manifest)("/edu/umd/mith/scalanvas/context.json", new File("output"))
 }
 
