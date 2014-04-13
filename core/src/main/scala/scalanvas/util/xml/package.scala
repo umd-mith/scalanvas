@@ -10,7 +10,8 @@ import scales.xml.ScalesXml.defaultVersion
 
 package object xml {
   val xmlIdAttr = Namespace.xml("id")
-  val utilNs = Namespace("http://mith.umd.edu/util/1#").prefixed("mu")
+  val utilNs = Namespace("http://mith.umd.edu/util/ns1#").prefixed("mu")
+  val mithNs = Namespace("http://mith.umd.edu/sc/ns1#").prefixed("mith")
   val beginOffset = utilNs("b")
   val endOffset = utilNs("e")
 
@@ -50,6 +51,11 @@ package object xml {
       def getAttribute(name: String): Validation[Throwable, String] =
         (xpath \@ NoNamespaceQName(name)).one.headOption.map(_.attribute.value).toSuccess(
           MissingAttributeError(name)
+        )
+
+      def getQAttribute(name: AttributeQName): Validation[Throwable, String] =
+        (xpath \@ name).one.headOption.map(_.attribute.value).toSuccess(
+          MissingAttributeError(name.toString)
         )
 
       def root: XmlPath = xpath.ancestor_::.head

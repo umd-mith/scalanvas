@@ -36,6 +36,11 @@ trait TeiCollection {
       case other => MissingElementError(other).fail
     }
   )
+
+  def handName(root: XmlPath)(abbrev: String): Option[String] =
+    (root \\* teiNs("handDesc") \* teiNs("handNote") withId(abbrev)).\^.\*(
+      teiNs("persName")
+    ).\+.text.one.headOption.map(_.item.value)
 }
 
 trait CanvasParser[C <: Canvas] {
