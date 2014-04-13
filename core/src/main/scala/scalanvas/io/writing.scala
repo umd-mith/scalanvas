@@ -33,7 +33,7 @@ trait ManifestWriter[Rdf <: RDF] {
     toPg: ToPG[Rdf, ResourceMap[M]]
   ) = {
     import ops._
-    RDFWriter[Rdf, F].write(manifest.jsonResource.toPG.graph, out, manifest.base.toString)
+    RDFWriter[Rdf, F].write(manifest.jsonldResource.toPG.graph, out, manifest.base.toString)
   }
 }
 

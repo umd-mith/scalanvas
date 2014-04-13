@@ -20,7 +20,6 @@
     "xsd":     "http://www.w3.org/2001/XMLSchema#",
 
     "first":  { "@id" : "rdf:first", "@type": "@id" },
-    "rest":   { "@id": "rdf:rest",   "@type": "@id", "@container": "@list" },
 
     "width":  { "@id": "exif:width",  "@type": "xsd:int" },
     "height": { "@id": "exif:height", "@type": "xsd:int" },
