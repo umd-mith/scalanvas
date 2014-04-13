@@ -2,7 +2,7 @@ package edu.umd.mith.scalanvas.extensions.parsing
 
 import edu.umd.mith.scalanvas.parsing._
 import edu.umd.mith.scalanvas.extensions.model.MithCanvas
-import edu.umd.mith.scalanvas.model.{ Canvas, Configuration, ImageForPainting, Link, Range }
+import edu.umd.mith.scalanvas.model.{ Canvas, Configuration, ImageForPainting, Link }
 import edu.umd.mith.scalanvas.util.concurrent._
 import edu.umd.mith.scalanvas.util.xml._
 import edu.umd.mith.scalanvas.util.xml.implicits._
@@ -13,26 +13,6 @@ import scalaz._, Scalaz._
 import scalaz.concurrent._
 import scales.utils._, ScalesUtils._
 import scales.xml._, ScalesXml._
-
-object MithTeiCollection {
-  def createHandNames(docs: Map[String, CollectionDoc]) = {
-    docs.values.foldLeft(Map.empty[(String, String), String]) {
-      case (map, CollectionDoc(doc, _, fileName)) =>
-        (top(doc) \\* teiNs("handDesc") \* teiNs("handNote") \* teiNs("persName")).foldLeft(map) {
-          case (map, persName) =>
-            map.updated((fileName, text(persName.\^.\@(xmlIdAttr))), text(persName))
-        }
-    }
-  }
-}
-
-trait MithTeiCollection extends TeiCollection {
-  def handNames: Map[(String, String), String]
-
-  // Abbreviation should not include the pound sign.
-  def lookupHandName(doc: CollectionDoc)(abbrev: String) =
-    handNames.get((doc.fileName, abbrev))
-}
 
 trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollection with Configuration =>
   def parseSurfaceId(surface: XmlPath): Throwable \/ String =
@@ -108,43 +88,6 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
         }
       )
     )
-  }
-}
-
-trait MithRangeParser[C <: Canvas] extends RangeParser[C] { this: CanvasParser[C] with TeiCollection with Configuration =>
-  def parseMsItemId(msItem: XmlPath): Task[String] =
-    (msItem \@ xmlIdAttr).one.headOption.map(_.attribute.value).toTask(
-      MissingXmlIdError("msItem")
-    )
-
-  def parseRangeLabel(msItem: XmlPath): Task[String] =
-    (msItem \* teiNs("bibl") \* teiNs("title")).\+.text.one.headOption.map(_.item.value).toTask(
-      new Exception("Missing title on range msItem.")
-    )
-
-  def parseRanges(doc: CollectionDoc)(msItem: XmlPath): Task[List[Range[C]]] = {
-    val parentId = parseMsItemId(msItem)
-
-    (msItem \* teiNs("msItem")).toList.traverseU { child =>
-      val surfaces = Nondeterminism[Task].gather(
-        (
-          child \*
-          teiNs("locusGrp") \*
-          teiNs("locus") \@
-          NoNamespaceQName("target")
-        ).flatMap(_.value.split("\\s")).map(idRef =>
-          resolveIdRef(doc)(idRef).toTask(
-            new Exception(f"Missing xml:id reference $idRef%s in ${ doc.fileName }%s.")
-          ).flatMap(parseCanvas(doc))
-        ).toSeq
-      )
-
-      (
-        parentId.map(constructRangeUri) |@|
-        parseRangeLabel(child) |@|
-        surfaces
-      )(Range.apply)
-    }
   }
 }
 
