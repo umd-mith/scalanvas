@@ -73,20 +73,16 @@ trait ObjectBinders {
       def readTextAnnotations(canvas: SgaCanvas): List[PointedGraph[Rdf]] = {
         val annotationExtractor = AnnotationExtractor(canvas.transcription, Set("c56-0113.02"))
 
-        val hand = (canvas.transcription \\ "handShift").toList match {
-          case List(handShift) => handShift.attributes.asAttrMap.get("new").filter(_ == "#pbs")
-          case Nil => None
-          case _ => throw new RuntimeException("Too many hand shifts.")
+        val handShifts = (canvas.transcription \\ "handShift").toList.flatMap { handShift =>
+          val attrs = handShift.attributes.asAttrMap
+          for {
+            handId <- attrs.get("new")
+            begin <- attrs.get("mu:b").toInt
+          } yield (handId, begin)
         }
 
         val Hand = "#(\\S+)".r
         val BrokenHand = "(\\S+)".r
-
-        val handClass = hand.flatMap {
-          case Hand(hand) => Some(s"hand-$hand")
-          case BrokenHand(hand) => Some(s"hand-$hand")
-          case _ => None
-        }
 
         def isAuthorialLine(lineElem: xml.Node) =
           (lineElem \ "add" \ "note" \ "@type").exists {
@@ -104,6 +100,17 @@ trait ObjectBinders {
           val libraryHand = inLibraryZone match {
             case true => Some("hand-library")
             case false => None
+          }
+
+          val lineBegin = attrs("mu:b").toInt
+          val hand = handShifts.takeWhile {
+            case (handId, begin) => begin < lineBegin
+          }.lastOption.map(_._1)
+
+          val handClass = hand.flatMap {
+            case Hand(hand) => Some(s"hand-$hand")
+            case BrokenHand(hand) => Some(s"hand-$hand")
+            case _ => None
           }
 
           val lineAnnotation = (
