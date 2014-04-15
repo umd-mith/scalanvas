@@ -77,7 +77,7 @@ trait ObjectBinders {
           val attrs = handShift.attributes.asAttrMap
           for {
             handId <- attrs.get("new")
-            begin <- attrs.get("mu:b").toInt
+            begin <- attrs.get("mu:b").map(_.toInt)
           } yield (handId, begin)
         }
 
