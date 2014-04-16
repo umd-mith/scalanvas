@@ -26,24 +26,6 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
     val hands = attrsText(surface \\@ "hand")
     val handShiftsOnPage = attrsText(surface \\* teiNs("handShift") \@ "new")
 
-    /*val firstHandShift: Option[XmlPath] = (surface.\\*(teiNs("handShift")).pos(1)).one.headOption
-
-    val handShifts = for {
-      firstHandShift <- (surface.\\*(teiNs("handShift")).pos(1)).one.headOption
-      firstLine <- (surface.\\*(teiNs("line")).pos(1)).one.headOption
-    } yield (
-      for {
-        firstHandShiftBeginning <- firstHandShift.beginningOffset.disjunction
-        firstLineBeginning <- firstLine.beginningOffset.disjunction
-        earlier <- if (firstHandShiftBeginning > firstLineBeginning) {
-          attrText(surface.preceding_::.\*(teiNs("handShift")).pos(1).\@("new")).toRightDisjunction(
-            new Exception("No appropriate earlier handshift for ${ surface.toString }%s.")
-          ).map(_.some)
-        } else none.right  
-      } yield (hands ++ handShiftsOnPage ++ earlier.toList).distinct
-    )*/
-        
-    println(lastHandShift(surface.\\*(teiNs("line")).pos(1)))
     (hands ++ handShiftsOnPage ++ lastHandShift(surface.\\*(teiNs("line")).pos(1)).toList).distinct
   }
 

@@ -17,6 +17,7 @@ import edu.umd.mith.scalanvas.rdf._
 import edu.umd.mith.scalanvas.extensions.rdf._
 import org.w3.banana._
 import edu.umd.mith.scalanvas.io._
+import scalaz._, Scalaz._
 
 class MithStack(files: List[File]) extends MithPrefixes
   with MithObjectBinders
@@ -98,6 +99,21 @@ class Frankenstein(filePaths: List[String]) extends MithStack(filePaths.map(new 
       new File("output")
     )
   }
+
+  def saveLogicalManifests(): Unit = docs.foreach {
+    case (fileName, doc) =>
+      // Assuming that every msItem with an xml:id can be treated as a logical
+      // manifest.
+      val msItems = (top(doc.doc).\\*(teiNs("msItem")).*(_.\@(xmlIdAttr))).toList
+      val manifests = msItems.traverseU(parseLogicalManifest(doc)).run
+
+      manifests.foreach { manifest =>
+        saveJsonLd[MithCanvas, MithLogicalManifest](manifest)(
+          "/edu/umd/mith/scalanvas/context.json",
+          new File("output")
+        )
+      }
+  }
 }
 
 object Demo extends App {
@@ -105,6 +121,7 @@ object Demo extends App {
   
   if (args.length == 1) {
     frankenstein.savePhysicalManifests()
+    frankenstein.saveLogicalManifests()
   } else {
     frankenstein.savePhysicalManifest(args(1))
   }
