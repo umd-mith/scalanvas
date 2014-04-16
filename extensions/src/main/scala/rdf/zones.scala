@@ -14,7 +14,7 @@ import org.w3.banana.syntax._
 import scalaz.{ Source => _, _ }, Scalaz._
 import scales.xml._, ScalesXml._
 
-trait ZoneReader { this: RDFOpsModule with MithPrefixes with MithObjectBinders with MithPropertyBinders with Helpers with MithTeiCollection =>
+trait ZoneReader { this: RDFOpsModule with MithPrefixes with MithObjectBinders with MithPropertyBinders with MithTeiCollection with Helpers =>
   private def bail(throwable: Throwable) = throw throwable
 
   def readZones(canvas: MithCanvas): List[PointedGraph[Rdf]] =

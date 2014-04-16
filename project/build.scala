@@ -45,15 +45,6 @@ object Scalanvas extends Build {
     settings = commonSettings
   )
 
-  lazy val teiUtil: Project = Project(
-    id = "tei-util",
-    base = file("tei"),
-    settings = commonSettings ++ Seq(
-      libraryDependencies ++= Seq(
-      )
-    )
-  )
-
   /*lazy val sga: Project = Project(
     id = "scalanvas-sga",
     base = file("sga"),
@@ -76,7 +67,7 @@ object Scalanvas extends Build {
     id = "scalanvas",
     base = file("."),
     settings = commonSettings
-  ).aggregate(sga, wwa)
+  ).aggregate(extensions)
 
   def commonSettings = Defaults.defaultSettings ++ Seq(
     organization := "edu.umd.mith",
@@ -84,7 +75,8 @@ object Scalanvas extends Build {
     resolvers += Resolver.sonatypeRepo("snapshots"),
     scalaVersion := "2.10.4",
     javaOptions := Seq(
-      "-XX:MaxPermSize=512m"
+      "-XX:MaxPermSize=512m",
+      "-Xmx6G"
     ),
     scalacOptions := Seq(
       "-feature",

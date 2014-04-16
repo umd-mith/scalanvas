@@ -1,45 +1,9 @@
 package edu.umd.mith.scalanvas.extensions
 
-import scales.utils._, ScalesUtils._
-import scales.xml._, ScalesXml._
-import java.io.{ FileReader, File }
-import edu.umd.mith.banana.jena.DefaultGraphJenaModule
-import edu.umd.mith.util.xml._
-import edu.umd.mith.util.xml.implicits._
-import edu.umd.mith.util.xml.tei._
-import edu.umd.mith.util.xml.tei.implicits._
-import edu.umd.mith.scalanvas.{ CollectionDoc, Configuration, Service, TeiCollection }
+import java.io.File
+import edu.umd.mith.scalanvas.Service
 import edu.umd.mith.scalanvas.extensions._
 import java.net.URI
-import org.w3.banana.binder._
-import org.w3.banana.jena._
-import edu.umd.mith.scalanvas.rdf._
-import edu.umd.mith.scalanvas.extensions.rdf._
-import org.w3.banana._
-import edu.umd.mith.scalanvas.io._
-import scalaz._, Scalaz._
-
-class MithStack(files: List[File]) extends MithPrefixes
-  with MithObjectBinders
-  with MithPropertyBinders
-  with Helpers
-  with TeiHelpers
-  with MithPhysicalManifestParser
-  with MithLogicalManifestParser
-  with MithRangeParser[MithCanvas]
-  with MithCanvasParser
-  with MithTeiCollection { this: RDFOpsModule with MithConfiguration =>
-  val docs = loadFiles(files).map(
-    _.map {
-      case (systemId, doc) =>
-        val fileName = systemId.split("/").last
-        (fileName -> CollectionDoc(XmlLabeler.addCharOffsets(doc), systemId, fileName))
-    }
-  ).run
-
-  val idMap = TeiCollection.createIdMap(docs).run
-  val handNames = MithTeiCollection.createHandNames(docs)
-}
 
 trait FrankensteinConfiguration extends MithConfiguration {
   lazy val FrankensteinServicePattern = """ox-frankenstein_([^_]+)_(.+)""".r
@@ -85,44 +49,21 @@ trait FrankensteinConfiguration extends MithConfiguration {
   )
 }
 
-class Frankenstein(filePaths: List[String]) extends MithStack(filePaths.map(new File(_)))
-  with DefaultGraphJenaModule with JenaManifestWriter with FrankensteinConfiguration {
+object FrankensteinDemo extends App {
+  // The first command-line argument should be a space-separated list of file
+  // paths.
+  val filePaths = args(0).split("\\s").toList
 
-  def savePhysicalManifests(): Unit =
-    docs.keys.foreach(savePhysicalManifest)
+  // Mix in the appropriate configuration here.
+  val frankenstein = new MithStack(filePaths.map(new File(_))) with FrankensteinConfiguration
 
-  def savePhysicalManifest(fileName: String): Unit = {
-    val doc = docs(fileName)
-    val manifest = parsePhysicalManifest(doc).run
-    saveJsonLd[MithCanvas, MithPhysicalManifest](manifest)(
-      "/edu/umd/mith/scalanvas/context.json",
-      new File("output")
-    )
-  }
-
-  def saveLogicalManifests(): Unit = docs.foreach {
-    case (fileName, doc) =>
-      // Assuming that every msItem with an xml:id can be treated as a logical
-      // manifest.
-      val msItems = (top(doc.doc).\\*(teiNs("msItem")).*(_.\@(xmlIdAttr))).toList
-      val manifests = msItems.traverseU(parseLogicalManifest(doc)).run
-
-      manifests.foreach { manifest =>
-        saveJsonLd[MithCanvas, MithLogicalManifest](manifest)(
-          "/edu/umd/mith/scalanvas/context.json",
-          new File("output")
-        )
-      }
-  }
-}
-
-object Demo extends App {
-  val frankenstein = new Frankenstein(args(0).split("\\s").toList)
-  
+  // If there's only one argument, create all of the logical and physical
+  // manifests.
   if (args.length == 1) {
     frankenstein.savePhysicalManifests()
     frankenstein.saveLogicalManifests()
   } else {
+    // Otherwise only create the physical manifest for the specified file name.
     frankenstein.savePhysicalManifest(args(1))
   }
 }
