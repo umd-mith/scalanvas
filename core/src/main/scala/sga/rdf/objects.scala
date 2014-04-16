@@ -230,19 +230,36 @@ trait ObjectBinders {
 
           val offset = attrs.get("rend") match {
             case Some("double-underline") => addCssClass(os, "double-underline")
-            case Some("underline") => addCssStyle(os, "text-decoration: underline")
-            case Some("italic") => addCssStyle(os, "font-style: italic")
-            case Some("sup") => addCssStyle(os, "vertical-align: super")
-            case Some("superscript") => addCssStyle(os, "vertical-align: super")
-            case Some("subscript") => addCssStyle(os, "vertical-align: sub")
-            case Some("circled") => addCssStyle(os, "ignore: ignore")
-            case Some("right") => addCssStyle(os, "ignore: ignore")
-            case Some("smallcaps") => addCssStyle(os, "font-variant: small-caps")
+            case Some("underline") => addCssStyle(os, "text-decoration: underline;")
+            case Some("italic") => addCssStyle(os, "font-style: italic;")
+            case Some("sup") => addCssStyle(os, "vertical-align: super;")
+            case Some("superscript") => addCssStyle(os, "vertical-align: super;")
+            case Some("subscript") => addCssStyle(os, "vertical-align: sub;")
+            case Some("circled") => addCssStyle(os, "ignore: ignore;")
+            case Some("right") => addCssStyle(os, "ignore: ignore;")
+            case Some("smallcaps") => addCssStyle(os, "font-variant: small-caps;")
             case Some(rend) => sys.error(s"Unexpected rend value: $rend.")
             case None => os
           }
 
-          bnode().a(oa.Annotation).a(oax.Highlight) -- oa.hasTarget ->- offset
+          val Hand = "#(\\S+)".r
+          val BrokenHand = "(\\S+)".r
+
+          val annotClass = attrs.get("hand").flatMap {
+            case Hand(hand) => Some(s"annot-$hand")
+            case BrokenHand(hand) => Some(s"annot-$hand")
+            case _ => None
+          }
+
+          (
+            bnode()
+              .a(oa.Annotation)
+              .a(oax.Highlight) 
+              -- oa.hasTarget ->- (
+                offset
+                  -- sga.hasClass ->- annotClass
+              )
+          )
         }
 
         val metamarkHighlights = annotationExtractor.marginaliaMetamarks.valueOr(
@@ -250,12 +267,16 @@ trait ObjectBinders {
         ).map {
           case Annotation((b, e), _, attrs) =>
             val borderCss = attrs.get("rend").flatMap {
-              case "singleLine-left" => Some("border-left-style: solid")
-              case "singleLine-right" => Some("border-right-style: solid")
-              case "doubleLine-left" => Some("border-left-style: double")
-              case "doubleLine-right" => Some("border-right-style: double")
+              case "singleLine-left" 
+                 | "singleLine-right"
+                 | "doubleLine-left"
+                 | "doubleLine-right"
+                 | "bracket-left"
+                 | "bracket-right" => Some("background-color: #E9E9E9;")
               case _ => None
             }
+
+            val annotClass = Some(s"annot-ww")
 
             (
               bnode()
@@ -263,6 +284,7 @@ trait ObjectBinders {
                 .a(oax.Highlight)
                 -- oa.hasTarget ->- (
                   textOffsetSelection(canvas.source, b, e)
+                    -- sga.hasClass ->- annotClass
                     -- oa.hasStyle ->- (
                       borderCss.map { css => (
                         bnode().a(cnt.ContentAsText)
