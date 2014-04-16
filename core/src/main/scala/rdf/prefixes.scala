@@ -4,20 +4,19 @@ import edu.umd.mith.scalanvas.rdf.prefixes._
 import org.w3.banana._
 import org.w3.banana.binder._
 
-//abstract class ScalanvasPrefixes[Rdf <: RDF](implicit val ops: RDFOps[Rdf]) {
-abstract class ScalanvasPrefixes extends RDFOpsModule {
-  val cnt = ContentPrefix[Rdf]
-  val dc = DCElementsPrefix[Rdf]
-  val dcterms = DCTermsPrefix[Rdf]
-  val dct = DCTypesPrefix[Rdf]
-  val dms = DmsPrefix[Rdf]
-  val exif = ExifPrefix[Rdf]
-  val oa = OpenAnnotationPrefix[Rdf]
-  val oax = OpenAnnotationExtensionPrefix[Rdf]
-  val ore = OREPrefix[Rdf]
-  val rdf = RDFPrefix[Rdf]
-  val rdfs = RDFSPrefix[Rdf]
-  val sc = SharedCanvasPrefix[Rdf]
-  val tei = TeiPrefix[Rdf]
+trait ScalanvasPrefixes { this: RDFOpsModule =>
+  lazy val cnt = ContentPrefix[Rdf]
+  lazy val dc = DCElementsPrefix[Rdf]
+  lazy val dcterms = DCTermsPrefix[Rdf]
+  lazy val dct = DCTypesPrefix[Rdf]
+  lazy val dms = DmsPrefix[Rdf]
+  lazy val exif = ExifPrefix[Rdf]
+  lazy val oa = OpenAnnotationPrefix[Rdf]
+  lazy val oax = OpenAnnotationExtensionPrefix[Rdf]
+  lazy val ore = OREPrefix[Rdf]
+  lazy val rdf = RDFPrefix[Rdf]
+  lazy val rdfs = RDFSPrefix[Rdf]
+  lazy val sc = SharedCanvasPrefix[Rdf]
+  lazy val tei = TeiPrefix[Rdf]
 }
 

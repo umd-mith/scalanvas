@@ -9,7 +9,7 @@ import org.w3.banana.binder._
 import org.w3.banana.diesel._
 import org.w3.banana.syntax._
 
-trait MithPropertyBinders extends PropertyBinders { this: MithPrefixes with MithObjectBinders =>
+trait MithPropertyBinders extends PropertyBinders { this: RDFOpsModule with MithPrefixes with MithObjectBinders =>
   trait MithMetadataLabeledToPG[A <: MithMetadataLabeled] extends MetadataLabeledToPG[A] {
     abstract override def toPG(a: A) = (
       super.toPG(a)

@@ -5,7 +5,7 @@ import edu.umd.mith.scalanvas.extensions.rdf.prefixes._
 import org.w3.banana._
 import org.w3.banana.binder._
 
-abstract class MithPrefixes extends ScalanvasPrefixes { this: RDFOpsModule =>
-  val mith = MithPrefix[Rdf]
+trait MithPrefixes extends ScalanvasPrefixes { this: RDFOpsModule =>
+  lazy val mith = MithPrefix[Rdf]
 }
 
