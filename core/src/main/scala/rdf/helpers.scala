@@ -5,33 +5,30 @@ import org.w3.banana.binder._
 import org.w3.banana.diesel._
 import org.w3.banana.syntax._
 
-trait Helpers {
-  trait SpecificResourceHelper[Rdf <: RDF] { this: ScalanvasPrefixes[Rdf] =>
-    def ops: RDFOps[Rdf]
+trait Helpers { this: RDFOpsModule with ScalanvasPrefixes =>
+  trait SpecificResourceHelper {
 
     def base[A](source: A)(selector: PointedGraph[Rdf])(implicit aToPG: ToPG[Rdf, A]) = ( 
-      ops.bnode().a(oa.SpecificResource)
+      Ops.bnode().a(oa.SpecificResource)
         -- oa.hasSource ->- source
         -- oa.hasSelector ->- selector
     )
 
     def textOffsetSelection[A](source: A, begin: Int, end: Int)(implicit aToPG: ToPG[Rdf, A]) =
       base(source)(
-        ops.bnode().a(oax.TextOffsetSelector)
+        Ops.bnode().a(oax.TextOffsetSelector)
           -- oax.begin ->- begin
           -- oax.end ->- end
       )
   
     def fragmentSelection[A](source: A, value: String)(implicit aToPG: ToPG[Rdf, A]) =
       base(source)(
-        ops.bnode().a(oa.FragmentSelector) -- rdf.value ->- value
+        Ops.bnode().a(oa.FragmentSelector) -- rdf.value ->- value
       )
   }
 
-  trait AnnotationHelper[Rdf <: RDF] { this: ScalanvasPrefixes[Rdf] =>
-    def ops: RDFOps[Rdf]
-
-    private def base() = ops.bnode().a(oa.Annotation)
+  trait AnnotationHelper {
+    private def base() = Ops.bnode().a(oa.Annotation)
 
     def contentAnnotation[A, B](body: A, target: B)(implicit
       aToPG: ToPG[Rdf, A],
@@ -44,19 +41,15 @@ trait Helpers {
     )
   }
 
-  trait CssHelper[Rdf <: RDF] { this: ScalanvasPrefixes[Rdf] =>
-    def ops: RDFOps[Rdf]
-
+  trait CssHelper {
     def addCssStyle(g: PointedGraph[Rdf], css: String) = g -- oa.hasStyle ->- (
-      ops.bnode().a(cnt.ContentAsText)
+      Ops.bnode().a(cnt.ContentAsText)
         -- dc.format ->- "text/css"
         -- cnt.chars ->- css
     )
   }
 
-  trait OreHelper[Rdf <: RDF] { this: ScalanvasPrefixes[Rdf] =>
-    def ops: RDFOps[Rdf]
-
+  trait OreHelper {
     implicit class Aggregates(g: PointedGraph[Rdf]) {
       def aggregates[A](aggregated: List[A])(implicit
         aToPG: ToPG[Rdf, A]

@@ -18,7 +18,7 @@ import edu.umd.mith.scalanvas.extensions.rdf._
 import org.w3.banana._
 import edu.umd.mith.scalanvas.io._
 
-object Demo extends App with DefaultGraphJenaModule with MithObjectBinders with MithPropertyBinders with Helpers {
+object Demo extends MithPrefixes with App with DefaultGraphJenaModule with MithObjectBinders with MithPropertyBinders with Helpers {
   val teiDocs = loadFiles(args.toList.map(new File(_))).map(
     _.map {
       case (systemId, doc) =>

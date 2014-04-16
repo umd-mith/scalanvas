@@ -9,8 +9,8 @@ import org.w3.banana.binder._
 import org.w3.banana.diesel._
 import org.w3.banana.syntax._
 
-trait MithPropertyBinders extends PropertyBinders { this: MithObjectBinders =>
-  trait MithMetadataLabeledToPG[Rdf <: RDF, A <: MithMetadataLabeled] extends MetadataLabeledToPG[Rdf, A] { this: MithPrefixes[Rdf] =>
+trait MithPropertyBinders extends PropertyBinders { this: MithPrefixes with MithObjectBinders =>
+  trait MithMetadataLabeledToPG[A <: MithMetadataLabeled] extends MetadataLabeledToPG[A] {
     abstract override def toPG(a: A) = (
       super.toPG(a)
         -- mith.shelfmarkLabel ->- a.shelfmark
@@ -20,7 +20,7 @@ trait MithPropertyBinders extends PropertyBinders { this: MithObjectBinders =>
     )
   }
 
-  trait MithMotivationHelpers[Rdf <: RDF] extends MotivationHelpers[Rdf] { this: MithPrefixes[Rdf] =>
+  trait MithMotivationHelpers extends MotivationHelpers {
     override def motivationUri: PartialFunction[Motivation, Rdf#URI] = super.motivationUri orElse {
       case Reading => mith.reading
       case Source => mith.source
