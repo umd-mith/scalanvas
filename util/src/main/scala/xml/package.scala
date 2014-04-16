@@ -25,6 +25,18 @@ package object xml {
   def loadFiles(files: List[File]): Task[Map[String, Doc]] = 
     Nondeterminism[Task].gatherUnordered(files map loadFile).map(_.toMap)
 
+  def attrText[PT <: Iterable[XmlPath]](paths: AttributePaths[PT]): Option[String] =
+    paths.one.headOption.map(_.attribute.value)
+
+  def elemText[PT <: Iterable[XmlPath]](path: XPath[PT]): Option[String] =
+    path.\+.text.one.headOption.map(_.item.value)
+
+  def attrsText[PT <: Iterable[XmlPath]](paths: AttributePaths[PT]): List[String] =
+    paths.attributes.map(_.attribute.value).toList
+
+  def elemsText[PT <: Iterable[XmlPath]](path: XPath[PT]): List[String] =
+    path.\+.text.map(_.item.value).toList
+
   object implicits {
     implicit class RichElem(val elem: Elem) extends AnyVal {
       def beginningOffset: Validation[Throwable, Int] =
@@ -45,6 +57,16 @@ package object xml {
 
     implicit class RichXPath[PT <: Iterable[XmlPath]](val xpath: XPath[PT]) extends AnyVal {
       def withId(id: String): AttributePaths[PT] = xpath \@ xmlIdAttr === id
+
+      def beginningOffset: Validation[Throwable, Int] =
+        attrText(xpath \@ beginOffset).toSuccess(
+          MissingBeginningOffsetError(xpath.toString)
+        ).flatMap(_.parseInt)
+
+      def endingOffset: Validation[Throwable, Int] =
+        attrText(xpath \@ endOffset).toSuccess(
+          MissingEndingOffsetError(xpath.toString)
+        ).flatMap(_.parseInt)
     }
 
     implicit class RichXmlPath(val xpath: XmlPath) extends AnyVal {
@@ -59,9 +81,19 @@ package object xml {
         )
 
       def root: XmlPath = xpath.ancestor_::.head
+
+      def beginningOffset: Validation[Throwable, Int] =
+        attrText(xpath \@ beginOffset).toSuccess(
+          MissingBeginningOffsetError(xpath.toString)
+        ).flatMap(_.parseInt)
+
+      def endingOffset: Validation[Throwable, Int] =
+        attrText(xpath \@ endOffset).toSuccess(
+          MissingEndingOffsetError(xpath.toString)
+        ).flatMap(_.parseInt)
     }
 
-    implicit class RichAttributes(val attributes: Attributes) extends AnyVal {
+    /*implicit class RichAttributes(val attributes: Attributes) extends AnyVal {
       def get[B, C](b: B)(implicit
         equiv: Equiv[C],
         viewA: Attribute => C,
@@ -70,7 +102,7 @@ package object xml {
         attributes(b)(equiv, viewA, viewB).map(_.value).toSuccess(
           MissingAttributeError(b.toString)
         )
-    }
+    }*/
   }
 }
 

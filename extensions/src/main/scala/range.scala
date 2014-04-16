@@ -15,29 +15,24 @@ import scales.xml._, ScalesXml._
 
 trait MithRangeParser[C <: Canvas] extends RangeParser[C] { this: CanvasParser[C] with TeiCollection with Configuration =>
   def parseMsItemId(msItem: XmlPath): Task[String] =
-    (msItem \@ xmlIdAttr).one.headOption.map(_.attribute.value).toTask(
+    attrText(msItem \@ xmlIdAttr).toTask(
       MissingXmlIdError("msItem")
     )
 
   def parseRangeLabel(msItem: XmlPath): Task[String] =
-    (msItem \* teiNs("bibl") \* teiNs("title")).\+.text.one.headOption.map(_.item.value).toTask(
+    elemText(msItem \* teiNs("bibl") \* teiNs("title")).toTask(
       new Exception("Missing title on range msItem.")
     )
 
   def parseRangeN(msItem: XmlPath): Task[String] =
-    (msItem \@ NoNamespaceQName("n")).one.headOption.map(text(_)).toTask(
+    attrText(msItem \@ "n").toTask(
       new Exception("Missing title on range msItem.")
     )
 
   def parseRanges(doc: CollectionDoc)(msItem: XmlPath): Task[List[Range[C]]] = {
     (msItem \* teiNs("msItem")).toList.traverseU { child =>
       val surfaces = Nondeterminism[Task].gather(
-        (
-          child \*
-          teiNs("locusGrp") \*
-          teiNs("locus") \@
-          NoNamespaceQName("target")
-        ).flatMap(_.value.split("\\s")).map(idRef =>
+        attrsText(child \* teiNs("locusGrp") \* teiNs("locus") \@ "target").flatMap(_.split("\\s")).map(idRef =>
           resolveIdRef(doc)(idRef).toTask(
             new Exception(f"Missing xml:id reference $idRef%s in ${ doc.fileName }%s.")
           ).flatMap(parseCanvas(doc))

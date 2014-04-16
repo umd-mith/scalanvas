@@ -15,29 +15,36 @@ import scales.xml._, ScalesXml._
 
 trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollection with MithConfiguration =>
   def parseSurfaceId(surface: XmlPath): Throwable \/ String =
-    (surface \@ xmlIdAttr).one.headOption.map(_.attribute.value).toRightDisjunction(
+    attrText(surface \@ xmlIdAttr).toRightDisjunction(
       MissingXmlIdError("surface")
     )
 
   def findStatus(msItem: XmlPath): Option[String] =
-    (msItem.ancestor_or_self_:: \* teiNs("bibl") \@ NoNamespaceQName("status")).toList.lastOption.map(
-      _.attribute.value
+    attrsText(msItem.ancestor_or_self_:: \* teiNs("bibl") \@ "status").lastOption
+
+  def findHandAbbrevs(surface: XmlPath): Throwable \/ List[String] = {
+    val hands = attrsText(surface \\@ "hand")
+
+    val handShiftsOnPage = attrsText(surface \\* teiNs("handShift") \@ "new")
+
+    val firstHandShift: Option[XmlPath] = (surface.\\*(teiNs("handShift")).pos(1)).one.headOption
+
+    val handShifts = for {
+      firstHandShift <- (surface.\\*(teiNs("handShift")).pos(1)).one.headOption
+      firstLine <- (surface.\\*(teiNs("line")).pos(1)).one.headOption
+    } yield (
+      for {
+        firstHandShiftBeginning <- firstHandShift.beginningOffset.disjunction
+        firstLineBeginning <- firstLine.beginningOffset.disjunction
+        earlier <- if (firstHandShiftBeginning > firstLineBeginning) {
+          attrText(surface.preceding_::.\*(teiNs("handShift")).pos(1).\@("new")).toRightDisjunction(
+            new Exception("No appropriate earlier handshift for ${ surface.toString }%s.")
+          ).map(_.some)
+        } else none.right  
+      } yield (hands ++ handShiftsOnPage ++ earlier.toList).distinct
     )
-
-  def findHandAbbrevs(surface: XmlPath): List[String] = {
-    val hands = (surface \\@ NoNamespaceQName("hand")).attributes.map(_.attribute.value)
-    val shifts = (surface \\* teiNs("line")).toList.lastOption.toList.flatMap { lastLine =>
-      val preceding = lastLine.preceding_::.toList
-      val (before, after) = preceding.span(_ == surface)
-      before.filter(p => !p.isItem && p.tree.section.name == teiNs("handShift")) ++
-        after.find(p => !p.isItem && p.tree.section.name == teiNs("handShift"))
-    }
-
-    val shiftHands = shifts.flatMap(shift =>
-      (shift \@ NoNamespaceQName("new")).one.headOption.map(_.attribute.value)
-    )
-
-    (hands ++ shiftHands).toList.distinct
+    
+    handShifts.getOrElse((hands ++ handShiftsOnPage).distinct.right)
   }
 
   def parseCanvas(doc: CollectionDoc)(surface: XmlPath): Task[MithCanvas] = {
@@ -45,7 +52,6 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
     val root = surface.root
 
     val seq = (root \\* teiNs("surface")).toList.indexOf(surface) + 1
-    val handNames = findHandAbbrevs(surface).map(_.tail).flatMap(lookupHandName(doc))
 
     val msItems: Throwable \/ List[XmlPath] =
       surface.getAttribute("partOf").toOption.toList.flatMap(_.split("\\s")).traverseU(idRef =>
@@ -54,7 +60,7 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
         )
       )
 
-    val imageUriAttr = (surface \* teiNs("graphic") \@ NoNamespaceQName("url")).one.headOption.map(text(_))
+    val imageUriAttr = attrText(surface \* teiNs("graphic") \@ "url")
 
     new Task(
       Future.now(
@@ -65,6 +71,8 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
           lry <- surface.getAttribute("lry").flatMap(_.parseInt).disjunction
           sm <- surface.getQAttribute(mithNs("shelfmark")).disjunction
           fo <- surface.getQAttribute(mithNs("folio")).disjunction
+          handAbbrevs <- findHandAbbrevs(surface)
+          handNames = handAbbrevs.map(_.tail).flatMap(lookupHandName(doc))
           offset <- elem.beginningOffset.disjunction
           ranges <- msItems
           imageUri <- imageUriAttr.toRightDisjunction(

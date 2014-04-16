@@ -7,15 +7,16 @@ import scales.utils._, ScalesUtils._
 import scales.xml._, ScalesXml._
 
 object MithTeiCollection {
-  def createHandNames(docs: Map[String, CollectionDoc]) = {
+  def createHandNames(docs: Map[String, CollectionDoc]): Map[(String, String), String] =
     docs.values.foldLeft(Map.empty[(String, String), String]) {
       case (map, CollectionDoc(doc, _, fileName)) =>
         (top(doc) \\* teiNs("handDesc") \* teiNs("handNote") \* teiNs("persName")).foldLeft(map) {
           case (map, persName) =>
-            map.updated((fileName, text(persName.\^.\@(xmlIdAttr))), text(persName))
+            attrText(persName.\^.\@(xmlIdAttr)).fold(map) { personId =>
+              map.updated((fileName, personId), text(persName))
+            }
         }
     }
-  }
 }
 
 trait MithTeiCollection extends TeiCollection {
@@ -25,50 +26,40 @@ trait MithTeiCollection extends TeiCollection {
   def lookupHandName(doc: CollectionDoc)(abbrev: String) =
     handNames.get((doc.fileName, abbrev))
 
-  def topLevelRepository(doc: CollectionDoc): Option[String] = {
-    val repository = top(doc.doc) \\* teiNs("sourceDesc") \* teiNs("msDesc") \* teiNs("msIdentifier") \* teiNs("repository")
+  def topLevelRepository(doc: CollectionDoc): Option[String] = elemText(
+    top(doc.doc) \\* teiNs("sourceDesc") \* teiNs("msDesc") \* teiNs("msIdentifier") \* teiNs("repository")
+  )
 
-    repository.one.headOption.map(text(_))
-  }
+  def topLevelShelfmark(doc: CollectionDoc): Option[String] = elemText(
+    top(doc.doc) \\* teiNs("sourceDesc") \* teiNs("msDesc") \* teiNs("msIdentifier") \* teiNs("idNo")
+  )
 
-  def topLevelShelfmark(doc: CollectionDoc): Option[String] = {
-    val idNo = top(doc.doc) \\* teiNs("sourceDesc") \* teiNs("msDesc") \* teiNs("msIdentifier") \* teiNs("idNo")
-
-    idNo.one.headOption.map(text(_))
-  }
-
-  def topLevelTitle(doc: CollectionDoc): Option[String] = {
-    val titles = top(doc.doc) \\* teiNs("titleStmt") \* teiNs("title")
-
-    titles.filter(title => text(title \@ NoNamespaceQName("type")) == "main").one.headOption.map(text(_))
-  }
+  def topLevelTitle(doc: CollectionDoc): Option[String] = elemText(
+    (top(doc.doc) \\* teiNs("titleStmt") \* teiNs("title")).filter(
+      title => text(title \@ "type") == "main"
+    )
+  )
 
   def topLevelXmlId(doc: CollectionDoc): Option[String] =
-    (top(doc.doc) \@ xmlIdAttr).one.headOption.map(text(_))
+    attrText(top(doc.doc) \@ xmlIdAttr)
 
-  def nearestDate(msItem: XmlPath): Option[String] = {
-    val dates = msItem.ancestor_or_self_::.filter(
+  def nearestDate(msItem: XmlPath): Option[String] = elemsText(
+    msItem.ancestor_or_self_::.filter(
       node => !node.isItem && node.tree.section.name == teiNs("msItem")
     ) \* teiNs("bibl") \* teiNs("date")
+  ).lastOption
 
-    dates.\+.text.lastOption.map(_.item.value)
-  }
-
-  def nearestAgent(msItem: XmlPath): Option[String] = {
-    val authors = msItem.ancestor_or_self_::.filter(
+  def nearestAgent(msItem: XmlPath): Option[String] = elemsText(
+    msItem.ancestor_or_self_::.filter(
       node => !node.isItem && node.tree.section.name == teiNs("msItem")
     ) \* teiNs("bibl") \* teiNs("author")
+  ).lastOption
 
-    authors.\+.text.lastOption.map(_.item.value)
-  }
-
-  def nearestState(msItem: XmlPath): Option[String] = {
-    val states = msItem.ancestor_or_self_::.filter(
+  def nearestState(msItem: XmlPath): Option[String] = attrsText(
+    msItem.ancestor_or_self_::.filter(
       node => !node.isItem && node.tree.section.name == teiNs("msItem")
-    ) \* teiNs("bibl") \@ NoNamespaceQName("status")
-
-    states.lastOption.map(text(_))
-  }
+    ) \* teiNs("bibl") \@ "status"
+  ).lastOption
 
   def expandStateName(s: String) = s match {
     case "draft" => "Draft"

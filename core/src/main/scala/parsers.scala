@@ -42,11 +42,6 @@ trait TeiCollection {
     case IdRef("", ref) => idMap.get(doc.fileName + "#" + ref)
     case IdRef(_, _) => idMap.get(idRef)
   }
-
-  def handName(root: XmlPath)(abbrev: String): Option[String] =
-    (root \\* teiNs("handDesc") \* teiNs("handNote") withId(abbrev)).\^.\*(
-      teiNs("persName")
-    ).\+.text.one.headOption.map(_.item.value)
 }
 
 trait CanvasParser[C <: Canvas] {
