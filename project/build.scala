@@ -22,11 +22,13 @@ object Scalanvas extends Build {
     settings = commonSettings ++ Seq(
       libraryDependencies ++= Seq(
         "org.apache.jena" % "jena-arq" % "2.11.1",
+        "org.scalaz" %% "scalaz-core" % "7.0.6",
         "com.github.jsonld-java" % "jsonld-java-jena" % "0.4-SNAPSHOT"
       )
     )
   ).dependsOn(
-    ProjectRef(uri("git://github.com/w3c/banana-rdf.git"), "banana-jena")
+    ProjectRef(uri("git://github.com/w3c/banana-rdf.git#95069024cf0184172c6dba9fc0be55efbeb5b863"), "banana-rdf"),
+    ProjectRef(uri("git://github.com/w3c/banana-rdf.git#95069024cf0184172c6dba9fc0be55efbeb5b863"), "banana-jena")
   )
 
   lazy val core: Project = Project(

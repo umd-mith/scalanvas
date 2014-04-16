@@ -12,22 +12,21 @@ import org.w3.banana.syntax._
 
 //import scalaz.{ Source => _, _ }, Scalaz._
 
-trait MithObjectBinders extends ObjectBinders { this: MithPropertyBinders with Helpers =>
-  implicit def ImageToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, Image] =
+trait MithObjectBinders extends ObjectBinders with RDFOpsModule { this: MithPropertyBinders with Helpers =>
+  implicit def ImageToPG: ToPG[Rdf, Image] =
     new MithPrefixes[Rdf] with ImageToPG[Rdf, Image] with MithMotivationHelpers[Rdf] {}
 
-  implicit def MithCanvasToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithCanvas] =
+  implicit def MithCanvasToPG: ToPG[Rdf, MithCanvas] =
     new MithPrefixes[Rdf] with CanvasToPG[Rdf, MithCanvas] with MithMetadataLabeledToPG[Rdf, MithCanvas] {}
 
-  implicit def MithLogicalManifestToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithLogicalManifest] =
-    new MithPrefixes[Rdf] with MithManifestToPG[Rdf, MithCanvas, MithLogicalManifest] with MithMetadataLabeledToPG[Rdf, MithLogicalManifest] with OreHelper[Rdf]
+  implicit def MithLogicalManifestToPG: ToPG[Rdf, MithLogicalManifest] =
+    new MithPrefixes[Rdf] with MithManifestToPG[MithCanvas, MithLogicalManifest] with MithMetadataLabeledToPG[Rdf, MithLogicalManifest] with OreHelper[Rdf]
 
-  implicit def MithPhysicalManifestToPG[Rdf <: RDF](implicit ops: RDFOps[Rdf]): ToPG[Rdf, MithPhysicalManifest] =
-    new MithPrefixes[Rdf] with MithManifestToPG[Rdf, MithCanvas, MithPhysicalManifest] with MithMetadataLabeledToPG[Rdf, MithPhysicalManifest] with OreHelper[Rdf]
+  implicit def MithPhysicalManifestToPG: ToPG[Rdf, MithPhysicalManifest] =
+    new MithPrefixes[Rdf] with MithManifestToPG[MithCanvas, MithPhysicalManifest] with MithMetadataLabeledToPG[Rdf, MithPhysicalManifest] with OreHelper[Rdf]
 
-  trait MithManifestToPG[Rdf <: RDF, C <: MithCanvas, M <: MithManifest[C, M]] extends ManifestToPG[Rdf, C, M] { this: MithPrefixes[Rdf] with MithMetadataLabeledToPG[Rdf, M] with OreHelper[Rdf] =>
-    import ops._
-    
+  trait MithManifestToPG[C <: MithCanvas, M <: MithManifest[C, M]] extends ManifestToPG[Rdf, C, M] { this: MithPrefixes[Rdf] with MithMetadataLabeledToPG[Rdf, M] with OreHelper[Rdf] =>
+    import Ops._
     def readTextAnnotations(canvas: C): List[PointedGraph[Rdf]] = Nil
     def readZones(canvas: C): List[PointedGraph[Rdf]] = Nil
 

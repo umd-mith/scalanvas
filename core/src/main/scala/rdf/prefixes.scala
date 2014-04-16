@@ -5,6 +5,7 @@ import org.w3.banana._
 import org.w3.banana.binder._
 
 abstract class ScalanvasPrefixes[Rdf <: RDF](implicit val ops: RDFOps[Rdf]) {
+//abstract class ScalanvasPrefixes extends RDFOpsModule {
   val cnt = ContentPrefix[Rdf]
   val dc = DCElementsPrefix[Rdf]
   val dcterms = DCTermsPrefix[Rdf]

@@ -12,7 +12,7 @@ object DefaultGraphJena extends DefaultGraphJenaModule
   * necessary for performance in some situations.
   */
 trait DefaultGraphJenaModule extends JenaModule {
-  implicit override val ops: RDFOps[Jena] = DefaultGraphJenaOperations
+  implicit override val Ops: JenaOperations = DefaultGraphJenaOperations
 }
 
 object DefaultGraphJenaOperations extends DefaultGraphJenaOperations

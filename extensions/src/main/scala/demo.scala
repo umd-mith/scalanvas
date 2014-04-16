@@ -3,6 +3,7 @@ package edu.umd.mith.scalanvas.extensions
 import scales.utils._, ScalesUtils._
 import scales.xml._, ScalesXml._
 import java.io.{ FileReader, File }
+import edu.umd.mith.banana.jena.DefaultGraphJenaModule
 import edu.umd.mith.util.xml._
 import edu.umd.mith.util.xml.implicits._
 import edu.umd.mith.util.xml.tei._
@@ -17,7 +18,7 @@ import edu.umd.mith.scalanvas.extensions.rdf._
 import org.w3.banana._
 import edu.umd.mith.scalanvas.io._
 
-object Demo extends App {
+object Demo extends App with DefaultGraphJenaModule with MithObjectBinders with MithPropertyBinders with Helpers {
   val teiDocs = loadFiles(args.toList.map(new File(_))).map(
     _.map {
       case (systemId, doc) =>
