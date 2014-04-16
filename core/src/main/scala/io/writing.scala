@@ -12,7 +12,7 @@ import java.util.{ Map => JMap }
 import java.io.{ BufferedOutputStream, File, FileOutputStream, InputStream, OutputStream }
 import scala.io.Source
 
-trait ManifestWriter[Rdf <: RDF] {
+trait ManifestWriter { this: RDFOpsModule =>
   def readContext(in: InputStream): JMap[String, Object] = {
     val source = Source.fromInputStream(in)
     val json = source.mkString
@@ -27,20 +27,18 @@ trait ManifestWriter[Rdf <: RDF] {
 
   def write[F, C <: Canvas, M <: Manifest[C, M]](manifest: M)(out: OutputStream)(implicit
     writer: RDFWriter[Rdf, F],
-    ops: RDFOps[Rdf],
     toPg: ToPG[Rdf, ResourceMap[M]]
   ) = {
-    import ops._
+    import Ops._
     RDFWriter[Rdf, F].write(manifest.jsonldResource.toPG.graph, out, manifest.base.toString)
   }
 }
 
-trait JenaManifestWriter extends ManifestWriter[Jena] {
+trait JenaManifestWriter extends ManifestWriter { this: JenaModule =>
   def writeJsonLd[C <: Canvas, M <: Manifest[C, M], Ctx: JsonLdContext](manifest: M)(ctx: Ctx, out: OutputStream)(implicit
     toPg: ToPG[Jena, ResourceMap[M]]
   ) = write[JsonLd, C, M](manifest)(out)(
     new JsonLdWriter[Ctx] { val context = ctx },
-    implicitly[RDFOps[Jena]],
     toPg
   )
 

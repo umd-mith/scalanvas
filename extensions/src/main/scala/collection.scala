@@ -66,5 +66,12 @@ trait MithTeiCollection extends TeiCollection {
     case "fair_copy" => "Fair copy"
     case other => other
   }
+
+  def lastHandShift[PT <: Iterable[XmlPath]](path: XPath[PT]): Option[String] = {
+    val lastHandShift =
+      path.preceding_::.filter(node => !node.isItem && node.tree.section.name == teiNs("handShift")).lastOption
+
+    lastHandShift.flatMap(handShift => attrText(handShift \@ "new"))
+  }
 }
 

@@ -4,15 +4,15 @@ package rdf
 import edu.umd.mith.scalanvas._
 import edu.umd.mith.scalanvas.rdf.{ Helpers, ObjectBinders, PropertyBinders, ScalanvasPrefixes }
 import edu.umd.mith.util.xml.tei.{ Annotation, AnnotationExtractor }
-
 import org.w3.banana._
 import org.w3.banana.binder._
 import org.w3.banana.diesel._
 import org.w3.banana.syntax._
 
-//import scalaz.{ Source => _, _ }, Scalaz._
+import scalaz.{ Source => _, _ }, Scalaz._
 
-trait MithObjectBinders extends ObjectBinders { this: RDFOpsModule with MithPrefixes with MithPropertyBinders with Helpers =>
+trait MithObjectBinders extends ObjectBinders {
+  this: RDFOpsModule with MithPrefixes with MithPropertyBinders with Helpers with TeiHelpers =>
   implicit def ImageToPG: ToPG[Rdf, Image] =
     new ImageToPG[Image] with MithMotivationHelpers {}
 
@@ -25,7 +25,8 @@ trait MithObjectBinders extends ObjectBinders { this: RDFOpsModule with MithPref
   implicit def MithPhysicalManifestToPG: ToPG[Rdf, MithPhysicalManifest] =
     new MithManifestToPG[MithCanvas, MithPhysicalManifest] with MithMetadataLabeledToPG[MithPhysicalManifest] with OreHelper
 
-  trait MithManifestToPG[C <: MithCanvas, M <: MithManifest[C, M]] extends ManifestToPG[C, M] { this: MithMetadataLabeledToPG[M] with OreHelper =>
+  trait MithManifestToPG[C <: MithCanvas, M <: MithManifest[C, M]] extends ManifestToPG[C, M] {
+    this: MithMetadataLabeledToPG[M] with OreHelper =>
     import Ops._
     def readTextAnnotations(canvas: C): List[PointedGraph[Rdf]] = Nil
     def readZones(canvas: C): List[PointedGraph[Rdf]] = Nil
@@ -55,7 +56,7 @@ trait MithObjectBinders extends ObjectBinders { this: RDFOpsModule with MithPref
           -- ore.aggregates ->- manifest.sequence
           -- ore.aggregates ->- {
             if (manifest.hasTranscriptions)
-              Some((
+              (
                 manifest.itemBasePlus("/reading-html").toUri
                   .a(sc.AnnotationList)
                   .a(sc.Layer)
@@ -71,11 +72,11 @@ trait MithObjectBinders extends ObjectBinders { this: RDFOpsModule with MithPref
                       -- sc.motivatedBy ->- mith.reading
                   )
                 }
-              )) else None
+              ).some else None
           }
           -- ore.aggregates ->- {
             if (manifest.hasTranscriptions)
-              Some((
+              (
                 manifest.itemBasePlus("/source-tei").toUri
                   .a(sc.AnnotationList)
                   .a(sc.Layer)
@@ -90,7 +91,7 @@ trait MithObjectBinders extends ObjectBinders { this: RDFOpsModule with MithPref
                       -- oa.hasBody ->- canvas.source
                   )
                 }
-              )) else None
+              ).some else None
           }
           -- sc.hasImageAnnotations ->- (imageAnnotations)
           -- ore.aggregates ->- (
@@ -106,7 +107,7 @@ trait MithObjectBinders extends ObjectBinders { this: RDFOpsModule with MithPref
           )
           -- ore.aggregates ->- {
             if (manifest.hasTranscriptions)
-              Some((
+              (
                 manifest.itemBasePlus("/text-annotations").toUri
                   .a(sc.AnnotationList)
                   .a(sc.Layer)
@@ -114,7 +115,7 @@ trait MithObjectBinders extends ObjectBinders { this: RDFOpsModule with MithPref
                   -- sc.forMotivation ->- sc.painting
               ).aggregates(
                 if (manifest.hasTranscriptions) manifest.sequence.canvases.flatMap(readTextAnnotations) else Nil
-              )) else None
+              ).some else None
           }
         )
 

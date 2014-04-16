@@ -22,12 +22,11 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
   def findStatus(msItem: XmlPath): Option[String] =
     attrsText(msItem.ancestor_or_self_:: \* teiNs("bibl") \@ "status").lastOption
 
-  def findHandAbbrevs(surface: XmlPath): Throwable \/ List[String] = {
+  def findHandAbbrevs(surface: XmlPath): List[String] = {
     val hands = attrsText(surface \\@ "hand")
-
     val handShiftsOnPage = attrsText(surface \\* teiNs("handShift") \@ "new")
 
-    val firstHandShift: Option[XmlPath] = (surface.\\*(teiNs("handShift")).pos(1)).one.headOption
+    /*val firstHandShift: Option[XmlPath] = (surface.\\*(teiNs("handShift")).pos(1)).one.headOption
 
     val handShifts = for {
       firstHandShift <- (surface.\\*(teiNs("handShift")).pos(1)).one.headOption
@@ -42,9 +41,10 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
           ).map(_.some)
         } else none.right  
       } yield (hands ++ handShiftsOnPage ++ earlier.toList).distinct
-    )
-    
-    handShifts.getOrElse((hands ++ handShiftsOnPage).distinct.right)
+    )*/
+        
+    println(lastHandShift(surface.\\*(teiNs("line")).pos(1)))
+    (hands ++ handShiftsOnPage ++ lastHandShift(surface.\\*(teiNs("line")).pos(1)).toList).distinct
   }
 
   def parseCanvas(doc: CollectionDoc)(surface: XmlPath): Task[MithCanvas] = {
@@ -62,6 +62,8 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
 
     val imageUriAttr = attrText(surface \* teiNs("graphic") \@ "url")
 
+    val handNames = findHandAbbrevs(surface).map(_.tail).flatMap(lookupHandName(doc))
+
     new Task(
       Future.now(
         for {
@@ -71,8 +73,6 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
           lry <- surface.getAttribute("lry").flatMap(_.parseInt).disjunction
           sm <- surface.getQAttribute(mithNs("shelfmark")).disjunction
           fo <- surface.getQAttribute(mithNs("folio")).disjunction
-          handAbbrevs <- findHandAbbrevs(surface)
-          handNames = handAbbrevs.map(_.tail).flatMap(lookupHandName(doc))
           offset <- elem.beginningOffset.disjunction
           ranges <- msItems
           imageUri <- imageUriAttr.toRightDisjunction(
@@ -85,7 +85,7 @@ trait MithCanvasParser extends CanvasParser[MithCanvas] { this: MithTeiCollectio
           val label = f"$sm%s, $fo"
           val (width, height) = adjustDimensions(lrx, lry)
           val service = None
-          val transcription = Some(surface)
+          val transcription = Some((doc, surface))
           val images = List(
             ImageForPainting(
               new URI(imageUri),

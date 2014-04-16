@@ -92,17 +92,6 @@ package object xml {
           MissingEndingOffsetError(xpath.toString)
         ).flatMap(_.parseInt)
     }
-
-    /*implicit class RichAttributes(val attributes: Attributes) extends AnyVal {
-      def get[B, C](b: B)(implicit
-        equiv: Equiv[C],
-        viewA: Attribute => C,
-        viewB: B => C
-      ): Validation[Throwable, String] =
-        attributes(b)(equiv, viewA, viewB).map(_.value).toSuccess(
-          MissingAttributeError(b.toString)
-        )
-    }*/
   }
 }
 

@@ -23,7 +23,7 @@ trait Canvas extends LocatedResource
   def width: Int
   def height: Int
   def images: List[Image]
-  def transcription: Option[XmlPath]
+  def transcription: Option[(CollectionDoc, XmlPath)]
   def reading: Option[Link]
   def source: Option[Link]
 }

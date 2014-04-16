@@ -83,6 +83,9 @@ object Scalanvas extends Build {
     version := "0.0.0-SNAPSHOT",
     resolvers += Resolver.sonatypeRepo("snapshots"),
     scalaVersion := "2.10.4",
+    javaOptions := Seq(
+      "-XX:MaxPermSize=512m"
+    ),
     scalacOptions := Seq(
       "-feature",
       "-language:implicitConversions",
