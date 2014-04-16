@@ -54,7 +54,7 @@ object Scalanvas extends Build {
     )
   )
 
-  lazy val sga: Project = Project(
+  /*lazy val sga: Project = Project(
     id = "scalanvas-sga",
     base = file("sga"),
     dependencies = Seq(extensions, teiUtil),
@@ -70,7 +70,7 @@ object Scalanvas extends Build {
     base = file("wwa"),
     dependencies = Seq(extensions, teiUtil),
     settings = commonSettings
-  )
+  )*/
 
   lazy val root: Project = Project(
     id = "scalanvas",
@@ -93,7 +93,6 @@ object Scalanvas extends Build {
       "-unchecked"
     ),
     libraryDependencies <++= scalaVersion(sv => Seq(
-      "com.typesafe" % "config" % "1.2.0",
       "org.slf4j" % "slf4j-simple" % "1.7.6"
     ))
   )

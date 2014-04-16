@@ -14,13 +14,14 @@ import org.w3.banana.syntax._
 import scalaz.{ Source => _, _ }, Scalaz._
 import scales.xml._, ScalesXml._
 
-trait TeiHelpers extends AnnotationExtractor {
-  this: RDFOpsModule with MithPrefixes with MithPropertyBinders with Helpers with MithTeiCollection =>
+trait TeiHelpers extends AnnotationExtractor with ZoneReader {
+  this: RDFOpsModule with MithPrefixes with MithObjectBinders with MithPropertyBinders with Helpers with MithTeiCollection =>
+  import Ops._
 
   lazy val Hand = "#(\\S+)".r
   lazy val BrokenHand = "(\\S+)".r
 
-  def handClass(handString: String) = handString match {
+  def toHandClass(handString: String) = handString match {
     case Hand(hand) => Some(s"hand-$hand")
     case BrokenHand(hand) => Some(s"hand-$hand")
     case _ => None
@@ -30,23 +31,39 @@ trait TeiHelpers extends AnnotationExtractor {
     line \* teiNs("add") \* teiNs("note") \@ "type"
   ).fold(false)(_ == "authorial")
 
-  def readTextAnnotations(canvas: MithCanvas): List[PointedGraph[Rdf]] = Nil
-/*    canvas.transcription.fold(Nil) {
+  def rendToTextAlignment(rend: String) =
+    if (!rend.startsWith("indent")) Some(rend) else None
+
+  def rendToIndentLevel(rend: String) =
+    if (rend.startsWith("indent")) Some(rend.drop(6).toInt) else None
+
+  def addCssClass(g: PointedGraph[Rdf], cls: String) = g -- mith.hasClass ->- cls
+
+  private def bail(throwable: Throwable) = throw throwable
+
+  def readTextAnnotations(canvas: MithCanvas): List[PointedGraph[Rdf]] =
+    canvas.transcription.fold(List.empty[PointedGraph[Rdf]]) {
       case (doc, transcription) =>
-        val canvasBeginningOffset = transcription.beginningOffset.getOrElse(throwable => throw throwable)
+        val canvasBeginningOffset = transcription.beginningOffset.valueOr(bail)
 
-        val (linesWithIds, marginalia) = (transcription \\* "line").toList.zipWithIndex.map {
+        val (linesWithIds, marginalia) = (transcription \\* teiNs("line")).toList.zipWithIndex.map {
           case (line, i) =>
-            val attrs = line.attributes.asAttrMap
+            val id = attrText(line \@ xmlIdAttr)
+            val b = line.beginningOffset.valueOr(bail) - canvasBeginningOffset
+            val e = line.endingOffset.valueOr(bail) - canvasBeginningOffset
 
-            val b = line.beginningOffset.getOrElse(throwable => throw throwable) - canvasBeginningOffset
-            val e = line.endingOffset.getOrElse(throwable => throw throwable) - canvasBeginningOffset
+            val zone = line.ancestor_::.filter(node =>
+              !node.isItem && node.tree.section.name == teiNs("zone")
+            ).headOption.getOrElse(
+              throw new Exception(f"No enclosing zone for line ${ i + 1 }%d in ${ canvas.uri.toString }%s.")
+            )
 
-            val inLibraryZone = attrsText(
-              line.ancestor_:: \* teiNs("zone") \@ "type"
-            ).contains("library")
+            val inLibraryZone = attrText(zone \@ "type") == "library"
 
             val libraryHand = if (inLibraryZone) Some("hand-library") else None
+            val handClass = lastHandShift(line).flatMap(toHandClass) 
+
+            val rend = attrText(line \@ "rend")
 
             val lineAnnotation = (
               URI(canvas.uri.toString + f"/line-annotations/${ i + 1 }%04d")
@@ -55,31 +72,20 @@ trait TeiHelpers extends AnnotationExtractor {
                 .a(oax.Highlight)
                 -- oa.hasTarget ->- (
                   textOffsetSelection(canvas.source, b, e)
-                  -- mith.hasClass ->- libraryHand.orElse(
-                    handClass.filter { _ =>
-                      !canvas.uri.toString.endsWith("ox-ms_abinger_c58/canvas/0047") || i > 7 
-                    }
-                  )
-              )
-              -- mith.textAlignment ->- attrs.get("rend").filterNot(_.startsWith("indent"))
-              -- mith.textIndentLevel ->- attrs.get("rend").filter(_.startsWith("indent")).map(_.drop(6).toInt)
-          )
+                    -- mith.hasClass ->- libraryHand.orElse(handClass)
+                )
+                -- mith.textAlignment ->- rend.flatMap(rendToTextAlignment)
+                -- mith.textIndentLevel ->- rend.flatMap(rendToIndentLevel)
+            )
 
-          val marginalia = if (isAuthorialLine(line)) {
-            (canvas.transcription.get \\ "zone").filter(
-              zone => (zone \\ "line").contains(line)
-            ).headOption.flatMap {
-              zone =>
-                val attrs = zone.attributes.asAttrMap
-                
-                for {
-                  target <- attrs.get("target").map(_.tail)
-                  zoneType <- attrs.get("type")
-                } yield target -> (zoneType, lineAnnotation)
-            }
-          } else None
+            val marginalia: Option[(String, (String, PointedGraph[Rdf]))] = if (isAuthorialLine(line)) {
+              for {
+                zoneTarget <- attrText(zone \@ "target")
+                zoneType <- attrText(zone \@ "type")
+              } yield zoneTarget -> (zoneType, lineAnnotation)
+            } else None
 
-          (attrs.get("xml:id") -> lineAnnotation, marginalia)
+            (id -> lineAnnotation, marginalia)
         }.unzip
 
         val lines = linesWithIds.map(_._2)
@@ -104,8 +110,8 @@ trait TeiHelpers extends AnnotationExtractor {
             )
         }.toList
 
-        val additions = annotationExtractor.additions.valueOr(es => sys.error(es.toList.mkString("\n"))).map {
-          case Annotation((b, e), place, attrs) =>
+        val additions = getAdditions(doc.doc.rootElem).valueOr(errors => bail(errors.head)).map {
+          case annotation @ Annotation((b, e), place, _) =>
             val placeCss = place.flatMap {
               case "superlinear" => Some("vertical-align: super;")
               case "sublinear"   => Some("vertical-align: sub;")
@@ -115,7 +121,7 @@ trait TeiHelpers extends AnnotationExtractor {
             val Hand = "#(\\S+)".r
             val BrokenHand = "(\\S+)".r
 
-            val handClass = attrs.get("hand").flatMap {
+            val handClass = annotation.getAttr("hand").flatMap {
               case Hand(hand) => Some(s"hand-$hand")
               case BrokenHand(hand) => Some(s"hand-$hand")
               case _ => None
@@ -127,7 +133,7 @@ trait TeiHelpers extends AnnotationExtractor {
                 .a(mith.AdditionAnnotation)
                 .a(oax.Highlight)
                 -- oa.hasTarget ->- (
-                  textOffsetSelection(canvas.source, b, e)
+                  textOffsetSelection(canvas.source, b - canvasBeginningOffset, e - canvasBeginningOffset)
                     -- oa.hasStyle ->- (
                       placeCss.map { css => (
                         bnode().a(cnt.ContentAsText)
@@ -140,11 +146,11 @@ trait TeiHelpers extends AnnotationExtractor {
             )
         }
 
-        val deletions = annotationExtractor.deletions.valueOr(es => sys.error(es.toList.mkString("\n"))).map {
-          case Annotation((b, e), _, attrs) =>
+        val deletions = getDeletions(doc.doc.rootElem).valueOr(errors => bail(errors.head)).map {
+          case annotation @ Annotation((b, e), _, _) =>
             val Hand = "#(\\S+)".r
 
-            val handClass = attrs.get("hand").flatMap {
+            val handClass = annotation.getAttr("hand").flatMap {
               case Hand(hand) => Some(s"hand-$hand")
               case _ => None
             }
@@ -155,21 +161,19 @@ trait TeiHelpers extends AnnotationExtractor {
                 .a(mith.DeletionAnnotation)
                 .a(oax.Highlight)
                 -- oa.hasTarget ->- (
-                  textOffsetSelection(canvas.source, b, e)
+                  textOffsetSelection(canvas.source, b - canvasBeginningOffset, e - canvasBeginningOffset)
                     -- mith.hasClass ->- handClass
                 )
             )
         }
 
-        val highlights = (canvas.transcription.get \\ "hi").toList.map { hi => 
-          val attrs = hi.attributes.asAttrMap
-
-          val b = attrs("mu:b").toInt
-          val e = attrs("mu:e").toInt
+        val highlights = (transcription \\* "hi").toList.map { hi => 
+          val b = hi.beginningOffset.valueOr(bail) - canvasBeginningOffset
+          val e = hi.endingOffset.valueOr(bail) - canvasBeginningOffset
 
           val os = textOffsetSelection(canvas.source, b, e)
 
-          val offset = attrs.get("rend") match {
+          val offset = attrText(hi \@ "rend") match {
             case Some("double-underline") => addCssClass(os, "double-underline")
             case Some("underline") => addCssStyle(os, "text-decoration: underline")
             case Some("italic") => addCssStyle(os, "font-style: italic")
@@ -183,11 +187,11 @@ trait TeiHelpers extends AnnotationExtractor {
           bnode().a(oa.Annotation).a(oax.Highlight) -- oa.hasTarget ->- offset
         }
 
-        val metamarkHighlights = annotationExtractor.marginaliaMetamarks.valueOr(
+        val metamarkHighlights = getMarginaliaMetamarks(doc.doc.rootElem).valueOr(
           errors => sys.error(errors.toList.mkString("\n"))
         ).map {
-          case Annotation((b, e), _, attrs) =>
-            val borderCss = attrs.get("rend").flatMap {
+          case annotation @ Annotation((b, e), _, _) =>
+            val borderCss = annotation.getAttr("rend").flatMap {
               case "singleLine-left" => Some("border-left-style: solid")
               case "singleLine-right" => Some("border-right-style: solid")
               case "doubleLine-left" => Some("border-left-style: double")
@@ -213,6 +217,6 @@ trait TeiHelpers extends AnnotationExtractor {
         }
 
         lines ::: additions ::: deletions ::: (highlights ++ metamarkHighlights) ::: marginaliaAnnotations
-      i}
-*/
+  }
 }
+

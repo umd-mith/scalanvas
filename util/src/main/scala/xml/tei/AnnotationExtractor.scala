@@ -10,18 +10,29 @@ case class Annotation(
   pos: (Int, Int),
   place: Option[String],
   attrs: Attributes
-)
+) {
+  def getAttr(name: String): Option[String] =
+    attrs.find(_.name == NoNamespaceQName(name)).map(_.value)
+}
 
 trait AnnotationExtractor {
   import implicits._
 
-  def additions(doc: XmlTree): ValidationNel[Throwable, List[Annotation]] =
+  def getAdditions(doc: XmlTree): ValidationNel[Throwable, List[Annotation]] =
     doc.allElems("addSpan").traverseU(fromMilestone(doc)) |+|
     doc.allElems("add").traverseU(fromElem)
 
-  def deletions(doc: XmlTree): ValidationNel[Throwable, List[Annotation]] =
+  def getDeletions(doc: XmlTree): ValidationNel[Throwable, List[Annotation]] =
     doc.allElems("delSpan").traverseU(fromMilestone(doc)) |+|
     doc.allElems("del").traverseU(fromElem)
+
+  def getMarginaliaMetamarks(doc: XmlTree): ValidationNel[Throwable, List[Annotation]] =
+    doc.allElems("metamark").filter { milestone =>
+      milestone.attributes.exists {
+        case Attribute(name, "marginalia") => name == NoNamespaceQName("function") 
+        case _ => false 
+      }
+    }.traverseU(fromMilestone(doc))
 
   def createAnnotation(
     elem: Elem,

@@ -6,8 +6,6 @@ import org.w3.banana.diesel._
 import org.w3.banana.syntax._
 
 trait Helpers { this: RDFOpsModule with ScalanvasPrefixes =>
-  trait SpecificResourceHelper {
-
     def base[A](source: A)(selector: PointedGraph[Rdf])(implicit aToPG: ToPG[Rdf, A]) = ( 
       Ops.bnode().a(oa.SpecificResource)
         -- oa.hasSource ->- source
@@ -25,31 +23,23 @@ trait Helpers { this: RDFOpsModule with ScalanvasPrefixes =>
       base(source)(
         Ops.bnode().a(oa.FragmentSelector) -- rdf.value ->- value
       )
-  }
-
-  trait AnnotationHelper {
-    private def base() = Ops.bnode().a(oa.Annotation)
 
     def contentAnnotation[A, B](body: A, target: B)(implicit
       aToPG: ToPG[Rdf, A],
       bToPG: ToPG[Rdf, B]
     ) = (
-      base()
+      Ops.bnode().a(oa.Annotation)
         .a(sc.ContentAnnotation)
         -- oa.hasBody ->- body
         -- oa.hasTarget ->- target
     )
-  }
 
-  trait CssHelper {
     def addCssStyle(g: PointedGraph[Rdf], css: String) = g -- oa.hasStyle ->- (
       Ops.bnode().a(cnt.ContentAsText)
         -- dc.format ->- "text/css"
         -- cnt.chars ->- css
     )
-  }
 
-  trait OreHelper {
     implicit class Aggregates(g: PointedGraph[Rdf]) {
       def aggregates[A](aggregated: List[A])(implicit
         aToPG: ToPG[Rdf, A]
@@ -66,6 +56,5 @@ trait Helpers { this: RDFOpsModule with ScalanvasPrefixes =>
         case Nil => g
       }
     }
-  }
 }
 

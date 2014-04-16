@@ -67,6 +67,10 @@ package object xml {
         attrText(xpath \@ endOffset).toSuccess(
           MissingEndingOffsetError(xpath.toString)
         ).flatMap(_.parseInt)
+
+      def xmlId: Validation[Throwable, String] = attrText(xpath \@ xmlIdAttr).toSuccess(
+        MissingXmlIdError(xpath.toString)
+      )
     }
 
     implicit class RichXmlPath(val xpath: XmlPath) extends AnyVal {
@@ -91,6 +95,10 @@ package object xml {
         attrText(xpath \@ endOffset).toSuccess(
           MissingEndingOffsetError(xpath.toString)
         ).flatMap(_.parseInt)
+
+      def xmlId: Validation[Throwable, String] = attrText(xpath \@ xmlIdAttr).toSuccess(
+        MissingXmlIdError(xpath.toString)
+      )
     }
   }
 }

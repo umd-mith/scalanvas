@@ -42,7 +42,7 @@ trait ObjectBinders { this: RDFOpsModule with ScalanvasPrefixes with PropertyBin
       with FormattedToPG[Link]
 
   implicit def SequenceToPG[C <: Canvas](implicit cToPG: ToPG[Rdf, C]): ToPG[Rdf, Sequence[C]] =
-    new OreHelper with ResourceToPG[Sequence[C]]
+    new ResourceToPG[Sequence[C]]
       with LabeledToPG[Sequence[C]] {
       override def toPG(sequence: Sequence[C]) = (
         super.toPG(sequence).a(sc.Sequence)
