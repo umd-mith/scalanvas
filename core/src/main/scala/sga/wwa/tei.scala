@@ -13,8 +13,8 @@ trait TeiManager {
   def parseTeiFile(idWithSeq: String, itemShelfmark: String, pageFolio: String): SgaCanvas = {
     import WwaManifest.IdWithSeq
 
-    val (fullId, pageSeq) = idWithSeq match {
-      case IdWithSeq(itemId, seq) => (itemId, seq)
+    val (pref, fullId, pageSeq) = idWithSeq match {
+      case IdWithSeq(pref, itemId, seq) => (pref, itemId, seq)
       case itemIdWithSeq => throw new RuntimeException(
         s"Invalid identifier: $itemIdWithSeq!"
       )
@@ -39,9 +39,10 @@ trait TeiManager {
       val label = s"${ itemShelfmark.drop(12) }, $pageFolio"
       val width = w
       val height = h
+      val imgUrl = attrs.get("facs").map(_.toString).getOrElse("")
       val images = List(
         ImageForPainting(
-          constructImageUri(idWithSeq),
+          constructImageUri(imgUrl),
           w,
           h,
           imageFormat,
@@ -52,8 +53,8 @@ trait TeiManager {
       val reading = Link(constructReadingUri(idWithSeq), "text/html")
       val source = Link(
         new URI(
-          //"http://%s/tei/ox/%s.xml".format(
-          "/demo/xml/%s.xml".format(
+          "http://spacely.unl.edu/wasurfaces/%s.xml".format(
+          // "/demo/xml/%s.xml".format(  
             //resolvableDomain,
             idWithSeq
           )
