@@ -19,14 +19,14 @@ object DevelopmentBuilder extends Builder with App {
     with BodleianImages
     with SgaTei { this: FrankensteinManifest => }
 
-  // save(new NotebookAManifest with Dev, outputDir)
+  save(new NotebookAManifest with Dev, outputDir)
   // save(new NotebookBManifest with Dev, outputDir)
   // save(new NotebookC1Manifest with Dev, outputDir)
   // save(new NotebookC2Manifest with Dev, outputDir)
   // save(new VolumeIManifest with Dev, outputDir)
   // save(new VolumeIIManifest with Dev, outputDir)
   // save(new VolumeIIIManifest with Dev, outputDir)
-  save(new LessingManifest with Dev, outputDir)
+  // save(new LessingManifest with Dev, outputDir)
 }
 
 object ProductionBuilder extends Builder with App {
