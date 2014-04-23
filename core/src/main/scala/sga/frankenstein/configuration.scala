@@ -26,7 +26,7 @@ trait FrankensteinConfiguration { this: FrankensteinManifest =>
   // This should be the identifier for any Djatoka server, so I'm including
   // it here as a default, but it will need to be overridden in some cases.
   def constructImageUri(idWithSeq: String) = new URI(
-    "/demo/images/wwa/%s.jpg".format(idWithSeq)
+    "http://shelleygodwinarchive.org/images/ox/%s.jp2".format(idWithSeq)
   )
 }
 
@@ -52,7 +52,7 @@ trait MithDjatokaImages { this: FrankensteinConfiguration =>
   )
 
   override def constructImageUri(idWithSeq: String) = new URI(
-    "/demo/images/wwa/%s.jpg".format(idWithSeq)
+    "http://sga.mith.org/images/jp2/%s.jp2".format(idWithSeq)
   )
 
   override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)
@@ -61,7 +61,7 @@ trait MithDjatokaImages { this: FrankensteinConfiguration =>
 trait MithStaticImages { this: FrankensteinConfiguration =>
   def imageService = None
   override def constructImageUri(idWithSeq: String) = new URI(
-    "/demo/images/wwa/%s.jpg".format(idWithSeq)
+    "http://shelleygodwinarchive.org/images/ox/%s.jpg".format(idWithSeq)
   )
 
   override def adjustDimensions(w: Int, h: Int): (Int, Int) = (w, h)
