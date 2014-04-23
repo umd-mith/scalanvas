@@ -20,8 +20,7 @@ trait WwaManifest extends SgaManifest with ShelfmarkMapReader with TeiManager {
     "http://%s/data/ox".format(domain) 
   )
 
-  // val ServicePattern = """ox-wwa-([^_]+)_(.+)""".r
-  val ServicePattern = """(duk|loc)\.(\d+)""".r
+  val ServicePattern = """(duk|loc|mid|nyp)\.(\d+)""".r
 
   def service = Some(
     Service(
@@ -42,17 +41,14 @@ trait WwaManifest extends SgaManifest with ShelfmarkMapReader with TeiManager {
 
   def label = id match {
     case "duk.00055" => "Lessing's Laocoön."
-    case "duk.00200" => "Bunsen"
-    case _ => throw new RuntimeException("Unknown identifier.")
+    case _ => "Some work"
   }
 
   override val state = Some("...")
 
   override def date = Some(
     id match {
-      case "duk.00055" => "dummy date"
-      case "duk.00200" => "dummy date"
-      case id => throw new RuntimeException(s"Unknown identifier: $id!")
+      case id => "Some date"
     }
   )
 
@@ -63,6 +59,6 @@ trait WwaManifest extends SgaManifest with ShelfmarkMapReader with TeiManager {
 }
 
 object WwaManifest {
-  val IdWithSeq = """duk\.([^-]+)-(\d\d\d\d)""".r
+  val IdWithSeq = """(duk|loc|mid|nyp)\.([^-]+)-(\d\d\d\d)""".r
 }
 
