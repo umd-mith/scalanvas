@@ -8,7 +8,7 @@ object Scalanvas extends Build {
     dependencies = Seq(schemas),
     settings = commonSettings ++ Seq(
       libraryDependencies <++= scalaVersion { sv => Seq(
-        "com.chuusai" % "shapeless" % "2.0.0-SNAPSHOT" cross CrossVersion.full changing(), 
+        "com.chuusai" % "shapeless" % "2.0.0" cross CrossVersion.full changing(), 
         "com.github.jsonld-java" % "jsonld-java-jena" % "0.2" excludeAll(
           ExclusionRule(organization = "org.apache.jena"),
           ExclusionRule(organization = "org.slf4j")
