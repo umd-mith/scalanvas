@@ -1,247 +1,350 @@
-duk.00055-0001		Lessing's, fol. 1 recto
-duk.00055-0002		Lessing's, fol. 1 verso
-duk.00055-0003		Lessing's, fol. 2 recto
-duk.00055-0004		Lessing's, fol. 2 verso
-duk.00055-0005		Lessing's, fol. 3 recto
-duk.00055-0006		Lessing's, fol. 3 verso
-duk.00086-0001		Some work, page 1
-duk.00106-0001		Some work, page 1
-duk.00107-0001		Some work, page 1
-duk.00110-0001		Some work, page 1
-duk.00111-0001		Some work, page 1
-duk.00144-0001		Some work, page 1
-duk.00144-0002		Some work, page 2
-duk.00144-0003		Some work, page 3
-duk.00144-0004		Some work, page 4
-duk.00144-0005		Some work, page 5
-duk.00171-0001		Some work, page 1
-duk.00171-0002		Some work, page 2
-duk.00172-0001		Some work, page 1
-duk.00177-0001		Some work, page 1
-duk.00177-0002		Some work, page 2
-duk.00177-0003		Some work, page 3
-duk.00179-0001		Some work, page 1
-duk.00180-0001		Some work, page 1
-duk.00185-0001		Some work, page 1
-duk.00185-0002		Some work, page 2
-duk.00189-0001		Some work, page 1
-duk.00191-0001		Some work, page 1
-duk.00191-0002		Some work, page 2
-duk.00191-0003		Some work, page 3
-duk.00191-0004		Some work, page 4
-duk.00191-0005		Some work, page 5
-duk.00196-0001		Some work, page 1
-duk.00196-0002		Some work, page 2
-duk.00200-0001		Bunsen, fol. 1 recto
-duk.00200-0002		Bunsen, fol. 1 verso
-duk.00679-0001		Some work, page 1
-duk.00681-0001		Some work, page 1
-duk.00682-0001		Some work, page 1
-duk.00683-0001		Some work, page 1
-duk.00684-0001		Some work, page 1
-duk.00685-0001		Some work, page 1
-duk.00686-0001		Some work, page 1
-duk.00686-0002		Some work, page 2
-duk.00687-0001		Some work, page 1
-duk.00693-0001		Some work, page 1
-duk.00694-0001		Some work, page 1
-duk.00694-0002		Some work, page 2
-duk.00695-0001		Some work, page 1
-duk.00695-0002		Some work, page 2
-duk.00695-0003		Some work, page 3
-duk.00695-0004		Some work, page 4
-duk.00696-0001		Some work, page 1
-duk.00696-0002		Some work, page 2
-duk.00696-0003		Some work, page 3
-duk.00705-0001		Some work, page 1
-duk.00705-0002		Some work, page 2
-duk.00705-0003		Some work, page 3
-duk.00705-0004		Some work, page 4
-duk.00705-0005		Some work, page 5
-duk.00705-0006		Some work, page 6
-duk.00705-0007		Some work, page 7
-duk.00705-0008		Some work, page 8
-loc.03399-0001		Some work, page 1
-loc.03399-0002		Some work, page 2
-loc.03399-0003		Some work, page 3
-loc.03399-0004		Some work, page 4
-loc.03401-0001		Some work, page 1
-loc.03401-0002		Some work, page 2
-loc.03402-0001		Some work, page 1
-loc.03403-0001		Some work, page 1
-loc.03403-0002		Some work, page 2
-loc.03404-0001		Some work, page 1
-loc.03404-0002		Some work, page 2
-loc.03404-0003		Some work, page 3
-loc.03404-0004		Some work, page 4
-loc.03404-0005		Some work, page 5
-loc.03404-0006		Some work, page 6
-loc.03404-0007		Some work, page 7
-loc.03404-0008		Some work, page 8
-loc.03410-0001		Some work, page 1
-loc.03410-0002		Some work, page 2
-loc.03411-0001		Some work, page 1
-loc.03411-0002		Some work, page 2
-loc.03412-0001		Some work, page 1
-loc.03412-0002		Some work, page 2
-loc.03413-0001		Some work, page 1
-loc.03413-0002		Some work, page 2
-loc.03413-0003		Some work, page 3
-loc.03413-0004		Some work, page 4
-loc.03413-0005		Some work, page 5
-loc.03413-0006		Some work, page 6
-loc.03413-0007		Some work, page 7
-loc.03413-0008		Some work, page 8
-loc.03413-0009		Some work, page 9
-loc.03413-0010		Some work, page 10
-loc.03413-0011		Some work, page 11
-loc.03413-0012		Some work, page 12
-loc.03418-0001		Some work, page 1
-loc.03418-0002		Some work, page 2
-loc.03420-0001		Some work, page 1
-loc.03420-0002		Some work, page 2
-loc.03421-0001		Some work, page 1
-loc.03421-0002		Some work, page 2
-loc.03422-0001		Some work, page 1
-loc.03422-0002		Some work, page 2
-loc.03423-0001		Some work, page 1
-loc.03423-0002		Some work, page 2
-loc.03426-0001		Some work, page 1
-loc.03426-0002		Some work, page 2
-loc.03429-0001		Some work, page 1
-loc.03429-0002		Some work, page 2
-loc.03430-0001		Some work, page 1
-loc.03436-0001		Some work, page 1
-loc.03436-0002		Some work, page 2
-loc.03450-0001		Some work, page 1
-loc.03455-0001		Some work, page 1
-loc.03455-0002		Some work, page 2
-loc.03455-0003		Some work, page 3
-loc.03455-0004		Some work, page 4
-loc.03456-0001		Some work, page 1
-loc.03456-0002		Some work, page 2
-loc.03456-0003		Some work, page 3
-loc.03456-0004		Some work, page 4
-loc.03456-0005		Some work, page 5
-loc.03456-0006		Some work, page 6
-loc.03456-0007		Some work, page 7
-loc.03515-0001		Some work, page 1
-loc.03515-0002		Some work, page 2
-loc.03515-0003		Some work, page 3
-loc.03515-0004		Some work, page 4
-loc.03515-0005		Some work, page 5
-loc.03682-0001		Some work, page 1
-loc.03682-0002		Some work, page 2
-loc.03682-0003		Some work, page 3
-loc.03682-0004		Some work, page 4
-loc.03682-0005		Some work, page 5
-loc.03682-0006		Some work, page 6
-loc.03682-0007		Some work, page 7
-loc.03682-0008		Some work, page 8
-loc.03682-0009		Some work, page 9
-loc.03682-0010		Some work, page 10
-loc.03682-0011		Some work, page 11
-loc.03682-0012		Some work, page 12
-loc.03682-0013		Some work, page 13
-loc.03682-0014		Some work, page 14
-loc.03682-0015		Some work, page 15
-loc.03682-0016		Some work, page 16
-loc.03682-0017		Some work, page 17
-loc.03682-0018		Some work, page 18
-loc.03682-0019		Some work, page 19
-loc.03682-0020		Some work, page 20
-loc.03682-0021		Some work, page 21
-loc.03682-0022		Some work, page 22
-loc.03682-0023		Some work, page 23
-loc.03682-0024		Some work, page 24
-loc.03682-0025		Some work, page 25
-loc.03682-0026		Some work, page 26
-loc.03682-0027		Some work, page 27
-loc.03682-0028		Some work, page 28
-loc.03682-0029		Some work, page 29
-loc.03682-0030		Some work, page 30
-loc.03682-0031		Some work, page 31
-loc.03682-0032		Some work, page 32
-loc.03682-0033		Some work, page 33
-loc.03682-0034		Some work, page 34
-loc.03682-0035		Some work, page 35
-loc.03682-0036		Some work, page 36
-loc.03682-0037		Some work, page 37
-loc.03682-0038		Some work, page 38
-loc.03682-0039		Some work, page 39
-loc.03682-0040		Some work, page 40
-loc.03682-0041		Some work, page 41
-loc.03682-0042		Some work, page 42
-loc.03682-0043		Some work, page 43
-loc.03682-0044		Some work, page 44
-loc.03682-0045		Some work, page 45
-loc.03682-0046		Some work, page 46
-loc.03682-0047		Some work, page 47
-loc.03682-0048		Some work, page 48
-loc.03682-0049		Some work, page 49
-loc.03682-0050		Some work, page 50
-loc.03682-0051		Some work, page 51
-loc.03682-0052		Some work, page 52
-loc.03682-0053		Some work, page 53
-loc.03682-0054		Some work, page 54
-loc.03682-0055		Some work, page 55
-loc.03682-0056		Some work, page 56
-loc.03682-0057		Some work, page 57
-loc.03682-0058		Some work, page 58
-loc.03682-0059		Some work, page 59
-loc.03682-0060		Some work, page 60
-loc.03682-0061		Some work, page 61
-loc.03682-0062		Some work, page 62
-loc.03682-0063		Some work, page 63
-loc.03682-0064		Some work, page 64
-loc.03685-0001		Some work, page 1
-loc.03685-0002		Some work, page 2
-loc.03685-0003		Some work, page 3
-loc.03685-0004		Some work, page 4
-loc.03685-0005		Some work, page 5
-loc.03687-0001		Some work, page 1
-loc.03687-0002		Some work, page 2
-loc.03690-0001		Some work, page 1
-loc.03691-0001		Some work, page 1
-loc.03691-0002		Some work, page 2
-loc.03692-0001		Some work, page 1
-loc.03694-0001		Some work, page 1
-loc.03695-0001		Some work, page 1
-loc.03784-0001		Some work, page 1
-loc.03784-0002		Some work, page 2
-loc.03784-0003		Some work, page 3
-loc.03784-0004		Some work, page 4
-loc.03784-0005		Some work, page 5
-loc.03784-0006		Some work, page 6
-loc.03801-0001		Some work, page 1
-loc.03801-0002		Some work, page 2
-loc.03801-0003		Some work, page 3
-loc.03801-0004		Some work, page 4
-loc.03801-0005		Some work, page 5
-loc.03801-0006		Some work, page 6
-loc.03801-0007		Some work, page 7
-loc.03801-0008		Some work, page 8
-loc.03801-0009		Some work, page 9
-loc.03801-0010		Some work, page 10
-loc.03801-0011		Some work, page 11
-loc.03801-0012		Some work, page 12
-loc.03801-0013		Some work, page 13
-loc.03801-0014		Some work, page 14
-mid.00006-0001		Some work, page 1
-mid.00006-0002		Some work, page 2
-mid.00009-0001		Some work, page 1
-mid.00009-0002		Some work, page 2
-mid.00009-0003		Some work, page 3
-mid.00009-0004		Some work, page 4
-mid.00013-0001		Some work, page 1
-mid.00014-0001		Some work, page 1
-mid.00014-0002		Some work, page 2
-mid.00015-0001		Some work, page 1
-mid.00018-0001		Some work, page 1
-mid.00018-0002		Some work, page 2
-mid.00019-0001		Some work, page 1
-nyp.00027-0001		Some work, page 1
-nyp.00030-0001		Some work, page 1
-nyp.00031-0001		Some work, page 1
-nyp.00035-0001		Some work, page 1
-nyp.00392-0001		Some work, page 1
+duk.00055-0001		Title, 1
+duk.00055-0002		Title, 2
+duk.00055-0003		Title, 3
+duk.00055-0004		Title, 4
+duk.00055-0005		Title, 5
+duk.00055-0006		Title, 6
+duk.00086-0001		Title, 1
+duk.00106-0001		Title, 1
+duk.00107-0001		Title, 1
+duk.00109-0001		Title, 1
+duk.00109-0002		Title, 2
+duk.00110-0001		Title, 1
+duk.00111-0001		Title, 1
+duk.00144-0001		Title, 1
+duk.00144-0002		Title, 2
+duk.00144-0003		Title, 3
+duk.00144-0004		Title, 4
+duk.00144-0005		Title, 5
+duk.00169-0001		Title, 1
+duk.00169-0002		Title, 2
+duk.00169-0003		Title, 3
+duk.00171-0001		Title, 1
+duk.00171-0002		Title, 2
+duk.00172-0001		Title, 1
+duk.00175-0001		Title, 1
+duk.00175-0002		Title, 2
+duk.00176-0001		Title, 1
+duk.00176-0002		Title, 2
+duk.00177-0001		Title, 1
+duk.00177-0002		Title, 2
+duk.00177-0003		Title, 3
+duk.00178-0001		Title, 1
+duk.00178-0002		Title, 2
+duk.00178-0003		Title, 3
+duk.00179-0001		Title, 1
+duk.00180-0001		Title, 1
+duk.00184-0001		Title, 1
+duk.00184-0002		Title, 2
+duk.00184-0003		Title, 3
+duk.00184-0004		Title, 4
+duk.00185-0001		Title, 1
+duk.00185-0002		Title, 2
+duk.00188-0001		Title, 1
+duk.00188-0002		Title, 2
+duk.00188-0003		Title, 3
+duk.00188-0004		Title, 4
+duk.00188-0005		Title, 5
+duk.00188-0006		Title, 6
+duk.00188-0007		Title, 7
+duk.00188-0008		Title, 8
+duk.00188-0009		Title, 9
+duk.00188-0010		Title, 10
+duk.00188-0011		Title, 11
+duk.00189-0001		Title, 1
+duk.00191-0001		Title, 1
+duk.00191-0002		Title, 2
+duk.00191-0003		Title, 3
+duk.00191-0004		Title, 4
+duk.00191-0005		Title, 5
+duk.00192-0001		Title, 1
+duk.00195-0001		Title, 1
+duk.00195-0002		Title, 2
+duk.00195-0003		Title, 3
+duk.00195-0004		Title, 4
+duk.00195-0005		Title, 5
+duk.00195-0006		Title, 6
+duk.00195-0007		Title, 7
+duk.00195-0008		Title, 8
+duk.00195-0009		Title, 9
+duk.00195-0010		Title, 10
+duk.00195-0011		Title, 11
+duk.00195-0012		Title, 12
+duk.00195-0013		Title, 13
+duk.00195-0014		Title, 14
+duk.00195-0015		Title, 15
+duk.00195-0016		Title, 16
+duk.00195-0017		Title, 17
+duk.00195-0018		Title, 18
+duk.00195-0019		Title, 19
+duk.00195-0020		Title, 20
+duk.00195-0021		Title, 21
+duk.00195-0022		Title, 22
+duk.00195-0023		Title, 23
+duk.00195-0024		Title, 24
+duk.00195-0025		Title, 25
+duk.00195-0026		Title, 26
+duk.00195-0027		Title, 27
+duk.00195-0028		Title, 28
+duk.00195-0029		Title, 29
+duk.00195-0030		Title, 30
+duk.00195-0031		Title, 31
+duk.00195-0032		Title, 32
+duk.00195-0033		Title, 33
+duk.00195-0034		Title, 34
+duk.00195-0035		Title, 35
+duk.00195-0036		Title, 36
+duk.00195-0037		Title, 37
+duk.00195-0038		Title, 38
+duk.00195-0039		Title, 39
+duk.00195-0040		Title, 40
+duk.00195-0041		Title, 41
+duk.00195-0042		Title, 42
+duk.00195-0043		Title, 43
+duk.00195-0044		Title, 44
+duk.00195-0045		Title, 45
+duk.00195-0046		Title, 46
+duk.00195-0047		Title, 47
+duk.00195-0048		Title, 48
+duk.00195-0049		Title, 49
+duk.00195-0050		Title, 50
+duk.00196-0001		Title, 1
+duk.00196-0002		Title, 2
+duk.00197-0001		Title, 1
+duk.00197-0002		Title, 2
+duk.00198-0001		Title, 1
+duk.00200-0001		Title, 1
+duk.00200-0002		Title, 2
+duk.00201-0001		Title, 1
+duk.00201-0002		Title, 2
+duk.00673-0001		Title, 1
+duk.00674-0001		Title, 1
+duk.00674-0002		Title, 2
+duk.00677-0001		Title, 1
+duk.00677-0002		Title, 2
+duk.00678-0001		Title, 1
+duk.00678-0002		Title, 2
+duk.00679-0001		Title, 1
+duk.00681-0001		Title, 1
+duk.00682-0001		Title, 1
+duk.00683-0001		Title, 1
+duk.00684-0001		Title, 1
+duk.00685-0001		Title, 1
+duk.00686-0001		Title, 1
+duk.00686-0002		Title, 2
+duk.00687-0001		Title, 1
+duk.00692-0001		Title, 1
+duk.00692-0002		Title, 2
+duk.00692-0003		Title, 3
+duk.00692-0004		Title, 4
+duk.00692-0005		Title, 5
+duk.00692-0006		Title, 6
+duk.00692-0007		Title, 7
+duk.00692-0008		Title, 8
+duk.00692-0009		Title, 9
+duk.00692-0010		Title, 10
+duk.00692-0011		Title, 11
+duk.00692-0012		Title, 12
+duk.00692-0013		Title, 13
+duk.00692-0014		Title, 14
+duk.00692-0015		Title, 15
+duk.00705-0001		Title, 1
+duk.00707-0001		Title, 1
+duk.00707-0002		Title, 2
+duk.00707-0003		Title, 3
+duk.00707-0004		Title, 4
+duk.00707-0005		Title, 5
+duk.00707-0006		Title, 6
+duk.00707-0007		Title, 7
+duk.00707-0008		Title, 8
+duk.00707-0009		Title, 9
+duk.00707-0010		Title, 10
+duk.00707-0011		Title, 11
+duk.00707-0012		Title, 12
+duk.00707-0013		Title, 13
+duk.00707-0014		Title, 14
+duk.00707-0015		Title, 15
+duk.00707-0016		Title, 16
+duk.00707-0017		Title, 17
+duk.00707-0018		Title, 18
+duk.00707-0019		Title, 19
+duk.00707-0020		Title, 20
+duk.00707-0021		Title, 21
+duk.00707-0022		Title, 22
+duk.00707-0023		Title, 23
+duk.00707-0024		Title, 24
+duk.00707-0025		Title, 25
+duk.00707-0026		Title, 26
+duk.00707-0027		Title, 27
+duk.00707-0028		Title, 28
+duk.03782-0001		Title, 1
+duk.03782-0002		Title, 2
+duk.03782-0003		Title, 3
+duk.03782-0004		Title, 4
+duk.03782-0005		Title, 5
+duk.03782-0006		Title, 6
+duk.03782-0007		Title, 7
+duk.03782-0008		Title, 8
+duk.03782-0009		Title, 9
+duk.03782-0010		Title, 10
+duk.03782-0011		Title, 11
+duk.03782-0012		Title, 12
+duk.03782-0013		Title, 13
+duk.03782-0014		Title, 14
+duk.03782-0015		Title, 15
+duk.03782-0016		Title, 16
+duk.03782-0017		Title, 17
+duk.03782-0018		Title, 18
+duk.03782-0019		Title, 19
+duk.03782-0020		Title, 20
+duk.03782-0021		Title, 21
+duk.03782-0022		Title, 22
+duk.03782-0023		Title, 23
+duk.03782-0024		Title, 24
+duk.03782-0025		Title, 25
+duk.03782-0026		Title, 26
+duk.03782-0027		Title, 27
+duk.03782-0028		Title, 28
+duk.03782-0029		Title, 29
+duk.03782-0030		Title, 30
+duk.03782-0031		Title, 31
+duk.03782-0032		Title, 32
+duk.03782-0033		Title, 33
+duk.03782-0034		Title, 34
+duk.03782-0035		Title, 35
+duk.03782-0036		Title, 36
+duk.03782-0037		Title, 37
+loc.03399-0001		Title, 1
+loc.03399-0002		Title, 2
+loc.03399-0003		Title, 3
+loc.03399-0004		Title, 4
+loc.03400-0001		Title, 1
+loc.03400-0002		Title, 2
+loc.03401-0001		Title, 1
+loc.03401-0002		Title, 2
+loc.03402-0001		Title, 1
+loc.03403-0001		Title, 1
+loc.03403-0002		Title, 2
+loc.03404-0001		Title, 1
+loc.03404-0002		Title, 2
+loc.03404-0003		Title, 3
+loc.03404-0004		Title, 4
+loc.03404-0005		Title, 5
+loc.03404-0006		Title, 6
+loc.03404-0007		Title, 7
+loc.03404-0008		Title, 8
+loc.03405-0001		Title, 1
+loc.03405-0002		Title, 2
+loc.03408-0001		Title, 1
+loc.03408-0002		Title, 2
+loc.03409-0001		Title, 1
+loc.03409-0002		Title, 2
+loc.03410-0001		Title, 1
+loc.03410-0002		Title, 2
+loc.03411-0001		Title, 1
+loc.03411-0002		Title, 2
+loc.03412-0001		Title, 1
+loc.03412-0002		Title, 2
+loc.03413-0001		Title, 1
+loc.03413-0002		Title, 2
+loc.03413-0003		Title, 3
+loc.03413-0004		Title, 4
+loc.03413-0005		Title, 5
+loc.03413-0006		Title, 6
+loc.03413-0007		Title, 7
+loc.03413-0008		Title, 8
+loc.03413-0009		Title, 9
+loc.03413-0010		Title, 10
+loc.03413-0011		Title, 11
+loc.03413-0012		Title, 12
+loc.03415-0001		Title, 1
+loc.03415-0002		Title, 2
+loc.03415-0003		Title, 3
+loc.03418-0001		Title, 1
+loc.03418-0002		Title, 2
+loc.03419-0001		Title, 1
+loc.03419-0002		Title, 2
+loc.03420-0001		Title, 1
+loc.03420-0002		Title, 2
+loc.03421-0001		Title, 1
+loc.03421-0002		Title, 2
+loc.03423-0001		Title, 1
+loc.03423-0002		Title, 2
+loc.03424-0001		Title, 1
+loc.03424-0002		Title, 2
+loc.03424-0003		Title, 3
+loc.03424-0004		Title, 4
+loc.03424-0005		Title, 5
+loc.03424-0006		Title, 6
+loc.03425-0001		Title, 1
+loc.03425-0002		Title, 2
+loc.03425-0003		Title, 3
+loc.03425-0004		Title, 4
+loc.03426-0001		Title, 1
+loc.03426-0002		Title, 2
+loc.03428-0001		Title, 1
+loc.03428-0002		Title, 2
+loc.03428-0003		Title, 3
+loc.03428-0004		Title, 4
+loc.03428-0005		Title, 5
+loc.03428-0006		Title, 6
+loc.03428-0007		Title, 7
+loc.03428-0008		Title, 8
+loc.03428-0009		Title, 9
+loc.03428-0010		Title, 10
+loc.03429-0001		Title, 1
+loc.03429-0002		Title, 2
+loc.03430-0001		Title, 1
+loc.03434-0001		Title, 1
+loc.03434-0002		Title, 2
+loc.03436-0001		Title, 1
+loc.03436-0002		Title, 2
+loc.03437-0001		Title, 1
+loc.03437-0002		Title, 2
+loc.03440-0001		Title, 1
+loc.03440-0002		Title, 2
+loc.03441-0001		Title, 1
+loc.03441-0002		Title, 2
+loc.03442-0001		Title, 1
+loc.03442-0002		Title, 2
+loc.03442-0003		Title, 3
+loc.03442-0004		Title, 4
+loc.03445-0001		Title, 1
+loc.03445-0002		Title, 2
+loc.03445-0003		Title, 3
+loc.03445-0004		Title, 4
+loc.03445-0005		Title, 5
+loc.03445-0006		Title, 6
+loc.03450-0001		Title, 1
+loc.03456-0001		Title, 1
+loc.03456-0002		Title, 2
+loc.03456-0003		Title, 3
+loc.03456-0004		Title, 4
+loc.03456-0005		Title, 5
+loc.03456-0006		Title, 6
+loc.03456-0007		Title, 7
+loc.03784-0001		Title, 1
+loc.03784-0002		Title, 2
+loc.03784-0003		Title, 3
+loc.03784-0004		Title, 4
+loc.03784-0005		Title, 5
+loc.03784-0006		Title, 6
+loc.03801-0001		Title, 1
+loc.03801-0002		Title, 2
+loc.03801-0003		Title, 3
+loc.03801-0004		Title, 4
+loc.03801-0005		Title, 5
+loc.03801-0006		Title, 6
+loc.03801-0007		Title, 7
+loc.03801-0008		Title, 8
+loc.03801-0009		Title, 9
+loc.03801-0010		Title, 10
+loc.03801-0011		Title, 11
+loc.03801-0012		Title, 12
+loc.03801-0013		Title, 13
+loc.03801-0014		Title, 14
+nyp.00027-0001		Title, 1
+nyp.00030-0001		Title, 1
+nyp.00031-0001		Title, 1
+nyp.00035-0001		Title, 1
+nyp.00392-0001		Title, 1
