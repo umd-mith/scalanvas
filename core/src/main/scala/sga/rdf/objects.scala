@@ -84,12 +84,6 @@ trait ObjectBinders {
         val Hand = "#(\\S+)".r
         val BrokenHand = "(\\S+)".r
 
-        val handClass = hand.flatMap {
-          case Hand(hand) => Some(s"hand-$hand")
-          case BrokenHand(hand) => Some(s"hand-$hand")
-          case _ => None
-        }
-
         def isAuthorialLine(lineElem: xml.Node) =
           (lineElem \ "add" \ "note" \ "@type").exists {
             case xml.Text("authorial") => true
@@ -110,7 +104,7 @@ trait ObjectBinders {
 
           val lineBegin = attrs("mu:b").toInt
           val hand = handShifts.takeWhile {
-            case (handId, begin) => begin < lineBegin
+            case (handId, begin) => begin <= lineBegin
           }.lastOption.map(_._1)
 
           val handClass = hand.flatMap {
@@ -162,7 +156,13 @@ trait ObjectBinders {
 
         val marginaliaAnnotations = marginalia.flatten.groupBy(_._1).map {
           case (id, lines) =>
-            val targetLine = linesById.getOrElse(id, throw new RuntimeException(f"No line with id $id%s!"))
+            var surf = ""
+            val surface = (canvas.transcription \\ "surface").toList.map { s => 
+              val attrs = s.attributes.asAttrMap
+              surf = attrs("xml:id")
+            }
+
+            val targetLine = linesById.getOrElse(id, throw new RuntimeException(f"No line with id $id%s in $surf%s!"))
 
             val place = lines.head._2._1
 
