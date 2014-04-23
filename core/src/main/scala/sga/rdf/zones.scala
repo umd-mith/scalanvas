@@ -25,11 +25,17 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
   else
     false
 
+  val needExtraBottom = if (typeCounts("bottom_marginalia_left") > 0 || typeCounts("bottom_marginalia_right") > 0) 
+    true
+  else
+    false
+
   val extraRight = if (typeCounts("marginalia_right") > 0) 0.1 else 0.0
 
   val extraLeft = if (typeCounts("marginalia_left") > 0) 0.1 else 0.0
 
   val topHeight = if (needExtraTop) 0.10 else 0.05
+  val bottomHeight = if (needExtraBottom) 0.10 else 0.0
 
   // HACK for tracking space taken in grid
   var curGridX: Int = 0
@@ -55,7 +61,7 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         (0.0,  topHeight + (1 - topHeight) * (leftMarginIdx.toDouble / leftMarginCount)),
         (0.25, (1 - topHeight) / leftMarginCount)
       ).success
-    case ("main", _) if attrs("rend").toString contains "col" =>
+    case ("main", _) if attrs.getOrElse("rend", "") contains "col" =>
       
       val c = """.*col-(\d+).*""".r
       val r = """.*row-(\d+).*""".r
@@ -78,15 +84,13 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
       curGridY = rowSpan 
       tallestGridY = rowSpan
 
-      println(curGridX)
-
       Some(
         ((0.0, 0.0),
         (1.0 / (12.0 / colSpan.toDouble), 1.0 / (6.0 / rowSpan.toDouble)))
       ).success
     case ("main", _) if typeCounts("left_margin") == 0 =>
-      Some((0.125 + extraLeft, topHeight) -> (0.875 - extraRight, 1 - topHeight)).success
-    case ("main", _) => Some((0.25, topHeight) -> (0.75, 1 - topHeight)).success
+      Some((0.125 + extraLeft, topHeight) -> (0.875 - extraRight, 1 - bottomHeight - topHeight)).success
+    case ("main", _) => Some((0.25, topHeight) -> (0.75, 1 - bottomHeight - topHeight)).success
     case ("logical", _) => None.success
     // Unlike left_margins in SGA, these zones must occupy all the vertical space.
     // They are positioned and moved by the SC viewer.
@@ -95,17 +99,21 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
       val margLeftIdx = past.count(_ == "marginalia_left")
       Some(
         ((0.0, topHeight),
-        (extraLeft, 1 - topHeight))
+        (extraLeft, 1 - bottomHeight - topHeight))
       ).success
     case ("marginalia_right", _) => 
       val margRightCount = typeCounts("marginalia_right")
       val margRightIdx = past.count(_ == "marginalia_right")
       Some(
         ((1 - extraRight, topHeight),
-        (1.0, 1 - topHeight))
+        (extraRight, 1 - bottomHeight - topHeight))
       ).success
     case ("top_marginalia_left", _) => Some((0.0, 0.0) -> (1.0, topHeight)).success
     case ("top_marginalia_right", _) => Some((0.5, 0.0) -> (1.0, topHeight)).success
+    case ("bottom_marginalia_left", _) => 
+      Some((0.0, 1 - bottomHeight) -> (0.5, bottomHeight)).success
+    case ("bottom_marginalia_right", _) => 
+      Some((0.5, 1 - bottomHeight) -> (0.5, bottomHeight)).success
     case ("column", past) => 
       val columnCount = typeCounts("column")
       val columnIdx = past.count(_ == "column") + 1
@@ -114,7 +122,7 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
       val area = (end - start) / columnCount.toDouble
       Some(
         ((area * (columnIdx.toDouble - 1) + extraLeft,  topHeight),
-        (area, 1 - topHeight))
+        (area, 1 - bottomHeight - topHeight))
       ).success
     case ("pasteon", past) =>
      
@@ -137,11 +145,8 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         curGridX = widestGridX 
       }
 
-      // println("==newDoc/Col update==")
-      println(curGridX, curGridY)
-
-      val c = """.*col-(\d).*""".r
-      val r = """.*row-(\d).*""".r
+      val c = """.*col-(\d+).*""".r
+      val r = """.*row-(\d+).*""".r
       val rend = attrs("rend").toString
 
       val colSpan = rend match {
@@ -160,18 +165,12 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
 
       val startX = if (curGridX == 0) 0.0 else 1.0 / (12.0 / curGridX).toDouble
       val startY = if (curGridY == 0) 0.0 else 1.0 / (6.0 / curGridY).toDouble
-      val extX = 1.0 / (12.0 / colSpan).toDouble
-      val extY = 1.0 / (6.0 / rowSpan).toDouble
-
-      // println("==")
-      // println(startX, startY, extX, extY)
+      val extX = ( 1.0 / (12.0 / colSpan).toDouble ) - bottomHeight - topHeight
+      val extY = ( 1.0 / (6.0 / rowSpan).toDouble ) - bottomHeight - topHeight
 
       // Done calculating. Now update hack-y grid position trackers
       if (widestGridX < curGridX + colSpan) { widestGridX = curGridX + colSpan }
       curGridY = curGridY + rowSpan
-
-      // println("==updated==")
-      // println(curGridX, curGridY)
 
       Some(
         ((startX, startY),
