@@ -20,8 +20,8 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
     "http://%s/data/ox".format(domain) 
   )
 
-  // val ServicePattern = """ox-frankenstein-([^_]+)_(.+)""".r
-  val ServicePattern = """(duk|loc)\.(\d+)""".r
+  val ServicePattern = """ox-frankenstein-([^_]+)_(.+)""".r
+  // val ServicePattern = """(duk|loc)\.(\d+)""".r
 
   def service = Some(
     Service(
@@ -41,7 +41,7 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
   val title = "Frankenstein"
 
   def label = id match {
-    case "duk.00055" => "Lessing's Laocoön."
+    // case "duk.00055" => "Lessing's Laocoön."
     case "ox-frankenstein-notebook_a" => "Draft Notebook A"
     case "ox-frankenstein-notebook_b" => "Draft Notebook B"
     case "ox-frankenstein-notebook_c1" => "Fair-Copy Notebook C1"
@@ -82,6 +82,6 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
 }
 
 object FrankensteinManifest {
-  val IdWithSeq = """duk\.([^-]+)-(\d\d\d\d)""".r
+  val IdWithSeq = """ox-ms_abinger_([^-]+)-(\d\d\d\d)""".r
 }
 

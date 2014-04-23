@@ -20,7 +20,7 @@ object JsonLdDemoBuilder extends JsonLdBuilder with App {
     with BodleianImages
     with SgaTei { this: FrankensteinManifest => }
 
-  save(new LessingManifest with Dev, outputDir)
+  // save(new LessingManifest with Dev, outputDir)
 }
 
 trait JsonLdBuilder {
