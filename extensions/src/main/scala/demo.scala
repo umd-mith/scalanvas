@@ -52,7 +52,7 @@ trait FrankensteinConfiguration extends MithConfiguration {
 object FrankensteinDemo extends App {
   // The first command-line argument should be a space-separated list of file
   // paths.
-  val filePaths = args(0).split("\\s").toList
+  val filePaths = args(0).split("\\s+").toList
 
   // Mix in the appropriate configuration here.
   val frankenstein = new MithStack(filePaths.map(new File(_))) with FrankensteinConfiguration
