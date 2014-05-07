@@ -243,6 +243,8 @@ trait ObjectBinders {
 
           val offset = attrs.get("rend") match {
             case Some("double-underline") => addCssClass(os, "double-underline")
+            case Some("doubleunderline") => addCssClass(os, "double-underline")
+            case Some("doubleUnderline") => addCssClass(os, "double-underline")
             case Some("underline") => addCssStyle(os, "text-decoration: underline;")
             case Some("italic") => addCssStyle(os, "font-style: italic;")
             case Some("sup") => addCssStyle(os, "vertical-align: super;")
@@ -251,6 +253,7 @@ trait ObjectBinders {
             case Some("circled") => addCssStyle(os, "ignore: ignore;")
             case Some("right") => addCssStyle(os, "ignore: ignore;")
             case Some("smallcaps") => addCssStyle(os, "font-variant: small-caps;")
+            case Some("sideways") => addCssStyle(os, "ignore: ignore;")
             case Some(rend) => sys.error(s"Unexpected rend value: $rend.")
             case None => os
           }
