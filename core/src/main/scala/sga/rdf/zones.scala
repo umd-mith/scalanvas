@@ -39,9 +39,23 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
   else
     false
 
-  val extraRight = if (typeCounts("marginalia_right") > 0) 0.1 else 0.0
+  var extraRight = if (typeCounts("marginalia_right") > 0) 
+                      if (typeCounts("column") == 0) 0.25 
+                      else 0.1
+                   else 0.0
 
-  val extraLeft = if (typeCounts("marginalia_left") > 0) 0.1 else 0.0
+  var extraLeft = if (typeCounts("marginalia_left") > 0) 
+                      if (typeCounts("column") ==0 && typeCounts("pasteon") == 0) 0.25 
+                      else 0.1
+                   else 0.0
+
+  if (typeCounts("marginalia_right") > 0 && typeCounts("marginalia_left") > 0) {
+    if (typeCounts("column") ==0 && typeCounts("pasteon") == 0) {
+        extraRight = 0.15
+        extraLeft = 0.15
+    }
+    else 0.1    
+  }
 
   val topHeight = if (needExtraTop) 
                     if (typeCounts("running_head") > 0) 0.15
@@ -108,8 +122,10 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         ((0.0 + extraLeft, 0.0 + topHeight),
         ((1.0 / (12.0 / colSpan.toDouble)) - extraRight, 1.0 / (6.0 / rowSpan.toDouble)))
       ).success
+    case ("main", _) if (typeCounts("marginalia_left") > 0 | typeCounts("marginalia_right") > 0) =>
+      Some((0.0 + extraLeft, topHeight) -> (1 - extraLeft - extraRight, 1 - bottomHeight - topHeight)).success
     case ("main", _) if typeCounts("left_margin") == 0 =>
-      Some((0.125 + extraLeft, topHeight) -> (0.875 - extraRight, 1 - bottomHeight - topHeight)).success
+      Some((0.125 + extraLeft, topHeight) -> (0.875 - extraLeft - extraRight, 1 - bottomHeight - topHeight)).success
     case ("main", _) => Some((0.25, topHeight) -> (0.75, 1 - bottomHeight - topHeight)).success
     case ("logical", _) => None.success
     // Unlike left_margins in SGA, these zones must occupy all the vertical space.
@@ -188,12 +204,6 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
         totColumns = cols.head + 1
       }
 
-      if (isNewCol | current == "main_part") { 
-        columnIndex = columnIndex + 1 
-        curGridY = tallestGridY
-        curGridX = widestGridX 
-      }
-
       val c = """.*col-(\d+).*""".r
       val r = """.*row-(\d+).*""".r
       val rend = attrs("rend").toString
@@ -211,6 +221,15 @@ class ZoneReader[Rdf <: RDF](canvas: SgaCanvas)(implicit ops: RDFOps[Rdf])
           s"No row span specified in grid!"
         )
       }      
+
+      if (isNewCol | current == "main_part") { 
+        columnIndex = columnIndex + 1 
+        curGridY = tallestGridY
+        // check that the widest doesn't send the current pasteon too far right
+        // if it does, reduce curGridX to make it visible.
+        if (widestGridX + colSpan > 12) curGridX = 12 - colSpan
+        else curGridX = widestGridX 
+      }
 
       val startX = if (curGridX == 0) 0.0 else 1.0 / (12.0 / curGridX).toDouble
       val startY = if (curGridY == 0) 0.0 else 1.0 / (6.0 / curGridY).toDouble
