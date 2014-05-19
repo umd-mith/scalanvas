@@ -35,6 +35,8 @@
 
         "description": "dc:description",
         "attribution": "sc:attributionLabel",
+        "references":  "dcterms:references",
+        "editors":     "dc:creator",
         "height":      {"@type":"xsd:int", "@id":"exif:height"},
         "width":       {"@type":"xsd:int", "@id":"exif:width"},
         "viewingDirection": "sc:viewingDirection",
