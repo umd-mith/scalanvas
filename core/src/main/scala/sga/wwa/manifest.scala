@@ -37,28 +37,28 @@ trait WwaManifest extends SgaManifest with ShelfmarkMapReader with TeiManager {
     )
   )
 
-  val title = "Wwa"
 
-  def label = id match {
-    case "duk.00055" => "Lessing's Laocoön."
-    case _ => "Some work"
-  }
+  def title = parseHeaderFile(id+"-header").fullTitle.get
 
-  override val state = Some("...")
+  override def label = parseHeaderFile(id+"-header").fullTitle.get
 
-  override def date = Some(
-    id match {
-      case id => "Some date"
-    }
-  )
+  override val state = Some("marginalia")
+
+  override def date = parseHeaderFile(id+"-header").date
 
   import WwaManifest.IdWithSeq
 
-  override val agent = Some("...")
-  override val attribution = Some("...")
+  override def agent = parseHeaderFile(id+"-header").agent
+  override def attribution = parseHeaderFile(id+"-header").attribution
+
+  override def wwaShelfmark = parseHeaderFile(id+"-header").wwaShelfmark
+  override def wwaId = parseHeaderFile(id+"-header").wwaId
+  override def editors = parseHeaderFile(id+"-header").editors
+  override def bibSources = parseHeaderFile(id+"-header").bibSources
+
 }
 
 object WwaManifest {
-  val IdWithSeq = """(duk|loc|mid|nyp)\.([^-]+)-(\d\d\d\d)""".r
+  val IdWithSeq = """(duk|loc|mid|nyp)\.([^-]+)-(\d{4}|header)""".r
 }
 
