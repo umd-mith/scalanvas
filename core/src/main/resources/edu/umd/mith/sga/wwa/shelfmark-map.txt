@@ -1,375 +1,377 @@
-duk.00055-0001    Title, 1
-duk.00055-0002    Title, 2
-duk.00055-0003    Title, 3
-duk.00055-0004    Title, 4
-duk.00055-0005    Title, 5
-duk.00055-0006    Title, 6
-duk.00086-0001    Title, 1
-duk.00106-0001    Title, 1
-duk.00107-0001    Title, 1
-duk.00109-0001    Title, 1
-duk.00109-0002    Title, 2
-duk.00110-0001    Title, 1
-duk.00111-0001    Title, 1
-duk.00144-0001    Title, 1
-duk.00144-0002    Title, 2
-duk.00144-0003    Title, 3
-duk.00144-0004    Title, 4
-duk.00144-0005    Title, 5
-duk.00169-0001    Title, 1
-duk.00169-0002    Title, 2
-duk.00169-0003    Title, 3
-duk.00170-0001    Title, 1
-duk.00170-0002    Title, 2
-duk.00170-0003    Title, 3
-duk.00170-0004    Title, 4
-duk.00170-0005    Title, 5
-duk.00170-0006    Title, 6
-duk.00170-0007    Title, 7
-duk.00170-0008    Title, 8
-duk.00170-0009    Title, 9
-duk.00171-0001    Title, 1
-duk.00171-0002    Title, 2
-duk.00172-0001    Title, 1
-duk.00173-0001    Title, 1
-duk.00173-0002    Title, 2
-duk.00173-0003    Title, 3
-duk.00173-0004    Title, 4
-duk.00173-0005    Title, 5
-duk.00173-0006    Title, 6
-duk.00173-0007    Title, 7
-duk.00173-0008    Title, 8
-duk.00173-0009    Title, 9
-duk.00173-0010    Title, 10
-duk.00173-0011    Title, 11
-duk.00174-0001    Title, 1
-duk.00174-0002    Title, 2
-duk.00174-0003    Title, 3
-duk.00174-0004    Title, 4
-duk.00175-0001    Title, 1
-duk.00175-0002    Title, 2
-duk.00176-0001    Title, 1
-duk.00177-0001    Title, 1
-duk.00177-0002    Title, 2
-duk.00177-0003    Title, 3
-duk.00178-0001    Title, 1
-duk.00178-0002    Title, 2
-duk.00178-0003    Title, 3
-duk.00179-0001    Title, 1
-duk.00180-0001    Title, 1
-duk.00182-0001    Title, 1
-duk.00182-0002    Title, 2
-duk.00182-0003    Title, 3
-duk.00182-0004    Title, 4
-duk.00182-0005    Title, 5
-duk.00182-0006    Title, 6
-duk.00182-0007    Title, 7
-duk.00182-0008    Title, 8
-duk.00182-0009    Title, 9
-duk.00182-0010    Title, 10
-duk.00182-0011    Title, 11
-duk.00184-0001    Title, 1
-duk.00184-0002    Title, 2
-duk.00184-0003    Title, 3
-duk.00184-0004    Title, 4
-duk.00185-0001    Title, 1
-duk.00185-0002    Title, 2
-duk.00188-0001    Title, 1
-duk.00189-0001    Title, 1
-duk.00191-0001    Title, 1
-duk.00191-0002    Title, 2
-duk.00191-0003    Title, 3
-duk.00191-0004    Title, 4
-duk.00191-0005    Title, 5
-duk.00192-0001    Title, 1
-duk.00193-0001    Title, 1
-duk.00193-0002    Title, 2
-duk.00193-0003    Title, 3
-duk.00193-0004    Title, 4
-duk.00193-0005    Title, 5
-duk.00194-0001    Title, 1
-duk.00194-0002    Title, 2
-duk.00194-0003    Title, 3
-duk.00194-0004    Title, 4
-duk.00195-0001    Title, 1
-duk.00196-0001    Title, 1
-duk.00196-0002    Title, 2
-duk.00197-0001    Title, 1
-duk.00197-0002    Title, 2
-duk.00198-0001    Title, 1
-duk.00200-0001    Title, 1
-duk.00200-0002    Title, 2
-duk.00201-0001    Title, 1
-duk.00201-0002    Title, 2
-duk.00248-0001    Title, 1
-duk.00248-0002    Title, 2
-duk.00248-0003    Title, 3
-duk.00248-0004    Title, 4
-duk.00248-0005    Title, 5
-duk.00248-0006    Title, 6
-duk.00248-0007    Title, 7
-duk.00248-0008    Title, 8
-duk.00248-0009    Title, 9
-duk.00248-0010    Title, 10
-duk.00248-0011    Title, 11
-duk.00248-0012    Title, 12
-duk.00248-0013    Title, 13
-duk.00248-0014    Title, 14
-duk.00248-0015    Title, 15
-duk.00248-0016    Title, 16
-duk.00248-0017    Title, 17
-duk.00642-0001    Title, 1
-duk.00642-0002    Title, 2
-duk.00642-0003    Title, 3
-duk.00673-0001    Title, 1
-duk.00674-0001    Title, 1
-duk.00674-0002    Title, 2
-duk.00677-0001    Title, 1
-duk.00677-0002    Title, 2
-duk.00678-0001    Title, 1
-duk.00678-0002    Title, 2
-duk.00679-0001    Title, 1
-duk.00680-0001    Title, 1
-duk.00681-0001    Title, 1
-duk.00682-0001    Title, 1
-duk.00683-0001    Title, 1
-duk.00684-0001    Title, 1
-duk.00685-0001    Title, 1
-duk.00686-0001    Title, 1
-duk.00686-0002    Title, 2
-duk.00687-0001    Title, 1
-duk.00692-0001    Title, 1
-duk.00692-0002    Title, 2
-duk.00705-0001    Title, 1
-duk.00705-0002    Title, 2
-duk.00705-0003    Title, 3
-duk.00705-0004    Title, 4
-duk.00705-0005    Title, 5
-duk.00705-0006    Title, 6
-duk.00705-0007    Title, 7
-duk.00705-0008    Title, 8
-duk.00707-0001    Title, 1
-loc.03398-0001    Title, 1
-loc.03399-0001    Title, 1
-loc.03399-0002    Title, 2
-loc.03400-0001    Title, 1
-loc.03400-0002    Title, 2
-loc.03401-0001    Title, 1
-loc.03401-0002    Title, 2
-loc.03402-0001    Title, 1
-loc.03403-0001    Title, 1
-loc.03403-0002    Title, 2
-loc.03404-0001    Title, 1
-loc.03404-0002    Title, 2
-loc.03404-0003    Title, 3
-loc.03404-0004    Title, 4
-loc.03404-0005    Title, 5
-loc.03404-0006    Title, 6
-loc.03404-0007    Title, 7
-loc.03404-0008    Title, 8
-loc.03405-0001    Title, 1
-loc.03407-0001    Title, 1
-loc.03407-0002    Title, 2
-loc.03407-0003    Title, 3
-loc.03407-0004    Title, 4
-loc.03407-0005    Title, 5
-loc.03407-0006    Title, 6
-loc.03407-0007    Title, 7
-loc.03407-0008    Title, 8
-loc.03407-0009    Title, 9
-loc.03407-0010    Title, 10
-loc.03407-0011    Title, 11
-loc.03407-0012    Title, 12
-loc.03407-0013    Title, 13
-loc.03407-0014    Title, 14
-loc.03407-0015    Title, 15
-loc.03407-0016    Title, 16
-loc.03407-0017    Title, 17
-loc.03407-0018    Title, 18
-loc.03407-0019    Title, 19
-loc.03407-0020    Title, 20
-loc.03407-0021    Title, 21
-loc.03407-0022    Title, 22
-loc.03407-0023    Title, 23
-loc.03407-0024    Title, 24
-loc.03407-0025    Title, 25
-loc.03407-0026    Title, 26
-loc.03407-0027    Title, 27
-loc.03407-0028    Title, 28
-loc.03407-0029    Title, 29
-loc.03407-0030    Title, 30
-loc.03407-0031    Title, 31
-loc.03407-0032    Title, 32
-loc.03407-0033    Title, 33
-loc.03407-0034    Title, 34
-loc.03407-0035    Title, 35
-loc.03407-0036    Title, 36
-loc.03407-0037    Title, 37
-loc.03407-0038    Title, 38
-loc.03407-0039    Title, 39
-loc.03407-0040    Title, 40
-loc.03407-0041    Title, 41
-loc.03407-0042    Title, 42
-loc.03407-0043    Title, 43
-loc.03407-0044    Title, 44
-loc.03407-0045    Title, 45
-loc.03407-0046    Title, 46
-loc.03407-0047    Title, 47
-loc.03407-0048    Title, 48
-loc.03408-0001    Title, 1
-loc.03409-0001    Title, 1
-loc.03410-0001    Title, 1
-loc.03410-0002    Title, 2
-loc.03411-0001    Title, 1
-loc.03411-0002    Title, 2
-loc.03412-0001    Title, 1
-loc.03412-0002    Title, 2
-loc.03413-0001    Title, 1
-loc.03413-0002    Title, 2
-loc.03413-0003    Title, 3
-loc.03413-0004    Title, 4
-loc.03413-0005    Title, 5
-loc.03413-0006    Title, 6
-loc.03413-0007    Title, 7
-loc.03413-0008    Title, 8
-loc.03413-0009    Title, 9
-loc.03413-0010    Title, 10
-loc.03413-0011    Title, 11
-loc.03413-0012    Title, 12
-loc.03415-0001    Title, 1
-loc.03415-0002    Title, 2
-loc.03415-0003    Title, 3
-loc.03418-0001    Title, 1
-loc.03418-0002    Title, 2
-loc.03419-0001    Title, 1
-loc.03419-0002    Title, 2
-loc.03420-0001    Title, 1
-loc.03420-0002    Title, 2
-loc.03421-0001    Title, 1
-loc.03421-0002    Title, 2
-loc.03423-0001    Title, 1
-loc.03423-0002    Title, 2
-loc.03424-0001    Title, 1
-loc.03424-0002    Title, 2
-loc.03424-0003    Title, 3
-loc.03424-0004    Title, 4
-loc.03424-0005    Title, 5
-loc.03425-0001    Title, 1
-loc.03425-0002    Title, 2
-loc.03426-0001    Title, 1
-loc.03426-0002    Title, 2
-loc.03428-0001    Title, 1
-loc.03428-0002    Title, 2
-loc.03428-0003    Title, 3
-loc.03428-0004    Title, 4
-loc.03428-0005    Title, 5
-loc.03428-0006    Title, 6
-loc.03428-0007    Title, 7
-loc.03428-0008    Title, 8
-loc.03429-0001    Title, 1
-loc.03429-0002    Title, 2
-loc.03430-0001    Title, 1
-loc.03434-0001    Title, 1
-loc.03435-0001    Title, 1
-loc.03436-0001    Title, 1
-loc.03436-0002    Title, 2
-loc.03437-0001    Title, 1
-loc.03440-0001    Title, 1
-loc.03441-0001    Title, 1
-loc.03442-0001    Title, 1
-loc.03442-0002    Title, 2
-loc.03442-0003    Title, 3
-loc.03445-0001    Title, 1
-loc.03445-0002    Title, 2
-loc.03445-0003    Title, 3
-loc.03445-0004    Title, 4
-loc.03445-0005    Title, 5
-loc.03445-0006    Title, 6
-loc.03449-0001    Title, 1
-loc.03449-0002    Title, 2
-loc.03449-0003    Title, 3
-loc.03449-0004    Title, 4
-loc.03449-0005    Title, 5
-loc.03449-0006    Title, 6
-loc.03449-0007    Title, 7
-loc.03449-0008    Title, 8
-loc.03449-0009    Title, 9
-loc.03449-0010    Title, 10
-loc.03449-0011    Title, 11
-loc.03449-0012    Title, 12
-loc.03449-0013    Title, 13
-loc.03449-0014    Title, 14
-loc.03449-0015    Title, 15
-loc.03449-0016    Title, 16
-loc.03450-0001    Title, 1
-loc.03450-0002    Title, 2
-loc.03456-0001    Title, 1
-loc.03456-0002    Title, 2
-loc.03456-0003    Title, 3
-loc.03456-0004    Title, 4
-loc.03456-0005    Title, 5
-loc.03456-0006    Title, 6
-loc.03456-0007    Title, 7
-loc.03782-0001    Title, 1
-loc.03782-0002    Title, 2
-loc.03782-0003    Title, 3
-loc.03782-0004    Title, 4
-loc.03782-0005    Title, 5
-loc.03782-0006    Title, 6
-loc.03782-0007    Title, 7
-loc.03782-0008    Title, 8
-loc.03782-0009    Title, 9
-loc.03782-0010    Title, 10
-loc.03782-0011    Title, 11
-loc.03782-0012    Title, 12
-loc.03782-0013    Title, 13
-loc.03782-0014    Title, 14
-loc.03782-0015    Title, 15
-loc.03782-0016    Title, 16
-loc.03782-0017    Title, 17
-loc.03782-0018    Title, 18
-loc.03782-0019    Title, 19
-loc.03782-0020    Title, 20
-loc.03782-0021    Title, 21
-loc.03782-0022    Title, 22
-loc.03782-0023    Title, 23
-loc.03782-0024    Title, 24
-loc.03782-0025    Title, 25
-loc.03782-0026    Title, 26
-loc.03782-0027    Title, 27
-loc.03782-0028    Title, 28
-loc.03782-0029    Title, 29
-loc.03782-0030    Title, 30
-loc.03782-0031    Title, 31
-loc.03782-0032    Title, 32
-loc.03782-0033    Title, 33
-loc.03782-0034    Title, 34
-loc.03782-0035    Title, 35
-loc.03782-0036    Title, 36
-loc.03782-0037    Title, 37
-loc.03782-0038    Title, 38
-loc.03784-0001    Title, 1
-loc.03784-0002    Title, 2
-loc.03784-0003    Title, 3
-loc.03784-0004    Title, 4
-loc.03784-0005    Title, 5
-loc.03784-0006    Title, 6
-loc.03801-0001    Title, 1
-loc.03801-0002    Title, 2
-loc.03801-0003    Title, 3
-loc.03801-0004    Title, 4
-loc.03801-0005    Title, 5
-loc.03801-0006    Title, 6
-loc.03801-0007    Title, 7
-loc.03801-0008    Title, 8
-loc.03801-0009    Title, 9
-loc.03801-0010    Title, 10
-loc.03801-0011    Title, 11
-loc.03801-0012    Title, 12
-loc.03801-0013    Title, 13
-loc.03801-0014    Title, 14
-nyp.00027-0001    Title, 1
-nyp.00030-0001    Title, 1
-nyp.00031-0001    Title, 1
-nyp.00035-0001    Title, 1
-nyp.00392-0001    Title, 1
+duk.00055-0001    unknown, p. 1
+duk.00055-0002    unknown, p. 2
+duk.00055-0003    unknown, p. 3
+duk.00055-0004    unknown, p. 4
+duk.00055-0005    unknown, p. 5
+duk.00055-0006    unknown, p. 6
+duk.00086-0001    MS 4to188, p. 1
+duk.00106-0001    II-5 102, p. 1
+duk.00107-0001    II-5 102, p. 1
+duk.00109-0001    II-5 102, p. 1
+duk.00109-0002    II-5 102, p. 2
+duk.00110-0001    II-5 102, p. 1
+duk.00111-0001    II-5 102, p. 1
+duk.00144-0001    II-5 41, p. 1
+duk.00144-0002    II-5 41, p. 2
+duk.00144-0003    II-5 41, p. 3
+duk.00144-0004    II-5 41, p. 4
+duk.00144-0005    II-5 41, p. 5
+duk.00169-0001    MS 4to 70, p. 1
+duk.00169-0002    MS 4to 70, p. 2
+duk.00169-0003    MS 4to 70, p. 3
+duk.00170-0001    MS 4 to 72, p. 1
+duk.00170-0002    MS 4 to 72, p. 2
+duk.00170-0003    MS 4 to 72, p. 3
+duk.00170-0004    MS 4 to 72, p. 4
+duk.00170-0005    MS 4 to 72, p. 5
+duk.00170-0006    MS 4 to 72, p. 6
+duk.00170-0007    MS 4 to 72, p. 7
+duk.00170-0008    MS 4 to 72, p. 8
+duk.00170-0009    MS 4 to 72, p. 9
+duk.00171-0001    MS 12mo 89, p. 1
+duk.00171-0002    MS 12mo 89, p. 2
+duk.00172-0001    MS q 73, p. 1
+duk.00173-0001    MS 90, p. 1
+duk.00173-0002    MS 90, p. 2
+duk.00173-0003    MS 90, p. 3
+duk.00173-0004    MS 90, p. 4
+duk.00173-0005    MS 90, p. 5
+duk.00173-0006    MS 90, p. 6
+duk.00173-0007    MS 90, p. 7
+duk.00173-0008    MS 90, p. 8
+duk.00173-0009    MS 90, p. 9
+duk.00173-0010    MS 90, p. 10
+duk.00173-0011    MS 90, p. 11
+duk.00174-0001    MS 79, p. 1
+duk.00174-0002    MS 79, p. 2
+duk.00174-0003    MS 79, p. 3
+duk.00174-0004    MS 79, p. 4
+duk.00175-0001    MS 12mo 92, p. 1
+duk.00175-0002    MS 12mo 92, p. 2
+duk.00176-0001    MS 78, p. 1
+duk.00176-0002    MS 78, p. 2
+duk.00177-0001    MS 91, p. 1
+duk.00177-0002    MS 91, p. 2
+duk.00177-0003    MS 91, p. 3
+duk.00178-0001    MS 4to 80, p. 1
+duk.00178-0002    MS 4to 80, p. 2
+duk.00178-0003    MS 4to 80, p. 3
+duk.00179-0001    MS q 77, p. 1
+duk.00180-0001    MS q 76, p. 1
+duk.00182-0001    MS 4to 100, p. 1
+duk.00182-0002    MS 4to 100, p. 2
+duk.00182-0003    MS 4to 100, p. 3
+duk.00182-0004    MS 4to 100, p. 4
+duk.00182-0005    MS 4to 100, p. 5
+duk.00182-0006    MS 4to 100, p. 6
+duk.00182-0007    MS 4to 100, p. 7
+duk.00182-0008    MS 4to 100, p. 8
+duk.00182-0009    MS 4to 100, p. 9
+duk.00182-0010    MS 4to 100, p. 10
+duk.00182-0011    MS 4to 100, p. 11
+duk.00184-0001    MS 4to 81, p. 1
+duk.00184-0002    MS 4to 81, p. 2
+duk.00184-0003    MS 4to 81, p. 3
+duk.00184-0004    MS 4to 81, p. 4
+duk.00185-0001    MS q 82, p. 1
+duk.00185-0002    MS q 82, p. 2
+duk.00188-0001    III-3 #5 c. 1, p. 1
+duk.00189-0001    MS 93, p. 1
+duk.00191-0001    MS 12mo 95, p. 1
+duk.00191-0002    MS 12mo 95, p. 2
+duk.00191-0003    MS 12mo 95, p. 3
+duk.00191-0004    MS 12mo 95, p. 4
+duk.00191-0005    MS 12mo 95, p. 5
+duk.00192-0001    MS q 84, p. 1
+duk.00193-0001    MS 4to 85, p. 1
+duk.00193-0002    MS 4to 85, p. 2
+duk.00193-0003    MS 4to 85, p. 3
+duk.00193-0004    MS 4to 85, p. 4
+duk.00193-0005    MS 4to 85, p. 5
+duk.00194-0001    MS 4to 86, p. 1
+duk.00194-0002    MS 4to 86, p. 2
+duk.00194-0003    MS 4to 86, p. 3
+duk.00194-0004    MS 4to 86, p. 4
+duk.00195-0001    II-5 101, p. 1
+duk.00196-0001    II-5 102, p. 1
+duk.00196-0002    II-5 102, p. 2
+duk.00197-0001    MS 96, p. 1
+duk.00197-0002    MS 96, p. 2
+duk.00198-0001    MS 97, p. 1
+duk.00200-0001    II-5 103, p. 1
+duk.00200-0002    II-5 103, p. 2
+duk.00201-0001    MS 4to 87, p. 1
+duk.00201-0002    MS 4to 87, p. 2
+duk.00248-0001    MS 175, p. 1
+duk.00248-0002    MS 175, p. 2
+duk.00248-0003    MS 175, p. 3
+duk.00248-0004    MS 175, p. 4
+duk.00248-0005    MS 175, p. 5
+duk.00248-0006    MS 175, p. 6
+duk.00248-0007    MS 175, p. 7
+duk.00248-0008    MS 175, p. 8
+duk.00248-0009    MS 175, p. 9
+duk.00248-0010    MS 175, p. 10
+duk.00248-0011    MS 175, p. 11
+duk.00248-0012    MS 175, p. 12
+duk.00248-0013    MS 175, p. 13
+duk.00248-0014    MS 175, p. 14
+duk.00248-0015    MS 175, p. 15
+duk.00248-0016    MS 175, p. 16
+duk.00248-0017    MS 175, p. 17
+duk.00642-0001    MS 2o 46, p. 1
+duk.00642-0002    MS 2o 46, p. 2
+duk.00642-0003    MS 2o 46, p. 3
+duk.00673-0001    II-5 101, p. 1
+duk.00674-0001    II-5 101, p. 1
+duk.00674-0002    II-5 101, p. 2
+duk.00677-0001    II-5 101, p. 1
+duk.00677-0002    II-5 101, p. 2
+duk.00678-0001    II-5 101, p. 1
+duk.00678-0002    II-5 101, p. 2
+duk.00679-0001    II-5 101, p. 1
+duk.00680-0001    II-5 101, p. 1
+duk.00681-0001    II-5 101, p. 1
+duk.00682-0001    II-5 102, p. 1
+duk.00683-0001    II-5 103, p. 1
+duk.00684-0001    II-5 103, p. 1
+duk.00685-0001    II-5 103, p. 1
+duk.00686-0001    II-5 103, p. 1
+duk.00686-0002    II-5 103, p. 2
+duk.00687-0001    II-5 103, p. 1
+duk.00692-0001    MS 96, p. 1
+duk.00692-0002    MS 96, p. 2
+duk.00705-0001    unknown, p. 1
+duk.00705-0002    unknown, p. 2
+duk.00705-0003    unknown, p. 3
+duk.00705-0004    unknown, p. 4
+duk.00705-0005    unknown, p. 5
+duk.00705-0006    unknown, p. 6
+duk.00705-0007    unknown, p. 7
+duk.00705-0008    unknown, p. 8
+duk.00707-0001    II-5 102, p. 1
+loc.03398-0001    Box 39, Folder 9, p. 1
+loc.03399-0001    Box 39, Folder 12, p. 1
+loc.03399-0002    Box 39, Folder 12, p. 2
+loc.03400-0001    Box 39, Folder 14, p. 1
+loc.03400-0002    Box 39, Folder 14, p. 2
+loc.03401-0001    Box 39, Folder 18, p. 1
+loc.03401-0002    Box 39, Folder 18, p. 2
+loc.03402-0001    Box 39, Folder 22, p. 1
+loc.03403-0001    Box 39, Folder 40, p. 1
+loc.03403-0002    Box 39, Folder 40, p. 2
+loc.03404-0001    Box 39, Folder 41, p. 1
+loc.03404-0002    Box 39, Folder 41, p. 2
+loc.03404-0003    Box 39, Folder 41, p. 3
+loc.03404-0004    Box 39, Folder 41, p. 4
+loc.03404-0005    Box 39, Folder 41, p. 5
+loc.03404-0006    Box 39, Folder 41, p. 6
+loc.03404-0007    Box 39, Folder 41, p. 7
+loc.03404-0008    Box 39, Folder 41, p. 8
+loc.03405-0001    Box 39, Folder 43, p. 1
+loc.03407-0001    Box 39, Folder 60, p. 1
+loc.03407-0002    Box 39, Folder 60, p. 2
+loc.03407-0003    Box 39, Folder 60, p. 3
+loc.03407-0004    Box 39, Folder 60, p. 4
+loc.03407-0005    Box 39, Folder 60, p. 5
+loc.03407-0006    Box 39, Folder 60, p. 6
+loc.03407-0007    Box 39, Folder 60, p. 7
+loc.03407-0008    Box 39, Folder 60, p. 8
+loc.03407-0009    Box 39, Folder 60, p. 9
+loc.03407-0010    Box 39, Folder 60, p. 10
+loc.03407-0011    Box 39, Folder 60, p. 11
+loc.03407-0012    Box 39, Folder 60, p. 12
+loc.03407-0013    Box 39, Folder 60, p. 13
+loc.03407-0014    Box 39, Folder 60, p. 14
+loc.03407-0015    Box 39, Folder 60, p. 15
+loc.03407-0016    Box 39, Folder 60, p. 16
+loc.03407-0017    Box 39, Folder 60, p. 17
+loc.03407-0018    Box 39, Folder 60, p. 18
+loc.03407-0019    Box 39, Folder 60, p. 19
+loc.03407-0020    Box 39, Folder 60, p. 20
+loc.03407-0021    Box 39, Folder 60, p. 21
+loc.03407-0022    Box 39, Folder 60, p. 22
+loc.03407-0023    Box 39, Folder 60, p. 23
+loc.03407-0024    Box 39, Folder 60, p. 24
+loc.03407-0025    Box 39, Folder 60, p. 25
+loc.03407-0026    Box 39, Folder 60, p. 26
+loc.03407-0027    Box 39, Folder 60, p. 27
+loc.03407-0028    Box 39, Folder 60, p. 28
+loc.03407-0029    Box 39, Folder 60, p. 29
+loc.03407-0030    Box 39, Folder 60, p. 30
+loc.03407-0031    Box 39, Folder 60, p. 31
+loc.03407-0032    Box 39, Folder 60, p. 32
+loc.03407-0033    Box 39, Folder 60, p. 33
+loc.03407-0034    Box 39, Folder 60, p. 34
+loc.03407-0035    Box 39, Folder 60, p. 35
+loc.03407-0036    Box 39, Folder 60, p. 36
+loc.03407-0037    Box 39, Folder 60, p. 37
+loc.03407-0038    Box 39, Folder 60, p. 38
+loc.03407-0039    Box 39, Folder 60, p. 39
+loc.03407-0040    Box 39, Folder 60, p. 40
+loc.03407-0041    Box 39, Folder 60, p. 41
+loc.03407-0042    Box 39, Folder 60, p. 42
+loc.03407-0043    Box 39, Folder 60, p. 43
+loc.03407-0044    Box 39, Folder 60, p. 44
+loc.03407-0045    Box 39, Folder 60, p. 45
+loc.03407-0046    Box 39, Folder 60, p. 46
+loc.03407-0047    Box 39, Folder 60, p. 47
+loc.03407-0048    Box 39, Folder 60, p. 48
+loc.03408-0001    Box 39, Folder 65, p. 1
+loc.03409-0001    Box 39, Folder 71, p. 1
+loc.03410-0001    Box 40, Folder 8, p. 1
+loc.03410-0002    Box 40, Folder 8, p. 2
+loc.03411-0001    Box 40, Folder 9, p. 1
+loc.03411-0002    Box 40, Folder 9, p. 2
+loc.03412-0001    Box 40, Folder 18, p. 1
+loc.03412-0002    Box 40, Folder 18, p. 2
+loc.03413-0001    Box 40, Folder 32, p. 1
+loc.03413-0002    Box 40, Folder 32, p. 2
+loc.03413-0003    Box 40, Folder 32, p. 3
+loc.03413-0004    Box 40, Folder 32, p. 4
+loc.03413-0005    Box 40, Folder 32, p. 5
+loc.03413-0006    Box 40, Folder 32, p. 6
+loc.03413-0007    Box 40, Folder 32, p. 7
+loc.03413-0008    Box 40, Folder 32, p. 8
+loc.03413-0009    Box 40, Folder 32, p. 9
+loc.03413-0010    Box 40, Folder 32, p. 10
+loc.03413-0011    Box 40, Folder 32, p. 11
+loc.03413-0012    Box 40, Folder 32, p. 12
+loc.03415-0001    Box 40, Folder 32, p. 1
+loc.03415-0002    Box 40, Folder 32, p. 2
+loc.03415-0003    Box 40, Folder 32, p. 3
+loc.03418-0001    Box 40, Folder 65, p. 1
+loc.03418-0002    Box 40, Folder 65, p. 2
+loc.03419-0001    Box 40, Folder 66, p. 1
+loc.03419-0002    Box 40, Folder 66, p. 2
+loc.03420-0001    Box 40, Folder 79, p. 1
+loc.03420-0002    Box 40, Folder 79, p. 2
+loc.03421-0001    Box 41, Folder 3, p. 1
+loc.03421-0002    Box 41, Folder 3, p. 2
+loc.03423-0001    Box 41, Folder 13, p. 1
+loc.03423-0002    Box 41, Folder 13, p. 2
+loc.03424-0001    Box 41, Folder 19, p. 1
+loc.03424-0002    Box 41, Folder 19, p. 2
+loc.03424-0003    Box 41, Folder 19, p. 3
+loc.03424-0004    Box 41, Folder 19, p. 4
+loc.03424-0005    Box 41, Folder 19, p. 5
+loc.03425-0001    Box 41, Folder 45, p. 1
+loc.03425-0002    Box 41, Folder 45, p. 2
+loc.03426-0001    Box 41, Folder 46, p. 1
+loc.03426-0002    Box 41, Folder 46, p. 2
+loc.03428-0001    Box 41, Folder 62, p. 1
+loc.03428-0002    Box 41, Folder 62, p. 2
+loc.03428-0003    Box 41, Folder 62, p. 3
+loc.03428-0004    Box 41, Folder 62, p. 4
+loc.03428-0005    Box 41, Folder 62, p. 5
+loc.03428-0006    Box 41, Folder 62, p. 6
+loc.03428-0007    Box 41, Folder 62, p. 7
+loc.03428-0008    Box 41, Folder 62, p. 8
+loc.03429-0001    Box 41, Folder 70, p. 1
+loc.03429-0002    Box 41, Folder 70, p. 2
+loc.03430-0001    Box 41, Folder 74, p. 1
+loc.03434-0001    Box 42, Folder 43, p. 1
+loc.03435-0001    Box 42, Folder 34, p. 1
+loc.03436-0001    Box 42, Folder 46, p. 1
+loc.03436-0002    Box 42, Folder 46, p. 2
+loc.03437-0001    Box 42, Folder 48, p. 1
+loc.03440-0001    Box 42, Folder 51, p. 1
+loc.03441-0001    Box 42, Folder 53, p. 1
+loc.03442-0001    Box 42, Folder 54, p. 1
+loc.03442-0002    Box 42, Folder 54, p. 2
+loc.03442-0003    Box 42, Folder 54, p. 3
+loc.03445-0001    F72.C5 T4 Copy 5, p. 1
+loc.03445-0002    F72.C5 T4 Copy 5, p. 2
+loc.03445-0003    F72.C5 T4 Copy 5, p. 3
+loc.03445-0004    F72.C5 T4 Copy 5, p. 4
+loc.03445-0005    F72.C5 T4 Copy 5, p. 5
+loc.03445-0006    F72.C5 T4 Copy 5, p. 6
+loc.03449-0001    PS1120.B8 O3 1825 Copy 3, p. 1
+loc.03449-0002    PS1120.B8 O3 1825 Copy 3, p. 2
+loc.03449-0003    PS1120.B8 O3 1825 Copy 3, p. 3
+loc.03449-0004    PS1120.B8 O3 1825 Copy 3, p. 4
+loc.03449-0005    PS1120.B8 O3 1825 Copy 3, p. 5
+loc.03449-0006    PS1120.B8 O3 1825 Copy 3, p. 6
+loc.03449-0007    PS1120.B8 O3 1825 Copy 3, p. 7
+loc.03449-0008    PS1120.B8 O3 1825 Copy 3, p. 8
+loc.03449-0009    PS1120.B8 O3 1825 Copy 3, p. 9
+loc.03449-0010    PS1120.B8 O3 1825 Copy 3, p. 10
+loc.03449-0011    PS1120.B8 O3 1825 Copy 3, p. 11
+loc.03449-0012    PS1120.B8 O3 1825 Copy 3, p. 12
+loc.03449-0013    PS1120.B8 O3 1825 Copy 3, p. 13
+loc.03449-0014    PS1120.B8 O3 1825 Copy 3, p. 14
+loc.03449-0015    PS1120.B8 O3 1825 Copy 3, p. 15
+loc.03449-0016    PS1120.B8 O3 1825 Copy 3, p. 16
+loc.03450-0001    PA3975.A1 1857 Copy 2 vol. 2, p. 1
+loc.03450-0002    PA3975.A1 1857 Copy 2 vol. 2, p. 2
+loc.03456-0001    F127.L8 T4 Copy 4 Vol. 1-2, p. 1
+loc.03456-0002    F127.L8 T4 Copy 4 Vol. 1-2, p. 2
+loc.03456-0003    F127.L8 T4 Copy 4 Vol. 1-2, p. 3
+loc.03456-0004    F127.L8 T4 Copy 4 Vol. 1-2, p. 4
+loc.03456-0005    F127.L8 T4 Copy 4 Vol. 1-2, p. 5
+loc.03456-0006    F127.L8 T4 Copy 4 Vol. 1-2, p. 6
+loc.03456-0007    F127.L8 T4 Copy 4 Vol. 1-2, p. 7
+loc.03782-0001    unknown, p. 1
+loc.03782-0002    unknown, p. 2
+loc.03782-0003    unknown, p. 3
+loc.03782-0004    unknown, p. 4
+loc.03782-0005    unknown, p. 5
+loc.03782-0006    unknown, p. 6
+loc.03782-0007    unknown, p. 7
+loc.03782-0008    unknown, p. 8
+loc.03782-0009    unknown, p. 9
+loc.03782-0010    unknown, p. 10
+loc.03782-0011    unknown, p. 11
+loc.03782-0012    unknown, p. 12
+loc.03782-0013    unknown, p. 13
+loc.03782-0014    unknown, p. 14
+loc.03782-0015    unknown, p. 15
+loc.03782-0016    unknown, p. 16
+loc.03782-0017    unknown, p. 17
+loc.03782-0018    unknown, p. 18
+loc.03782-0019    unknown, p. 19
+loc.03782-0020    unknown, p. 20
+loc.03782-0021    unknown, p. 21
+loc.03782-0022    unknown, p. 22
+loc.03782-0023    unknown, p. 23
+loc.03782-0024    unknown, p. 24
+loc.03782-0025    unknown, p. 25
+loc.03782-0026    unknown, p. 26
+loc.03782-0027    unknown, p. 27
+loc.03782-0028    unknown, p. 28
+loc.03782-0029    unknown, p. 29
+loc.03782-0030    unknown, p. 30
+loc.03782-0031    unknown, p. 31
+loc.03782-0032    unknown, p. 32
+loc.03782-0033    unknown, p. 33
+loc.03782-0034    unknown, p. 34
+loc.03782-0035    unknown, p. 35
+loc.03782-0036    unknown, p. 36
+loc.03782-0037    unknown, p. 37
+loc.03782-0038    unknown, p. 38
+loc.03784-0001    Box 48, Folder 13, p. 1
+loc.03784-0002    Box 48, Folder 13, p. 2
+loc.03784-0003    Box 48, Folder 13, p. 3
+loc.03784-0004    Box 48, Folder 13, p. 4
+loc.03784-0005    Box 48, Folder 13, p. 5
+loc.03784-0006    Box 48, Folder 13, p. 6
+loc.03784-0007    Box 48, Folder 13, p. 7
+loc.03801-0001    Box 49, Folder 3, p. 1
+loc.03801-0002    Box 49, Folder 3, p. 2
+loc.03801-0003    Box 49, Folder 3, p. 3
+loc.03801-0004    Box 49, Folder 3, p. 4
+loc.03801-0005    Box 49, Folder 3, p. 5
+loc.03801-0006    Box 49, Folder 3, p. 6
+loc.03801-0007    Box 49, Folder 3, p. 7
+loc.03801-0008    Box 49, Folder 3, p. 8
+loc.03801-0009    Box 49, Folder 3, p. 9
+loc.03801-0010    Box 49, Folder 3, p. 10
+loc.03801-0011    Box 49, Folder 3, p. 11
+loc.03801-0012    Box 49, Folder 3, p. 12
+loc.03801-0013    Box 49, Folder 3, p. 13
+loc.03801-0014    Box 49, Folder 3, p. 14
+nyp.00027-0001    580214, p. 1
+nyp.00030-0001    580219, p. 1
+nyp.00031-0001    580219, p. 1
+nyp.00035-0001    580219, p. 1
+nyp.00392-0001    580219, p. 1
