@@ -284,6 +284,7 @@ trait ObjectBinders {
           case Annotation((b, e), _, attrs) =>
             val borderCss = attrs.get("rend").flatMap {
               case "singleLine-left" 
+                 | "singleLine-Left"
                  | "singleLine-right"
                  | "doubleLine-left"
                  | "doubleLine-right"
