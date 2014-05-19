@@ -6,6 +6,7 @@ class DCElementsPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends DCPrefix[Rdf](ops) {
   val title = apply("title")
   val format = apply("format")
+  val creator = apply("creator")
 }
 
 object DCElementsPrefix {
@@ -17,6 +18,7 @@ class DCTermsPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends DCTPrefix[Rdf](ops) {
   val conformsTo = apply("conformsTo")
   val isPartOf = apply("isPartOf")
+  val references = apply("references")
 }
 
 object DCTermsPrefix {
