@@ -72,7 +72,7 @@ trait ResourceMap[A] extends LocatedResource with Formatted {
 trait Manifest[C <: Canvas, M <: Manifest[C, M]]
   extends LocatedResource
   with Labeled
-  with MetadataLabeled
+  with WWAMetadataLabeled
   with HasRelatedService { manifest: M =>
   def base: URI
   def id: String
