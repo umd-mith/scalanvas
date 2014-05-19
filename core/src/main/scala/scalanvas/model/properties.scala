@@ -39,7 +39,15 @@ trait ContentsMotivated {
 trait MetadataLabeled {
   def agent: Option[String] = None
   def attribution: Option[String] = None
-  def date: Option[String] = None
+  def date: Option[String] = None  
+  def bibSources: Option[String] = None
+  def editors: Option[String] = None
+}
+
+trait WWAMetadataLabeled  extends MetadataLabeled {
+  def fullTitle: Option[String] = None
+  def wwaShelfmark: Option[String] = None
+  def wwaId: Option[String] = None  
 }
 
 sealed trait Motivation
