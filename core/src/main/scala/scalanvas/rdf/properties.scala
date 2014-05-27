@@ -60,7 +60,10 @@ trait PropertyBinders { this: ObjectBinders =>
         -- sc.agentLabel ->- a.agent
         -- sc.attributionLabel ->- a.attribution
       -- sc.dateLabel ->- a.date
+      -- dcterms.references ->- a.bibSources
+      -- dc.creator ->- a.editors
     )
   }
+  
 }
 

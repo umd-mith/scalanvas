@@ -14,7 +14,7 @@ trait TeiManager {
     import FrankensteinManifest.IdWithSeq
 
     val (fullId, pageSeq) = idWithSeq match {
-      case IdWithSeq(itemId, seq) => ("ox-ms_abinger_" + itemId, seq)
+      case IdWithSeq(itemId, seq) => (itemId, seq)
       case itemIdWithSeq => throw new RuntimeException(
         s"Invalid identifier: $itemIdWithSeq!"
       )
@@ -53,6 +53,7 @@ trait TeiManager {
       val source = Link(
         new URI(
           "http://%s/tei/ox/%s.xml".format(
+          // "/demo/xml/%s.xml".format(
             resolvableDomain,
             idWithSeq
           )

@@ -21,6 +21,7 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
   )
 
   val ServicePattern = """ox-frankenstein-([^_]+)_(.+)""".r
+  // val ServicePattern = """(duk|loc)\.(\d+)""".r
 
   def service = Some(
     Service(
@@ -40,6 +41,7 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
   val title = "Frankenstein"
 
   def label = id match {
+    // case "duk.00055" => "Lessing's Laocoön."
     case "ox-frankenstein-notebook_a" => "Draft Notebook A"
     case "ox-frankenstein-notebook_b" => "Draft Notebook B"
     case "ox-frankenstein-notebook_c1" => "Fair-Copy Notebook C1"
@@ -61,6 +63,7 @@ trait FrankensteinManifest extends SgaManifest with ShelfmarkMapReader with TeiM
 
   override def date = Some(
     id match {
+      case "duk.00055" => "dummy date"
       case "ox-frankenstein-notebook_a" => "[August or September]-[?December] 1816"
       case "ox-frankenstein-notebook_b" => "[?December] 1816-April 1817"
       case "ox-frankenstein-notebook_c1" => "18 April-[?13] May 1817"

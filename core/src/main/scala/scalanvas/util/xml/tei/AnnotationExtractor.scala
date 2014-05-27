@@ -24,13 +24,13 @@ case class AnnotationExtractor(doc: Elem, ignore: Set[String]) {
       (doc \\ "anchor").filter(
         attrEquals("xml:id", spanTo.tail)
       ).headOption.map { anchor =>
-        Some(Annotation(
+        Annotation(
           (attrs("mu:b").toInt, anchor.attributes.asAttrMap("mu:b").toInt),
           attrs.get("place"),
           attrs - "mu:b" - "mu:e" - "place" - "xml:id" - "spanTo"
-        )).success
+        ).some.success
       }.getOrElse(
-        if (ignore(spanTo.tail)) None.success
+        if (ignore(spanTo.tail)) none.success
           else ("Missing anchor: " + spanTo + "!").failNel
       )
     }
@@ -45,5 +45,12 @@ case class AnnotationExtractor(doc: Elem, ignore: Set[String]) {
     (doc \\ "delSpan").toList.traverseU(fromMilestone).map(
       _.flatten ++ (doc \\ "del").map(fromElem)
     )
+
+  def marginaliaMetamarks: ValidationNel[String, List[Annotation]] =
+    (doc \\ "metamark").toList.filter { milestone =>
+      val attrs = milestone.attributes.asAttrMap
+
+      attrs.get("function").exists(_ == "marginalia")
+    }.traverseU(fromMilestone).map(_.flatten)
 }
 

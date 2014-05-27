@@ -29,7 +29,7 @@ trait ObjectBinders { this: PropertyBinders with Helpers =>
       with ResourceToPG[Rdf, Sequence[C]]
       with LabeledToPG[Rdf, Sequence[C]] {
       override def toPG(sequence: Sequence[C]) = (
-        super.toPG(sequence).a(sc.Sequence).a(dms.Sequence)
+        super.toPG(sequence).a(sc.Sequence) //.a(dms.Sequence)
       ).aggregates(sequence.canvases)
     }
 

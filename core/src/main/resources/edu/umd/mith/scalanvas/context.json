@@ -1,10 +1,14 @@
 
 {"@context": 
   	{
+      "@base": "http://shelleygodwinarchive.org/",
   		"sc":         "http://www.shared-canvas.org/ns/",
+      "sga":        "http://www.shelleygodwinarchive.org/ns1#",
+      "ore":        "http://www.openarchives.org/ore/terms/",
         "exif":       "http://www.w3.org/2003/12/exif/ns#",
         "iiif":       "http://library.stanford.edu/iiif/image-api/ns/",
-        "oa":         "http://www.w3.org/ns/oa#",
+        "oa":        "http://www.w3.org/ns/openannotation/core/",
+        "oax":        "http://www.w3.org/ns/openannotation/extension/",
         "cnt":     "http://www.w3.org/2011/content#",
         "dc":      "http://purl.org/dc/elements/1.1/",
         "dcterms": "http://purl.org/dc/terms/",
@@ -31,8 +35,10 @@
 
         "description": "dc:description",
         "attribution": "sc:attributionLabel",
-        "height":      {"@type":"xsd:integer", "@id":"exif:height"},
-        "width":       {"@type":"xsd:integer", "@id":"exif:width"},
+        "references":  "dcterms:references",
+        "editors":     "dc:creator",
+        "height":      {"@type":"xsd:int", "@id":"exif:height"},
+        "width":       {"@type":"xsd:int", "@id":"exif:width"},
         "viewingDirection": "sc:viewingDirection",
         "viewingHint": "sc:viewingHint",
 
@@ -49,7 +55,7 @@
         "selector":    {"@type":"@id", "@id":"oa:hasSelector"},
         "stylesheet":  {"@type":"@id", "@id":"oa:styledBy"},
         "style":       "oa:styleClass",
-
+        "painting":    "sc:painting",
 
     "hasState":      {"@type":"@id", "@id" : "oa:hasState"},
     "hasScope":      {"@type":"@id", "@id" : "oa:hasScope"},
@@ -62,6 +68,11 @@
     "item":          {"@type":"@id", "@id" : "oa:item"},
     "first":         {"@type":"@id", "@id" : "rdf:first"},
     "rest":          {"@type":"@id", "@id" : "rdf:rest", "@container" : "@list"},
+
+    "beginOffset":     {"@type":"xsd:int", "@id":"oax:begin"},
+    "endOffset":       {"@type":"xsd:int", "@id":"oax:end"},
+
+    "textOffsetSelector": {"@type":"@id", "@id":"oax:TextOffsetSelector"},
 
     "chars":        "cnt:chars",
     "encoding":     "cnt:characterEncoding",

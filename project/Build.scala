@@ -8,7 +8,7 @@ object Scalanvas extends Build {
     dependencies = Seq(schemas),
     settings = commonSettings ++ Seq(
       libraryDependencies <++= scalaVersion { sv => Seq(
-        "com.chuusai" % "shapeless" % "2.0.0-SNAPSHOT" cross CrossVersion.full changing(), 
+        "com.chuusai" % "shapeless" % "2.0.0" cross CrossVersion.full changing(), 
         "com.github.jsonld-java" % "jsonld-java-jena" % "0.2" excludeAll(
           ExclusionRule(organization = "org.apache.jena"),
           ExclusionRule(organization = "org.slf4j")
@@ -38,8 +38,7 @@ object Scalanvas extends Build {
     organization := "edu.umd.mith",
     version := "0.0.0-SNAPSHOT",
     resolvers += Resolver.sonatypeRepo("snapshots"),
-    scalaVersion := "2.10.2",
-    //scalaBinaryVersion := "2.10",
+    scalaVersion := "2.10.3",
     scalacOptions := Seq(
       "-feature",
       "-language:implicitConversions",
@@ -47,6 +46,7 @@ object Scalanvas extends Build {
       "-unchecked"
     ),
     libraryDependencies <++= scalaVersion(sv => Seq(
+      "com.typesafe" % "config" % "1.2.0",
       "org.slf4j" % "slf4j-simple" % "1.6.4",
       "io.argonaut" %% "argonaut" % "6.0",
       "no.arktekk" % "anti-xml_2.10" % "0.5.1"

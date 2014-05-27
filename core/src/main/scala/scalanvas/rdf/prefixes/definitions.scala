@@ -6,6 +6,7 @@ class DCElementsPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends DCPrefix[Rdf](ops) {
   val title = apply("title")
   val format = apply("format")
+  val creator = apply("creator")
 }
 
 object DCElementsPrefix {
@@ -17,6 +18,7 @@ class DCTermsPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends DCTPrefix[Rdf](ops) {
   val conformsTo = apply("conformsTo")
   val isPartOf = apply("isPartOf")
+  val references = apply("references")
 }
 
 object DCTermsPrefix {
@@ -131,31 +133,14 @@ class SharedCanvasPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   val attributionLabel = apply("attributionLabel")
   val rightsLabel = apply("rightsLabel")
   val hasCanvases = apply("hasCanvases")
+  val hasSequences = apply("hasSequences")
+  val hasImageAnnotations = apply("hasImageAnnotations")
 }
 
 object SharedCanvasPrefix {
   def apply[Rdf <: RDF](implicit ops: RDFOps[Rdf]) =
     new SharedCanvasPrefix[Rdf](ops)
 }
-
-/*class SgaPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
-  extends PrefixBuilder("sga", "http://www.shelleygodwinarchive.org/ns1#")(ops) {
-  val hasClass = apply("hasClass")
-  val LineAnnotation = apply("LineAnnotation")
-  val AdditionAnnotation = apply("AdditionAnnotation")
-  val DeletionAnnotation = apply("DeletionAnnotation")
-  val reading = apply("reading")
-  val source = apply("source")
-  val shelfmarkLabel = apply("shelfmarkLabel")
-  val stateLabel = apply("stateLabel")
-  val handLabel = apply("handLabel")
-  val folioLabel = apply("folioLabel")
-}
-
-object SgaPrefix {
-  def apply[Rdf <: RDF](implicit ops: RDFOps[Rdf]) =
-    new SgaPrefix[Rdf](ops)
-}*/
 
 class DmsPrefix[Rdf <: RDF](ops: RDFOps[Rdf])
   extends PrefixBuilder("dms", "http://dms.stanford.edu/ns/")(ops) {
