@@ -7,7 +7,7 @@ trait ShelfmarkMapReader {
     "/edu/umd/mith/sga/wwa/shelfmark-map.txt"
   )
 
-  private val Line = """^(duk|loc|mid|nyp)(\.[^-]+-\d\d\d\d)\s+([^,]+),\s(.+)$""".r
+  private val Line = """^(duk|loc|mid|nyp)(\.[^-]+-\d\d\d\d)\s+([^;]+);\s(.+)$""".r
 
   private val source = Source.fromInputStream(stream)
 
