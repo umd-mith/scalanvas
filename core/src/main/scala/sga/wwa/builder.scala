@@ -11,7 +11,7 @@ import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
-object DevelopmentBuilder extends Builder with App {
+object MainBuilder extends Builder with App {
   val outputDir = new File(new File("output", "development"), "primary")
 
   trait Dev extends WwaConfiguration
