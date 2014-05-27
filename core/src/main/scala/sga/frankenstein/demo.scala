@@ -13,15 +13,15 @@ import edu.umd.mith.banana.io.jena._
 import java.io.{ File, PrintWriter }
 import scalax.io.Resource
 
-object JsonLdDemoBuilder extends JsonLdBuilder with App {
-  val outputDir = new File("jsonld-demo")
+// object JsonLdDemoBuilder extends JsonLdBuilder with App {
+//   val outputDir = new File("jsonld-demo")
 
-  trait Dev extends FrankensteinConfiguration
-    with BodleianImages
-    with SgaTei { this: FrankensteinManifest => }
+//   trait Dev extends FrankensteinConfiguration
+//     with BodleianImages
+//     with SgaTei { this: FrankensteinManifest => }
 
-  // save(new LessingManifest with Dev, outputDir)
-}
+//   // save(new LessingManifest with Dev, outputDir)
+// }
 
 trait JsonLdBuilder {
   def save(manifest: SgaManifest, outputDir: File) = {
